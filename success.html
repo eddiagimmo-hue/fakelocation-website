@@ -4,3 +4,141 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FakeLocation — Payment Successful</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 100vh; padding: 2rem;
+        }
+        .card {
+            background: #1a1a28; border: 1px solid #2a2a3d;
+            border-radius: 20px; padding: 3rem; max-width: 500px;
+            width: 100%; text-align: center;
+        }
+        .checkmark {
+            width: 80px; height: 80px; border-radius: 50%;
+            background: rgba(0, 184, 148, 0.15); margin: 0 auto 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem;
+        }
+        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .subtitle { color: #b2b2cc; margin-bottom: 2rem; }
+        .license-box {
+            background: #0a0a0f; border: 2px dashed #6c5ce7;
+            border-radius: 12px; padding: 1.5rem; margin: 1.5rem 0;
+        }
+        .license-label { color: #6c6c8a; font-size: 0.8rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .license-key {
+            font-size: 1.6rem; font-weight: 800; letter-spacing: 2px;
+            color: #6c5ce7; font-family: monospace;
+        }
+        .copy-btn {
+            background: #6c5ce7; color: white; border: none;
+            padding: 0.6rem 1.5rem; border-radius: 8px;
+            font-weight: 600; cursor: pointer; margin-top: 1rem;
+            font-size: 0.9rem; transition: all 0.2s;
+        }
+        .copy-btn:hover { background: #5a4bd4; }
+        .instructions {
+            text-align: left; color: #b2b2cc; font-size: 0.9rem;
+            margin-top: 2rem; padding-top: 1.5rem;
+            border-top: 1px solid #2a2a3d;
+        }
+        .instructions h3 { color: white; margin-bottom: 0.8rem; font-size: 1rem; }
+        .instructions ol { padding-left: 1.2rem; }
+        .instructions li { margin-bottom: 0.5rem; }
+        .loading { color: #6c6c8a; }
+        .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid #2a2a3d; border-top-color: #6c5ce7; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .back-link { display: inline-block; margin-top: 1.5rem; color: #6c5ce7; text-decoration: none; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="checkmark">&#10003;</div>
+        <h1>Payment Successful!</h1>
+        <p class="subtitle">Welcome to FakeLocation Pro</p>
+
+        <div id="license-area">
+            <p class="loading"><span class="spinner"></span>Generating your license key...</p>
+        </div>
+
+        <div class="instructions" id="instructions" style="display: none;">
+            <h3>How to activate:</h3>
+            <ol>
+                <li>Open FakeLocation on your device</li>
+                <li>Go to Settings (or the lock icon)</li>
+                <li>Enter your license key</li>
+                <li>All Pro features are now unlocked</li>
+            </ol>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: #6c6c8a;">
+                Your key works on up to 3 devices. A copy has been sent to your email.
+            </p>
+        </div>
+
+        <a href="/" class="back-link">&larr; Back to FakeLocation</a>
+    </div>
+
+    <script>
+        // ⚠️ CHANGEZ CETTE URL quand votre backend Render est live
+        const API_BASE = 'https://fakelocation-api.onrender.com';
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get('session_id');
+
+        async function fetchLicense() {
+            if (!sessionId) {
+                document.getElementById('license-area').innerHTML = '<p style="color:#ff6b6b">No session ID found. Check your email for the license key.</p>';
+                return;
+            }
+
+            let attempts = 0;
+            const maxAttempts = 10;
+
+            while (attempts < maxAttempts) {
+                try {
+                    const res = await fetch(`${API_BASE}/api/license/by-session/${sessionId}`);
+                    const data = await res.json();
+
+                    if (!data.pending && data.key) {
+                        document.getElementById('license-area').innerHTML = `
+                            <div class="license-box">
+                                <div class="license-label">Your License Key</div>
+                                <div class="license-key" id="key-text">${data.key}</div>
+                                <button class="copy-btn" onclick="copyKey()">Copy to Clipboard</button>
+                            </div>
+                            <p style="color: #b2b2cc; font-size: 0.85rem;">Plan: <strong style="color: #00b894;">${data.plan === 'yearly' ? 'Annual' : 'Monthly'} Pro</strong></p>
+                        `;
+                        document.getElementById('instructions').style.display = 'block';
+                        return;
+                    }
+                } catch (err) {
+                    console.error('Fetch error:', err);
+                }
+
+                attempts++;
+                await new Promise(r => setTimeout(r, 2000));
+            }
+
+            document.getElementById('license-area').innerHTML = `
+                <p style="color: #fdcb6e;">Your license is being processed. You'll receive it by email shortly at the address you used for payment.</p>
+            `;
+            document.getElementById('instructions').style.display = 'block';
+        }
+
+        function copyKey() {
+            const key = document.getElementById('key-text')?.textContent;
+            if (key) {
+                navigator.clipboard.writeText(key);
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy to Clipboard', 2000);
+            }
+        }
+
+        fetchLicense();
+    </script>
+</body>
+</html>
