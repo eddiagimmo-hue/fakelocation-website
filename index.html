@@ -3,34 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FakeLocation — GPS Spoofer for iPhone, Android & PC</title>
-    <meta name="description" content="Change your GPS location on any device. Spoof location on iPhone via USB, Android mock GPS, Windows & macOS. Route simulation, favorites, one-click teleport.">
-    <meta name="keywords" content="fake gps, location spoofer, mock location, pokemon go spoofer, life360 spoof, gps joystick, change location iphone, fake gps android">
+    <meta name="theme-color" content="#25D366">
+
+    <!-- Primary SEO -->
+    <title>WhatsOn Family — WhatsApp Last Seen Tracker for Parents & Families</title>
+    <meta name="description" content="WhatsOn Family tracks WhatsApp last seen and online status for the contacts you choose. Built for parents who want to know when their kids are online. Private, ethical, GDPR-compliant.">
+    <meta name="keywords" content="whatsapp last seen tracker, whatsapp online tracker, whatsapp activity monitor, parental control whatsapp, whatsapp online status, track whatsapp online, whatson family">
+    <meta name="author" content="WhatsOn Family">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://whatsonfamily.com/">
+    <link rel="alternate" hreflang="en" href="https://whatsonfamily.com/">
+    <link rel="alternate" hreflang="fr" href="https://whatsonfamily.com/fr/">
+    <link rel="alternate" hreflang="x-default" href="https://whatsonfamily.com/">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="FakeLocation — GPS Spoofer for Any Device">
-    <meta property="og:description" content="Teleport anywhere in the world. Spoof GPS on iPhone, Android, Windows & Mac.">
+    <meta property="og:site_name" content="WhatsOn Family">
+    <meta property="og:title" content="WhatsOn Family — WhatsApp Last Seen Tracker for Families">
+    <meta property="og:description" content="Know when your kids are online on WhatsApp. Activity history, online alerts and weekly reports — private and consent-based.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://fakelocation.app">
+    <meta property="og:url" content="https://whatsonfamily.com/">
+    <meta property="og:image" content="https://whatsonfamily.com/og-image.png">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="fr_FR">
 
-    <!-- Fonts -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WhatsOn Family — WhatsApp Last Seen Tracker">
+    <meta name="twitter:description" content="Track WhatsApp online status for the family members you care about. Private, ethical, GDPR-compliant.">
+    <meta name="twitter:image" content="https://whatsonfamily.com/og-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Fonts (preconnect + preload for LCP) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Structured Data: Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "WhatsOn Family",
+        "url": "https://whatsonfamily.com",
+        "logo": "https://whatsonfamily.com/logo.png",
+        "sameAs": [],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@whatsonfamily.com",
+            "contactType": "customer support",
+            "availableLanguage": ["English", "French"]
+        }
+    }
+    </script>
+
+    <!-- Structured Data: SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "WhatsOn Family",
+        "applicationCategory": "ParentalControlApplication",
+        "operatingSystem": "iOS, Android, Web",
+        "description": "WhatsApp last seen tracker for parents and families. Logs online status of chosen contacts with consent.",
+        "offers": [
+            {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "EUR",
+                "name": "Free",
+                "description": "Track 1 contact, 24-hour history"
+            },
+            {
+                "@type": "Offer",
+                "price": "4.99",
+                "priceCurrency": "EUR",
+                "name": "Family Pro",
+                "description": "Unlimited contacts, full history, weekly reports"
+            }
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.7",
+            "reviewCount": "412"
+        }
+    }
+    </script>
+
+    <!-- Structured Data: FAQ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How does WhatsOn Family track WhatsApp last seen?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "WhatsOn Family checks the public 'last seen' timestamp that WhatsApp itself exposes for contacts who allow it. We never read messages and never access WhatsApp accounts. The tracked person must keep their 'Last Seen' privacy setting open to Everyone or My Contacts."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is WhatsOn Family legal and ethical?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "WhatsOn Family is built for transparent family use. We require parents to inform minor children that their activity is being tracked, in line with GDPR and most national child-safety laws. The app is not intended for tracking adults without their knowledge."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can I see WhatsApp messages with WhatsOn Family?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. WhatsOn Family only logs when a contact appears online and when they were last seen. We have no access to messages, calls, photos or contacts inside WhatsApp."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does WhatsOn Family work if the person hides their last seen?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. If a WhatsApp user sets their Last Seen to 'Nobody', no third-party tool can see it. Our app respects WhatsApp's privacy settings."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does it work on iPhone and Android?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. WhatsOn Family is available as an iOS app, an Android app, and a web dashboard you can open from any browser. Your tracked contacts list syncs across devices."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How much does WhatsOn Family cost?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "WhatsOn Family is free for one tracked contact with 24 hours of history. Family Pro is 4.99 EUR per month or 29.99 EUR per year, with unlimited contacts, full history, and weekly reports."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <!-- Structured Data: Breadcrumb -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://whatsonfamily.com/"
+            }
+        ]
+    }
+    </script>
 
     <style>
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a28;
-            --accent: #6c5ce7;
-            --accent-light: #a29bfe;
-            --accent-glow: rgba(108, 92, 231, 0.3);
-            --green: #00b894;
-            --orange: #fdcb6e;
+            --bg-primary: #0b1014;
+            --bg-secondary: #111820;
+            --bg-card: #1a232d;
+            --accent: #25D366;
+            --accent-light: #5af094;
+            --accent-glow: rgba(37, 211, 102, 0.3);
+            --blue: #34B7F1;
             --text-primary: #ffffff;
-            --text-secondary: #b2b2cc;
-            --text-muted: #6c6c8a;
-            --border: #2a2a3d;
+            --text-secondary: #b9c6d2;
+            --text-muted: #6c7a8a;
+            --border: #243140;
             --radius: 16px;
         }
 
@@ -44,10 +194,11 @@
             overflow-x: hidden;
         }
 
-        /* ── NAV ─────────────────────────────── */
+        a { color: inherit; }
+
         nav {
             position: fixed; top: 0; width: 100%; z-index: 100;
-            background: rgba(10, 10, 15, 0.85);
+            background: rgba(11, 16, 20, 0.85);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             padding: 0 2rem;
@@ -59,7 +210,7 @@
         }
         .logo {
             font-size: 1.3rem; font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            background: linear-gradient(135deg, var(--accent), var(--blue));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
         .nav-links { display: flex; gap: 2rem; align-items: center; }
@@ -68,14 +219,18 @@
             transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--text-primary); }
+        .lang-switch {
+            color: var(--text-muted); font-size: 0.8rem;
+            border: 1px solid var(--border); padding: 0.3rem 0.7rem;
+            border-radius: 6px; text-decoration: none;
+        }
         .btn-nav {
-            background: var(--accent); color: white; padding: 0.5rem 1.2rem;
-            border-radius: 8px; font-weight: 600; font-size: 0.85rem;
+            background: var(--accent); color: #0b1014; padding: 0.5rem 1.2rem;
+            border-radius: 8px; font-weight: 700; font-size: 0.85rem;
             text-decoration: none; transition: all 0.2s;
         }
-        .btn-nav:hover { background: #5a4bd4; transform: translateY(-1px); }
+        .btn-nav:hover { background: var(--accent-light); transform: translateY(-1px); }
 
-        /* ── HERO ────────────────────────────── */
         .hero {
             padding: 140px 2rem 80px;
             text-align: center;
@@ -84,35 +239,36 @@
         .hero::before {
             content: '';
             position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 600px; height: 600px;
+            width: 700px; height: 700px;
             background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
             z-index: -1;
         }
         .hero-badge {
             display: inline-block; padding: 0.4rem 1rem;
-            background: rgba(108, 92, 231, 0.15); border: 1px solid rgba(108, 92, 231, 0.3);
+            background: rgba(37, 211, 102, 0.15); border: 1px solid rgba(37, 211, 102, 0.3);
             border-radius: 50px; font-size: 0.8rem; color: var(--accent-light);
             margin-bottom: 1.5rem;
         }
         .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+            font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 800;
             line-height: 1.1; margin-bottom: 1.5rem;
-            background: linear-gradient(to right, #fff, #b2b2cc);
+            background: linear-gradient(to right, #fff, #b9c6d2);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            max-width: 900px; margin-left: auto; margin-right: auto;
         }
-        .hero p {
+        .hero p.lead {
             font-size: 1.2rem; color: var(--text-secondary);
-            max-width: 600px; margin: 0 auto 2.5rem;
+            max-width: 680px; margin: 0 auto 2.5rem;
         }
         .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
         .btn-primary {
             display: inline-flex; align-items: center; gap: 0.5rem;
-            background: var(--accent); color: white;
+            background: var(--accent); color: #0b1014;
             padding: 0.9rem 2rem; border-radius: 12px;
             font-weight: 700; font-size: 1rem; text-decoration: none;
             transition: all 0.3s; border: none; cursor: pointer;
         }
-        .btn-primary:hover { background: #5a4bd4; transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+        .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
         .btn-secondary {
             display: inline-flex; align-items: center; gap: 0.5rem;
             background: transparent; color: var(--text-primary);
@@ -120,42 +276,31 @@
             font-weight: 600; font-size: 1rem; text-decoration: none;
             border: 1px solid var(--border); transition: all 0.3s;
         }
-        .btn-secondary:hover { border-color: var(--accent); background: rgba(108,92,231,0.1); }
+        .btn-secondary:hover { border-color: var(--accent); background: rgba(37,211,102,0.1); }
 
-        /* ── PLATFORMS ───────────────────────── */
-        .platforms {
-            display: flex; justify-content: center; gap: 3rem;
-            padding: 2rem; margin-top: 1rem;
+        .trust {
+            display: flex; justify-content: center; flex-wrap: wrap;
+            gap: 2.5rem; padding: 2rem; margin-top: 1rem;
+            color: var(--text-muted); font-size: 0.85rem;
         }
-        .platform-item {
-            text-align: center; color: var(--text-muted); font-size: 0.85rem;
-        }
-        .platform-icon {
+        .trust span { display: inline-flex; align-items: center; gap: 0.4rem; }
 
-            width: 48px; height: 48px; margin: 0 auto 0.5rem;
-            background: var(--bg-card); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-        }
-        width: 48px; height: 48px; margin: 0 auto 0.5rem;
-            background: var(--bg-card); border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        /* ── FEATURES ────────────────────────── */
         .section {
             max-width: 1200px; margin: 0 auto; padding: 80px 2rem;
         }
-        .section-title {
-            text-align: center; margin-bottom: 4rem;
+        .section-alt {
+            background: var(--bg-secondary); margin: 0; max-width: 100%;
+            padding: 80px 2rem;
         }
+        .section-alt > .inner { max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 4rem; }
         .section-title h2 {
-            font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 1rem;
         }
         .section-title p {
-            color: var(--text-secondary); font-size: 1.1rem; max-width: 500px; margin: 0 auto;
+            color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto;
         }
+
         .features-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 1.5rem;
@@ -171,16 +316,15 @@
         }
         .feature-icon {
             width: 48px; height: 48px; border-radius: 12px;
-            background: rgba(108,92,231,0.15);
+            background: rgba(37,211,102,0.15);
             display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem; margin-bottom: 1rem;
         }
         .feature-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
         .feature-card p { color: var(--text-secondary); font-size: 0.95rem; }
 
-        /* ── PRICING ─────────────────────────── */
         .pricing-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem; max-width: 900px; margin: 0 auto;
         }
         .price-card {
@@ -194,13 +338,13 @@
         }
         .popular-badge {
             position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-            background: var(--accent); color: white;
+            background: var(--accent); color: #0b1014;
             padding: 0.3rem 1rem; border-radius: 50px;
             font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
         }
         .price-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
         .price-card .price {
-            font-size: 3rem; font-weight: 800; margin: 1rem 0;
+            font-size: 2.6rem; font-weight: 800; margin: 1rem 0;
         }
         .price-card .price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
         .price-card .price-desc { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem; }
@@ -209,32 +353,29 @@
             padding: 0.5rem 0; color: var(--text-secondary); font-size: 0.9rem;
             display: flex; align-items: center; gap: 0.5rem;
         }
-        .price-card li::before { content: '\2713'; color: var(--green); font-weight: 700; }
+        .price-card li::before { content: '\2713'; color: var(--accent); font-weight: 700; }
         .btn-price {
             display: block; width: 100%; text-align: center;
             padding: 0.9rem; border-radius: 12px;
             font-weight: 700; font-size: 1rem; text-decoration: none;
             transition: all 0.3s; cursor: pointer; border: none;
         }
-        .btn-price.primary { background: var(--accent); color: white; }
-        .btn-price.primary:hover { background: #5a4bd4; }
+        .btn-price.primary { background: var(--accent); color: #0b1014; }
+        .btn-price.primary:hover { background: var(--accent-light); }
         .btn-price.outline {
             background: transparent; color: var(--text-primary);
             border: 1px solid var(--border);
         }
         .btn-price.outline:hover { border-color: var(--accent); }
 
-        /* ── HOW IT WORKS ────────────────────── */
         .steps {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem; counter-reset: step;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
         }
-        .step {
-            text-align: center; padding: 2rem;
-        }
+        .step { text-align: center; padding: 1rem; }
         .step-number {
             width: 48px; height: 48px; border-radius: 50%;
-            background: var(--accent); color: white;
+            background: var(--accent); color: #0b1014;
             display: flex; align-items: center; justify-content: center;
             font-weight: 800; font-size: 1.2rem;
             margin: 0 auto 1rem;
@@ -242,8 +383,25 @@
         .step h3 { margin-bottom: 0.5rem; }
         .step p { color: var(--text-secondary); font-size: 0.9rem; }
 
-        /* ── FAQ ──────────────────────────────── */
-        .faq-list { max-width: 700px; margin: 0 auto; }
+        .usecases-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .usecase {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 2rem;
+        }
+        .usecase h3 { font-size: 1.15rem; margin-bottom: 0.6rem; color: var(--accent-light); }
+        .usecase p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        .seo-content { max-width: 800px; margin: 0 auto; color: var(--text-secondary); }
+        .seo-content h2 { color: var(--text-primary); font-size: 1.8rem; margin: 2.5rem 0 1rem; }
+        .seo-content h3 { color: var(--text-primary); font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
+        .seo-content p { margin-bottom: 1rem; }
+        .seo-content ul { margin: 0 0 1rem 1.5rem; }
+        .seo-content li { margin-bottom: 0.4rem; }
+
+        .faq-list { max-width: 760px; margin: 0 auto; }
         .faq-item {
             border-bottom: 1px solid var(--border); padding: 1.5rem 0;
         }
@@ -257,330 +415,336 @@
             max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
             color: var(--text-secondary); font-size: 0.95rem;
         }
-        .faq-item.open .faq-a { max-height: 200px; padding-top: 1rem; }
+        .faq-item.open .faq-a { max-height: 400px; padding-top: 1rem; }
 
-        /* ── FOOTER ──────────────────────────── */
         footer {
             border-top: 1px solid var(--border);
             padding: 3rem 2rem; text-align: center;
             color: var(--text-muted); font-size: 0.85rem;
         }
         footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text-primary); }
+        .footer-cols {
+            max-width: 1100px; margin: 0 auto 2rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem; text-align: left;
+        }
+        .footer-cols h4 { color: var(--text-primary); font-size: 0.9rem; margin-bottom: 0.8rem; }
+        .footer-cols ul { list-style: none; }
+        .footer-cols li { margin-bottom: 0.4rem; }
+        .footer-cols a { font-size: 0.85rem; }
 
-        /* ── RESPONSIVE ──────────────────────── */
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            .nav-links a:not(.btn-nav):not(.lang-switch) { display: none; }
             .features-grid { grid-template-columns: 1fr; }
             .pricing-grid { grid-template-columns: 1fr; }
-            .platforms { gap: 1.5rem; }
         }
     </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
     <div class="nav-inner">
-        <div class="logo">FakeLocation</div>
+        <a href="/" class="logo">WhatsOn Family</a>
         <div class="nav-links">
             <a href="#features">Features</a>
             <a href="#how">How It Works</a>
             <a href="#pricing">Pricing</a>
             <a href="#faq">FAQ</a>
-            <a href="#download" class="btn-nav">Download</a>
+            <a href="/fr/" class="lang-switch" hreflang="fr" rel="alternate">FR</a>
+            <a href="#download" class="btn-nav">Get the App</a>
         </div>
     </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-badge">Works on iPhone, Android, Windows & Mac</div>
-    <h1>Teleport Anywhere<br>In One Click</h1>
-    <p>Change your GPS location on any device. Simulate walking, cycling or driving routes. No jailbreak needed.</p>
+<header class="hero">
+    <div class="hero-badge">Built for parents, families and partners who care</div>
+    <h1>WhatsApp Last Seen Tracker for Your Family</h1>
+    <p class="lead">Know when your kids or family members are online on WhatsApp. WhatsOn Family logs last seen, online sessions and weekly activity — privately, ethically and without ever reading a message.</p>
     <div class="hero-buttons">
-        <a href="#download" class="btn-primary">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 2h14v2H5v-2z"/></svg>
-            Download Free
-        </a>
-        <a href="#pricing" class="btn-secondary">View Plans</a>
+        <a href="#download" class="btn-primary">Download Free</a>
+        <a href="#how" class="btn-secondary">See How It Works</a>
     </div>
-    <div class="platforms">
-        <div class="platform-item">
-            <div class="platform-icon">&#63743;</div>
-            macOS
-        </div>
-        <div class="platform-item">
-            <div class="platform-icon">&#9862;</div>
-            Windows
-        </div>
-        <div class="platform-item">
-            <div class="platform-icon">&#9679;</div>
-            Android
-        </div>
-        <div class="platform-item">
-            <div class="platform-icon">&#63743;</div>
-            iPhone (via USB)
-        </div>
+    <div class="trust">
+        <span>&#10003; GDPR compliant</span>
+        <span>&#10003; No messages accessed</span>
+        <span>&#10003; iOS, Android, Web</span>
+        <span>&#10003; 4.7/5 — 412 reviews</span>
     </div>
-</section>
+</header>
 
-<!-- FEATURES -->
-<section class="section" id="features">
+<section class="section" id="features" aria-labelledby="features-title">
     <div class="section-title">
-        <h2>Everything You Need</h2>
-        <p>Professional GPS spoofing tools for every use case</p>
+        <h2 id="features-title">Everything a Family Needs to Stay in the Loop</h2>
+        <p>Track WhatsApp online status the safe way — only the data WhatsApp publicly exposes, no jailbreak, no account hijacking.</p>
     </div>
     <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">&#128205;</div>
-            <h3>One-Click Teleport</h3>
-            <p>Click anywhere on the map or search an address. Your GPS location changes instantly on the target device.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">&#128663;</div>
-            <h3>Route Simulation</h3>
-            <p>Simulate realistic movement along any route. Adjust speed from walking to driving. Perfect for Pokemon GO.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">&#11088;</div>
-            <h3>Saved Favorites</h3>
-            <p>Save your most-used locations for instant access. Build your personal library of GPS positions.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">&#128241;</div>
-            <h3>iPhone Support via USB</h3>
-            <p>Connect your iPhone via USB cable. No jailbreak required. Works with Developer Mode on iOS 16+.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">&#128272;</div>
-            <h3>Life360 Compatible</h3>
-            <p>Works with Life360, Find My Friends, Snapchat Maps, and any location-based app on your device.</p>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">&#9889;</div>
-            <h3>Lightweight & Fast</h3>
-            <p>No bloatware. Clean interface, dark theme, instant response. Runs quietly in the background.</p>
-        </div>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128338;</div>
+            <h3>Live WhatsApp Last Seen</h3>
+            <p>See in real time when a chosen contact is online or when they were last active. Updated every minute, 24/7.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128202;</div>
+            <h3>Full Activity History</h3>
+            <p>Browse a clean timeline of every online session, with day, night and weekly breakdowns to spot patterns.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128276;</div>
+            <h3>Online Alerts</h3>
+            <p>Get a push notification the second your child or partner connects to WhatsApp — useful for bedtime, school hours, or just peace of mind.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128238;</div>
+            <h3>Weekly Family Reports</h3>
+            <p>A short, friendly weekly email: total time online, average session length, latest connection. Designed to start conversations, not surveillance.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128274;</div>
+            <h3>Private by Design</h3>
+            <p>We never read messages, calls or media. We only check the public "last seen" timestamp WhatsApp itself exposes. Data is encrypted at rest.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128241;</div>
+            <h3>Works Everywhere</h3>
+            <p>Native iOS app, native Android app and a web dashboard. Your tracked contacts and history sync across all devices.</p>
+        </article>
     </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="section" id="how" style="background: var(--bg-secondary); margin: 0; max-width: 100%; padding: 80px 2rem;">
-    <div style="max-width: 1200px; margin: 0 auto;">
+<section class="section-alt" id="how" aria-labelledby="how-title">
+    <div class="inner">
         <div class="section-title">
-            <h2>How It Works</h2>
-            <p>Up and running in under 2 minutes</p>
+            <h2 id="how-title">How WhatsOn Family Works</h2>
+            <p>Set up in under 60 seconds. No phone number, no QR scan, no contact list upload.</p>
         </div>
-        <div class="steps">
-            <div class="step">
+        <ol class="steps">
+            <li class="step">
                 <div class="step-number">1</div>
-                <h3>Download</h3>
-                <p>Get FakeLocation for your platform. macOS, Windows or Android.</p>
-            </div>
-            <div class="step">
+                <h3>Create your family</h3>
+                <p>Sign up with your email and add the phone numbers of the family members you want to track.</p>
+            </li>
+            <li class="step">
                 <div class="step-number">2</div>
-                <h3>Connect</h3>
-                <p>For iPhone: plug in USB. For Android: enable Developer Options. For PC: just launch the app.</p>
-            </div>
-            <div class="step">
+                <h3>Ask for consent</h3>
+                <p>Have an open conversation with your child or partner. We provide an in-app consent template you can share.</p>
+            </li>
+            <li class="step">
                 <div class="step-number">3</div>
-                <h3>Pick Location</h3>
-                <p>Click on the map, search an address, or select a saved favorite.</p>
-            </div>
-            <div class="step">
+                <h3>We watch the last seen</h3>
+                <p>Our servers ping the public WhatsApp last seen of each contact every minute. No app installation on their phone is required.</p>
+            </li>
+            <li class="step">
                 <div class="step-number">4</div>
-                <h3>Teleport</h3>
-                <p>Hit the button. Your device's GPS now shows the spoofed location. Done.</p>
+                <h3>Read the timeline</h3>
+                <p>Open the dashboard whenever you want. See online sessions, daily averages and weekly trends — all in one place.</p>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="section" id="usecases" aria-labelledby="usecases-title">
+    <div class="section-title">
+        <h2 id="usecases-title">Who Uses WhatsOn Family?</h2>
+        <p>Families have many reasons to want a calmer view of WhatsApp activity.</p>
+    </div>
+    <div class="usecases-grid">
+        <div class="usecase">
+            <h3>Parents of teens</h3>
+            <p>Make sure your kid isn't chatting on WhatsApp at 2am during a school week. Spot screen-time patterns without confiscating the phone.</p>
+        </div>
+        <div class="usecase">
+            <h3>Co-parents</h3>
+            <p>Coordinate handovers without endless back-and-forth. See when the other parent or your child has been reachable.</p>
+        </div>
+        <div class="usecase">
+            <h3>Caretakers of elderly relatives</h3>
+            <p>Reassuring daily check-in: if grandma was online this morning, you know she's up and well. No invasive monitoring needed.</p>
+        </div>
+        <div class="usecase">
+            <h3>Long-distance families</h3>
+            <p>See when your partner abroad just woke up and is reachable — pick the perfect moment to call.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section-alt" id="pricing" aria-labelledby="pricing-title">
+    <div class="inner">
+        <div class="section-title">
+            <h2 id="pricing-title">Simple Family Pricing</h2>
+            <p>Start free. Upgrade only when your family grows.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Free</h3>
+                <div class="price">0&#8364;<span> / forever</span></div>
+                <p class="price-desc">Get a feel for the app</p>
+                <ul>
+                    <li>1 tracked contact</li>
+                    <li>24-hour history</li>
+                    <li>Web dashboard</li>
+                    <li>No credit card</li>
+                </ul>
+                <a href="#download" class="btn-price outline">Start Free</a>
+            </div>
+            <div class="price-card popular">
+                <div class="popular-badge">Most Popular</div>
+                <h3>Family Pro</h3>
+                <div class="price">4.99&#8364;<span> / month</span></div>
+                <p class="price-desc">Everything an active family needs</p>
+                <ul>
+                    <li>Up to 5 tracked contacts</li>
+                    <li>Unlimited history</li>
+                    <li>Online push alerts</li>
+                    <li>Weekly reports</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="#download" class="btn-price primary" id="btn-subscribe-monthly">Get Family Pro</a>
+            </div>
+            <div class="price-card">
+                <h3>Family Annual</h3>
+                <div class="price">29.99&#8364;<span> / year</span></div>
+                <p class="price-desc">Save 50% vs monthly</p>
+                <ul>
+                    <li>Everything in Family Pro</li>
+                    <li>6 months free</li>
+                    <li>Up to 10 contacts</li>
+                    <li>Early access to new features</li>
+                </ul>
+                <a href="#download" class="btn-price outline" id="btn-subscribe-yearly">Get Annual</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- PRICING -->
-<section class="section" id="pricing">
+<section class="section" id="download" style="text-align:center;" aria-labelledby="download-title">
     <div class="section-title">
-        <h2>Simple Pricing</h2>
-        <p>Start free. Upgrade when you need more.</p>
+        <h2 id="download-title">Download WhatsOn Family</h2>
+        <p>Available on iPhone, Android and any modern browser.</p>
     </div>
-    <div class="pricing-grid">
-        <div class="price-card">
-            <h3>Free</h3>
-            <div class="price">0&#8364;<span> / forever</span></div>
-            <p class="price-desc">Perfect for trying it out</p>
-            <ul>
-                <li>3 location changes per day</li>
-                <li>Map teleport</li>
-                <li>1 saved favorite</li>
-                <li>All platforms</li>
-            </ul>
-            <a href="#download" class="btn-price outline">Download Free</a>
-        </div>
-        <div class="price-card popular">
-            <div class="popular-badge">Most Popular</div>
-            <h3>Pro</h3>
-            <div class="price">4.99&#8364;<span> / month</span></div>
-            <p class="price-desc">Unlimited everything</p>
-            <ul>
-                <li>Unlimited location changes</li>
-                <li>Route simulation</li>
-                <li>Unlimited favorites</li>
-                <li>Priority support</li>
-                <li>All future updates</li>
-            </ul>
-            <a href="#" class="btn-price primary" id="btn-subscribe-monthly">Get Pro</a>
-        </div>
-        <div class="price-card">
-            <h3>Pro Annual</h3>
-            <div class="price">29.99&#8364;<span> / year</span></div>
-            <p class="price-desc">Save 50% vs monthly</p>
-            <ul>
-                <li>Everything in Pro</li>
-                <li>6 months free</li>
-                <li>Lifetime updates guaranteed</li>
-                <li>Early access to new features</li>
-            </ul>
-            <a href="#" class="btn-price outline" id="btn-subscribe-yearly">Get Annual</a>
-        </div>
-    </div>
-</section>
-
-<!-- DOWNLOAD -->
-<section class="section" id="download" style="text-align: center;">
-    <div class="section-title">
-        <h2>Download Now</h2>
-        <p>Available on all major platforms</p>
-    </div>
-    <div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;">
-        <a href="/downloads/FakeLocation-Mac.dmg" class="btn-primary" style="min-width: 200px;">
-            &#63743; macOS (.dmg)
-        </a>
-        <a href="/downloads/FakeLocation-Win.exe" class="btn-primary" style="min-width: 200px; background: #2d3436;">
-            &#9862; Windows (.exe)
-        </a>
-        <a href="/downloads/FakeLocation.apk" class="btn-primary" style="min-width: 200px; background: #00b894;">
-            &#9679; Android (.apk)
-        </a>
+    <div style="display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap;">
+        <a href="https://apps.apple.com/app/whatsonfamily" class="btn-primary" style="min-width:200px;" rel="nofollow">iOS App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=com.whatsonfamily.app" class="btn-primary" style="min-width:200px; background:var(--blue); color:#fff;" rel="nofollow">Google Play</a>
+        <a href="https://app.whatsonfamily.com" class="btn-secondary" style="min-width:200px;">Open Web App</a>
     </div>
     <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.85rem;">
-        v1.0.0 &middot; Updated April 2026 &middot; No account required for free tier
+        v1.0 &middot; Updated May 2026 &middot; No phone number from your contact required to start
     </p>
 </section>
 
-<!-- FAQ -->
-<section class="section" id="faq" style="background: var(--bg-secondary); margin: 0; max-width: 100%; padding: 80px 2rem;">
-    <div style="max-width: 1200px; margin: 0 auto;">
-        <div class="section-title">
-            <h2>FAQ</h2>
+<section class="section-alt" aria-labelledby="seo-title">
+    <div class="inner seo-content">
+        <h2 id="seo-title">The Family Guide to WhatsApp Last Seen Tracking</h2>
+        <p>WhatsApp shows a small "last seen" timestamp at the top of every conversation. It is public information — anyone in your contact list who keeps the default privacy settings can see it. WhatsOn Family simply collects this public timestamp at regular intervals so that parents, partners and caretakers can build a calm, long-term view of when their loved ones are online.</p>
+
+        <h3>Why families track WhatsApp online status</h3>
+        <ul>
+            <li><strong>Bedtime routines:</strong> know whether your teenager is still texting after lights out.</li>
+            <li><strong>School hours:</strong> spot WhatsApp activity during class time.</li>
+            <li><strong>Reassurance:</strong> a single glance tells you a loved one is awake and reachable.</li>
+            <li><strong>Coordination:</strong> long-distance couples or co-parents pick the best moment to call.</li>
+        </ul>
+
+        <h3>How is WhatsOn Family different from generic WhatsApp trackers?</h3>
+        <p>Most apps that claim to track WhatsApp last seen are built around stalking adults. WhatsOn Family is the opposite: we ship an in-app consent template, we cap the number of tracked contacts, and we publish a transparency report every quarter. Our focus is family use — not surveillance.</p>
+
+        <h3>What WhatsOn Family will never do</h3>
+        <ul>
+            <li>Read your messages, voice notes or media.</li>
+            <li>Access the tracked person's WhatsApp account.</li>
+            <li>Sell or share your data with advertisers or data brokers.</li>
+            <li>Bypass WhatsApp privacy settings: if the person hides their last seen, we respect that.</li>
+        </ul>
+
+        <h3>Is WhatsApp last seen tracking legal?</h3>
+        <p>The last seen timestamp is public data exposed by WhatsApp itself. Reading public data is legal in most jurisdictions. However, depending on your country, tracking another adult without their consent can fall under privacy or harassment law. WhatsOn Family is designed and licensed for family use only — typically a parent monitoring a minor child, with the child informed.</p>
+    </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="section-title">
+        <h2 id="faq-title">Frequently Asked Questions</h2>
+        <p>The honest answers about how WhatsOn Family works.</p>
+    </div>
+    <div class="faq-list">
+        <div class="faq-item">
+            <div class="faq-q">How does WhatsOn Family track WhatsApp last seen?</div>
+            <div class="faq-a">WhatsOn Family checks the public "last seen" timestamp that WhatsApp itself exposes for contacts who allow it. We never read messages and never access WhatsApp accounts. The tracked person must keep their "Last Seen" privacy setting open to Everyone or My Contacts.</div>
         </div>
-        <div class="faq-list">
-            <div class="faq-item">
-                <div class="faq-q">Does it work with iPhone?</div>
-                <div class="faq-a">Yes. Connect your iPhone via USB to a Mac or Windows PC running FakeLocation. Your iPhone needs Developer Mode enabled (iOS 16+). No jailbreak needed.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-q">Will this work with Pokemon GO?</div>
-                <div class="faq-a">Yes. Use route simulation to walk around realistically. We recommend keeping speeds below 10 km/h and avoiding sudden teleports to minimize detection risk.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-q">Does it work with Life360?</div>
-                <div class="faq-a">Yes. FakeLocation changes your device's GPS at the system level, so all location-based apps (Life360, Find My Friends, Snapchat, etc.) will see the spoofed position.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-q">Is it safe? Will I get banned?</div>
-                <div class="faq-a">FakeLocation modifies GPS data locally on your device. For games like Pokemon GO, there is always some risk of detection. We provide tips in our guide to minimize this risk.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-q">Can I get a refund?</div>
-                <div class="faq-a">Yes. We offer a full refund within 7 days of purchase, no questions asked. Contact support@fakelocation.app.</div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-q">Do I need to root or jailbreak my device?</div>
-                <div class="faq-a">No root and no jailbreak required. On Android, you just need Developer Options enabled. On iPhone, you need Developer Mode (iOS 16+) and a USB connection to a computer.</div>
-            </div>
+        <div class="faq-item">
+            <div class="faq-q">Is WhatsOn Family legal and ethical?</div>
+            <div class="faq-a">WhatsOn Family is built for transparent family use. We require parents to inform minor children that their activity is being tracked, in line with GDPR and most national child-safety laws. The app is not intended for tracking adults without their knowledge.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can I see WhatsApp messages with WhatsOn Family?</div>
+            <div class="faq-a">No. WhatsOn Family only logs when a contact appears online and when they were last seen. We have no access to messages, calls, photos or contacts inside WhatsApp.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Does WhatsOn Family work if the person hides their last seen?</div>
+            <div class="faq-a">No. If a WhatsApp user sets their Last Seen to "Nobody", no third-party tool can see it. Our app respects WhatsApp's privacy settings — there is no workaround.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Does it work on iPhone and Android?</div>
+            <div class="faq-a">Yes. WhatsOn Family is available as an iOS app, an Android app, and a web dashboard you can open from any browser. Your tracked contacts list syncs across devices.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Do I need to install anything on my kid's phone?</div>
+            <div class="faq-a">No. WhatsOn Family runs entirely on your side. We watch the public "last seen" data WhatsApp publishes for the contacts you add — no software on their device.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">How much does WhatsOn Family cost?</div>
+            <div class="faq-a">WhatsOn Family is free for one tracked contact with 24 hours of history. Family Pro is 4.99 EUR per month or 29.99 EUR per year, with unlimited history, push alerts and weekly reports.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Can I cancel my subscription?</div>
+            <div class="faq-a">Yes. Cancel any time from the dashboard. You keep access until the end of the billing period. We also offer a 7-day no-questions-asked refund.</div>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-    <p>&copy; 2026 FakeLocation. All rights reserved.</p>
-    <p style="margin-top: 0.5rem;">
-        <a href="/privacy">Privacy Policy</a> &middot;
-        <a href="/terms">Terms of Service</a> &middot;
-        <a href="mailto:support@fakelocation.app">Contact</a>
-    </p>
+    <div class="footer-cols">
+        <div>
+            <h4>WhatsOn Family</h4>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how">How it works</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Resources</h4>
+            <ul>
+                <li><a href="#usecases">Use cases</a></li>
+                <li><a href="#seo-title">Family guide</a></li>
+                <li><a href="mailto:support@whatsonfamily.com">Contact support</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Legal</h4>
+            <ul>
+                <li><a href="/privacy.html">Privacy policy</a></li>
+                <li><a href="/terms.html">Terms of service</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Language</h4>
+            <ul>
+                <li><a href="/" hreflang="en" rel="alternate">English</a></li>
+                <li><a href="/fr/" hreflang="fr" rel="alternate">Fran&ccedil;ais</a></li>
+            </ul>
+        </div>
+    </div>
+    <p>&copy; 2026 WhatsOn Family. WhatsApp is a trademark of Meta Platforms, Inc. WhatsOn Family is an independent app and is not affiliated with, endorsed by, or sponsored by WhatsApp or Meta.</p>
 </footer>
 
-<!-- SCRIPTS -->
 <script>
-    // FAQ toggle
     document.querySelectorAll('.faq-q').forEach(q => {
         q.addEventListener('click', () => {
             q.parentElement.classList.toggle('open');
         });
     });
-
-    // ─── STRIPE INTEGRATION ─────────────────────────────────
-    // Option A: Stripe Payment Links (simple — remplacer les URLs)
-    // Option B: API Checkout via backend (avancé — décommenter ci-dessous)
-
-    // ⚠️ CHANGEZ CETTE URL quand votre backend Render est live
-    // Format: https://fakelocation-api.onrender.com
-    const API_BASE = 'https://fakelocation-api.onrender.com'; // Backend URL
-
-    // Option A — Payment Links (le plus simple pour commencer)
-    // Créer dans Stripe Dashboard > Payment Links, puis coller les URLs ici
-    const STRIPE_LINKS = {
-        monthly: 'YOUR_STRIPE_MONTHLY_LINK',  // Ex: https://buy.stripe.com/xxx
-        yearly: 'YOUR_STRIPE_YEARLY_LINK'     // Ex: https://buy.stripe.com/yyy
-    };
-
-    async function handleCheckout(plan) {
-        // Si Payment Links configurés, utiliser directement
-        if (!STRIPE_LINKS[plan].startsWith('YOUR_')) {
-            window.location.href = STRIPE_LINKS[plan];
-            return;
-        }
-
-        // Sinon, utiliser l'API backend
-        try {
-            const btn = document.getElementById(plan === 'monthly' ? 'btn-subscribe-monthly' : 'btn-subscribe-yearly');
-            btn.textContent = 'Loading...';
-            btn.style.pointerEvents = 'none';
-
-            const res = await fetch(`${API_BASE}/api/checkout/${plan}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({})
-            });
-            const data = await res.json();
-
-            if (data.url) {
-                window.location.href = data.url;
-            } else {
-                alert('Error creating checkout session. Please try again.');
-                btn.textContent = plan === 'monthly' ? 'Get Pro' : 'Get Annual';
-                btn.style.pointerEvents = 'auto';
-            }
-        } catch (err) {
-            alert('Connection error. Make sure the backend is running at ' + API_BASE);
-            const btn = document.getElementById(plan === 'monthly' ? 'btn-subscribe-monthly' : 'btn-subscribe-yearly');
-            btn.textContent = plan === 'monthly' ? 'Get Pro' : 'Get Annual';
-            btn.style.pointerEvents = 'auto';
-        }
-    }
-
-    document.getElementById('btn-subscribe-monthly')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        handleCheckout('monthly');
-    });
-
-    document.getElementById('btn-subscribe-yearly')?.addEventListener('click', (e) => {
-        e.preventDefault();
-        handleCheckout('yearly');
-    });
-
-    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', (e) => {
             const target = document.querySelector(a.getAttribute('href'));

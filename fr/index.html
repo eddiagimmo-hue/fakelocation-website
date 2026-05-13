@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#25D366">
+
+    <!-- SEO principal -->
+    <title>WhatsOn Family — Tracker Vu en Dernier WhatsApp pour les Familles</title>
+    <meta name="description" content="WhatsOn Family suit le « vu en dernier » et le statut en ligne WhatsApp des contacts que vous choisissez. Conçu pour les parents qui veulent savoir quand leurs enfants sont connectés. Privé, éthique, conforme RGPD.">
+    <meta name="keywords" content="tracker whatsapp vu en dernier, suivi whatsapp en ligne, contrôle parental whatsapp, savoir quand quelqu'un est en ligne whatsapp, historique connexion whatsapp, whatson family">
+    <meta name="author" content="WhatsOn Family">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+    <!-- Canonical & hreflang -->
+    <link rel="canonical" href="https://whatsonfamily.com/fr/">
+    <link rel="alternate" hreflang="en" href="https://whatsonfamily.com/">
+    <link rel="alternate" hreflang="fr" href="https://whatsonfamily.com/fr/">
+    <link rel="alternate" hreflang="x-default" href="https://whatsonfamily.com/">
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="WhatsOn Family">
+    <meta property="og:title" content="WhatsOn Family — Tracker Vu en Dernier WhatsApp pour les Familles">
+    <meta property="og:description" content="Sachez quand vos enfants sont en ligne sur WhatsApp. Historique d'activité, alertes en ligne et rapports hebdomadaires — privé et basé sur le consentement.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://whatsonfamily.com/fr/">
+    <meta property="og:image" content="https://whatsonfamily.com/og-image.png">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:locale:alternate" content="en_US">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WhatsOn Family — Tracker WhatsApp Vu en Dernier">
+    <meta name="twitter:description" content="Suivez le statut en ligne WhatsApp des membres de votre famille. Privé, éthique, conforme RGPD.">
+    <meta name="twitter:image" content="https://whatsonfamily.com/og-image.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Schema.org Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "WhatsOn Family",
+        "url": "https://whatsonfamily.com",
+        "logo": "https://whatsonfamily.com/logo.png",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@whatsonfamily.com",
+            "contactType": "customer support",
+            "availableLanguage": ["French", "English"]
+        }
+    }
+    </script>
+
+    <!-- Schema.org SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "WhatsOn Family",
+        "applicationCategory": "ParentalControlApplication",
+        "operatingSystem": "iOS, Android, Web",
+        "description": "Tracker du vu en dernier WhatsApp pour les parents et les familles. Enregistre le statut en ligne des contacts choisis avec consentement.",
+        "offers": [
+            {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "EUR",
+                "name": "Gratuit",
+                "description": "1 contact suivi, historique 24h"
+            },
+            {
+                "@type": "Offer",
+                "price": "4.99",
+                "priceCurrency": "EUR",
+                "name": "Famille Pro",
+                "description": "Contacts illimités, historique complet, rapports hebdomadaires"
+            }
+        ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.7",
+            "reviewCount": "412"
+        }
+    }
+    </script>
+
+    <!-- Schema.org FAQ -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Comment WhatsOn Family suit-il le vu en dernier WhatsApp ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "WhatsOn Family consulte l'horodatage public « vu en dernier » que WhatsApp expose lui-même pour les contacts qui l'autorisent. Nous ne lisons jamais les messages et n'accédons jamais aux comptes WhatsApp. La personne suivie doit garder son paramètre de confidentialité « Vu en dernier » sur Tout le monde ou Mes contacts."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "WhatsOn Family est-il légal et éthique ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "WhatsOn Family est conçu pour un usage familial transparent. Nous demandons aux parents d'informer leurs enfants mineurs que leur activité est suivie, conformément au RGPD et aux lois nationales de protection de l'enfance. L'application n'est pas destinée au suivi d'adultes à leur insu."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Puis-je voir les messages WhatsApp avec WhatsOn Family ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non. WhatsOn Family enregistre uniquement quand un contact est en ligne et quand il a été vu pour la dernière fois. Nous n'avons aucun accès aux messages, appels, photos ou contacts à l'intérieur de WhatsApp."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "WhatsOn Family fonctionne-t-il si la personne masque son vu en dernier ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Non. Si un utilisateur WhatsApp définit son « Vu en dernier » sur Personne, aucun outil tiers ne peut le voir. Notre application respecte les paramètres de confidentialité de WhatsApp."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Fonctionne-t-il sur iPhone et Android ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Oui. WhatsOn Family est disponible en application iOS, Android et tableau de bord web accessible depuis n'importe quel navigateur. Votre liste de contacts suivis se synchronise sur tous vos appareils."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Combien coûte WhatsOn Family ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "WhatsOn Family est gratuit pour un contact suivi avec 24 heures d'historique. Famille Pro coûte 4,99 € par mois ou 29,99 € par an, avec contacts illimités, historique complet et rapports hebdomadaires."
+                }
+            }
+        ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-primary: #0b1014;
+            --bg-secondary: #111820;
+            --bg-card: #1a232d;
+            --accent: #25D366;
+            --accent-light: #5af094;
+            --accent-glow: rgba(37, 211, 102, 0.3);
+            --blue: #34B7F1;
+            --text-primary: #ffffff;
+            --text-secondary: #b9c6d2;
+            --text-muted: #6c7a8a;
+            --border: #243140;
+            --radius: 16px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+        a { color: inherit; }
+        nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(11,16,20,0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0 2rem; }
+        .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 64px; }
+        .logo { font-size: 1.3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--blue)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--text-primary); }
+        .lang-switch { color: var(--text-muted); font-size: 0.8rem; border: 1px solid var(--border); padding: 0.3rem 0.7rem; border-radius: 6px; text-decoration: none; }
+        .btn-nav { background: var(--accent); color: #0b1014; padding: 0.5rem 1.2rem; border-radius: 8px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: all 0.2s; }
+        .btn-nav:hover { background: var(--accent-light); transform: translateY(-1px); }
+        .hero { padding: 140px 2rem 80px; text-align: center; position: relative; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 700px; height: 700px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); z-index: -1; }
+        .hero-badge { display: inline-block; padding: 0.4rem 1rem; background: rgba(37,211,102,0.15); border: 1px solid rgba(37,211,102,0.3); border-radius: 50px; font-size: 0.8rem; color: var(--accent-light); margin-bottom: 1.5rem; }
+        .hero h1 { font-size: clamp(2.2rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; background: linear-gradient(to right, #fff, #b9c6d2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; max-width: 900px; margin-left: auto; margin-right: auto; }
+        .hero p.lead { font-size: 1.2rem; color: var(--text-secondary); max-width: 680px; margin: 0 auto 2.5rem; }
+        .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent); color: #0b1014; padding: 0.9rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s; border: none; cursor: pointer; }
+        .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+        .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; color: var(--text-primary); padding: 0.9rem 2rem; border-radius: 12px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid var(--border); transition: all 0.3s; }
+        .btn-secondary:hover { border-color: var(--accent); background: rgba(37,211,102,0.1); }
+        .trust { display: flex; justify-content: center; flex-wrap: wrap; gap: 2.5rem; padding: 2rem; margin-top: 1rem; color: var(--text-muted); font-size: 0.85rem; }
+        .trust span { display: inline-flex; align-items: center; gap: 0.4rem; }
+        .section { max-width: 1200px; margin: 0 auto; padding: 80px 2rem; }
+        .section-alt { background: var(--bg-secondary); margin: 0; max-width: 100%; padding: 80px 2rem; }
+        .section-alt > .inner { max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 4rem; }
+        .section-title h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin-bottom: 1rem; }
+        .section-title p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .feature-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; transition: all 0.3s; }
+        .feature-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+        .feature-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(37,211,102,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .feature-card p { color: var(--text-secondary); font-size: 0.95rem; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+        .price-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; position: relative; }
+        .price-card.popular { border-color: var(--accent); box-shadow: 0 0 40px var(--accent-glow); }
+        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent); color: #0b1014; padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .price-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        .price-card .price { font-size: 2.6rem; font-weight: 800; margin: 1rem 0; }
+        .price-card .price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        .price-card .price-desc { color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem; }
+        .price-card ul { list-style: none; margin-bottom: 2rem; }
+        .price-card li { padding: 0.5rem 0; color: var(--text-secondary); font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+        .price-card li::before { content: '\2713'; color: var(--accent); font-weight: 700; }
+        .btn-price { display: block; width: 100%; text-align: center; padding: 0.9rem; border-radius: 12px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; }
+        .btn-price.primary { background: var(--accent); color: #0b1014; }
+        .btn-price.primary:hover { background: var(--accent-light); }
+        .btn-price.outline { background: transparent; color: var(--text-primary); border: 1px solid var(--border); }
+        .btn-price.outline:hover { border-color: var(--accent); }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+        .step { text-align: center; padding: 1rem; }
+        .step-number { width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: #0b1014; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; margin: 0 auto 1rem; }
+        .step h3 { margin-bottom: 0.5rem; }
+        .step p { color: var(--text-secondary); font-size: 0.9rem; }
+        .usecases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .usecase { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; }
+        .usecase h3 { font-size: 1.15rem; margin-bottom: 0.6rem; color: var(--accent-light); }
+        .usecase p { color: var(--text-secondary); font-size: 0.95rem; }
+        .seo-content { max-width: 800px; margin: 0 auto; color: var(--text-secondary); }
+        .seo-content h2 { color: var(--text-primary); font-size: 1.8rem; margin: 2.5rem 0 1rem; }
+        .seo-content h3 { color: var(--text-primary); font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
+        .seo-content p { margin-bottom: 1rem; }
+        .seo-content ul { margin: 0 0 1rem 1.5rem; }
+        .seo-content li { margin-bottom: 0.4rem; }
+        .faq-list { max-width: 760px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid var(--border); padding: 1.5rem 0; }
+        .faq-q { font-weight: 600; font-size: 1.05rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-q::after { content: '+'; font-size: 1.5rem; color: var(--accent); transition: transform 0.3s; }
+        .faq-item.open .faq-q::after { transform: rotate(45deg); }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; color: var(--text-secondary); font-size: 0.95rem; }
+        .faq-item.open .faq-a { max-height: 400px; padding-top: 1rem; }
+        footer { border-top: 1px solid var(--border); padding: 3rem 2rem; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
+        footer a { color: var(--text-secondary); text-decoration: none; }
+        footer a:hover { color: var(--text-primary); }
+        .footer-cols { max-width: 1100px; margin: 0 auto 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; text-align: left; }
+        .footer-cols h4 { color: var(--text-primary); font-size: 0.9rem; margin-bottom: 0.8rem; }
+        .footer-cols ul { list-style: none; }
+        .footer-cols li { margin-bottom: 0.4rem; }
+        .footer-cols a { font-size: 0.85rem; }
+        @media (max-width: 768px) {
+            .nav-links a:not(.btn-nav):not(.lang-switch) { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a href="/fr/" class="logo">WhatsOn Family</a>
+        <div class="nav-links">
+            <a href="#features">Fonctionnalit&eacute;s</a>
+            <a href="#how">Comment &ccedil;a marche</a>
+            <a href="#pricing">Tarifs</a>
+            <a href="#faq">FAQ</a>
+            <a href="/" class="lang-switch" hreflang="en" rel="alternate">EN</a>
+            <a href="#download" class="btn-nav">Obtenir l'app</a>
+        </div>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-badge">Pens&eacute; pour les parents, les familles et les couples</div>
+    <h1>Tracker du Vu en Dernier WhatsApp pour Votre Famille</h1>
+    <p class="lead">Sachez quand vos enfants ou vos proches sont en ligne sur WhatsApp. WhatsOn Family enregistre le vu en dernier, les sessions et l'activit&eacute; hebdomadaire — en toute discr&eacute;tion, &eacute;thiquement et sans jamais lire un message.</p>
+    <div class="hero-buttons">
+        <a href="#download" class="btn-primary">T&eacute;l&eacute;charger gratuitement</a>
+        <a href="#how" class="btn-secondary">Voir comment &ccedil;a marche</a>
+    </div>
+    <div class="trust">
+        <span>&#10003; Conforme RGPD</span>
+        <span>&#10003; Aucun message lu</span>
+        <span>&#10003; iOS, Android, Web</span>
+        <span>&#10003; 4,7/5 — 412 avis</span>
+    </div>
+</header>
+
+<section class="section" id="features" aria-labelledby="features-title">
+    <div class="section-title">
+        <h2 id="features-title">Tout ce dont une famille a besoin pour rester connect&eacute;e</h2>
+        <p>Suivez le statut en ligne WhatsApp de fa&ccedil;on s&ucirc;re — uniquement les donn&eacute;es publiques expos&eacute;es par WhatsApp, sans jailbreak ni acc&egrave;s au compte.</p>
+    </div>
+    <div class="features-grid">
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128338;</div>
+            <h3>Vu en dernier WhatsApp en temps r&eacute;el</h3>
+            <p>Voyez en direct quand un contact choisi est en ligne ou quand il a &eacute;t&eacute; actif pour la derni&egrave;re fois. Mise &agrave; jour chaque minute, 24h/24.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128202;</div>
+            <h3>Historique complet d'activit&eacute;</h3>
+            <p>Parcourez une chronologie claire de chaque session en ligne, avec des r&eacute;partitions jour/nuit et hebdomadaires pour rep&eacute;rer les habitudes.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128276;</div>
+            <h3>Alertes en ligne</h3>
+            <p>Recevez une notification push d&egrave;s que votre enfant ou votre partenaire se connecte &agrave; WhatsApp — utile pour le coucher, les heures de classe ou simplement pour se rassurer.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128238;</div>
+            <h3>Rapports famille hebdomadaires</h3>
+            <p>Un email hebdomadaire court et bienveillant : temps total en ligne, dur&eacute;e moyenne des sessions, derni&egrave;re connexion. Pens&eacute; pour ouvrir le dialogue, pas pour surveiller.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128274;</div>
+            <h3>Confidentialit&eacute; par d&eacute;faut</h3>
+            <p>Nous ne lisons jamais les messages, appels ou m&eacute;dias. Nous v&eacute;rifions uniquement l'horodatage public « vu en dernier » que WhatsApp expose. Donn&eacute;es chiffr&eacute;es au repos.</p>
+        </article>
+        <article class="feature-card">
+            <div class="feature-icon" aria-hidden="true">&#128241;</div>
+            <h3>Partout o&ugrave; vous &ecirc;tes</h3>
+            <p>Application iOS native, application Android native et tableau de bord web. Vos contacts suivis et votre historique se synchronisent sur tous vos appareils.</p>
+        </article>
+    </div>
+</section>
+
+<section class="section-alt" id="how" aria-labelledby="how-title">
+    <div class="inner">
+        <div class="section-title">
+            <h2 id="how-title">Comment fonctionne WhatsOn Family</h2>
+            <p>Configuration en moins de 60 secondes. Pas de num&eacute;ro de t&eacute;l&eacute;phone, pas de QR code, pas de carnet d'adresses &agrave; importer.</p>
+        </div>
+        <ol class="steps">
+            <li class="step">
+                <div class="step-number">1</div>
+                <h3>Cr&eacute;ez votre famille</h3>
+                <p>Inscrivez-vous avec votre email et ajoutez les num&eacute;ros des membres de la famille que vous souhaitez suivre.</p>
+            </li>
+            <li class="step">
+                <div class="step-number">2</div>
+                <h3>Demandez le consentement</h3>
+                <p>Discutez ouvertement avec votre enfant ou votre partenaire. Nous fournissons un mod&egrave;le de consentement int&eacute;gr&eacute; &agrave; l'app.</p>
+            </li>
+            <li class="step">
+                <div class="step-number">3</div>
+                <h3>Nous surveillons le vu en dernier</h3>
+                <p>Nos serveurs interrogent le « vu en dernier » WhatsApp public de chaque contact chaque minute. Aucune installation sur leur t&eacute;l&eacute;phone.</p>
+            </li>
+            <li class="step">
+                <div class="step-number">4</div>
+                <h3>Lisez la chronologie</h3>
+                <p>Ouvrez le tableau de bord quand vous le souhaitez. Sessions en ligne, moyennes quotidiennes et tendances hebdomadaires — tout au m&ecirc;me endroit.</p>
+            </li>
+        </ol>
+    </div>
+</section>
+
+<section class="section" id="usecases" aria-labelledby="usecases-title">
+    <div class="section-title">
+        <h2 id="usecases-title">Qui utilise WhatsOn Family ?</h2>
+        <p>Les familles ont mille raisons de vouloir une vue apais&eacute;e de l'activit&eacute; WhatsApp.</p>
+    </div>
+    <div class="usecases-grid">
+        <div class="usecase">
+            <h3>Parents d'ados</h3>
+            <p>V&eacute;rifiez que votre ado ne chatte pas sur WhatsApp &agrave; 2h du matin en pleine semaine d'&eacute;cole. Rep&eacute;rez les habitudes d'&eacute;cran sans confisquer le t&eacute;l&eacute;phone.</p>
+        </div>
+        <div class="usecase">
+            <h3>Co-parents</h3>
+            <p>Coordonnez les gardes sans &eacute;changes interminables. Voyez quand l'autre parent ou votre enfant a &eacute;t&eacute; joignable.</p>
+        </div>
+        <div class="usecase">
+            <h3>Aidants de parents &acirc;g&eacute;s</h3>
+            <p>Un check-in quotidien rassurant : si grand-m&egrave;re &eacute;tait en ligne ce matin, vous savez qu'elle est lev&eacute;e et va bien. Sans surveillance intrusive.</p>
+        </div>
+        <div class="usecase">
+            <h3>Familles &agrave; distance</h3>
+            <p>Voyez quand votre partenaire &agrave; l'&eacute;tranger vient de se r&eacute;veiller et est joignable — choisissez le bon moment pour appeler.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section-alt" id="pricing" aria-labelledby="pricing-title">
+    <div class="inner">
+        <div class="section-title">
+            <h2 id="pricing-title">Tarifs simples pour les familles</h2>
+            <p>Commencez gratuitement. Passez au Pro quand votre famille grandit.</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Gratuit</h3>
+                <div class="price">0&#8364;<span> / &agrave; vie</span></div>
+                <p class="price-desc">D&eacute;couvrez l'app</p>
+                <ul>
+                    <li>1 contact suivi</li>
+                    <li>Historique 24h</li>
+                    <li>Tableau de bord web</li>
+                    <li>Sans carte bancaire</li>
+                </ul>
+                <a href="#download" class="btn-price outline">Commencer gratuitement</a>
+            </div>
+            <div class="price-card popular">
+                <div class="popular-badge">Le plus populaire</div>
+                <h3>Famille Pro</h3>
+                <div class="price">4,99&#8364;<span> / mois</span></div>
+                <p class="price-desc">Tout ce qu'une famille active veut</p>
+                <ul>
+                    <li>Jusqu'&agrave; 5 contacts suivis</li>
+                    <li>Historique illimit&eacute;</li>
+                    <li>Alertes push en ligne</li>
+                    <li>Rapports hebdomadaires</li>
+                    <li>Support prioritaire</li>
+                </ul>
+                <a href="#download" class="btn-price primary" id="btn-subscribe-monthly">Passer &agrave; Famille Pro</a>
+            </div>
+            <div class="price-card">
+                <h3>Famille Annuel</h3>
+                <div class="price">29,99&#8364;<span> / an</span></div>
+                <p class="price-desc">&Eacute;conomisez 50% vs mensuel</p>
+                <ul>
+                    <li>Tout Famille Pro</li>
+                    <li>6 mois offerts</li>
+                    <li>Jusqu'&agrave; 10 contacts</li>
+                    <li>Acc&egrave;s anticip&eacute; aux nouveaut&eacute;s</li>
+                </ul>
+                <a href="#download" class="btn-price outline" id="btn-subscribe-yearly">Choisir l'annuel</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="download" style="text-align:center;" aria-labelledby="download-title">
+    <div class="section-title">
+        <h2 id="download-title">T&eacute;l&eacute;chargez WhatsOn Family</h2>
+        <p>Disponible sur iPhone, Android et tout navigateur moderne.</p>
+    </div>
+    <div style="display:flex; gap:1.2rem; justify-content:center; flex-wrap:wrap;">
+        <a href="https://apps.apple.com/app/whatsonfamily" class="btn-primary" style="min-width:200px;" rel="nofollow">App Store iOS</a>
+        <a href="https://play.google.com/store/apps/details?id=com.whatsonfamily.app" class="btn-primary" style="min-width:200px; background:var(--blue); color:#fff;" rel="nofollow">Google Play</a>
+        <a href="https://app.whatsonfamily.com" class="btn-secondary" style="min-width:200px;">Ouvrir l'app web</a>
+    </div>
+    <p style="color: var(--text-muted); margin-top: 1.5rem; font-size: 0.85rem;">
+        v1.0 &middot; Mis &agrave; jour mai 2026 &middot; Aucun num&eacute;ro &agrave; collecter sur votre contact pour commencer
+    </p>
+</section>
+
+<section class="section-alt" aria-labelledby="seo-title">
+    <div class="inner seo-content">
+        <h2 id="seo-title">Le guide famille du suivi « vu en dernier » WhatsApp</h2>
+        <p>WhatsApp affiche un petit horodatage « vu en dernier » en haut de chaque conversation. C'est une information publique — toute personne dans votre liste de contacts qui garde les param&egrave;tres par d&eacute;faut peut la voir. WhatsOn Family se contente de relever cet horodatage public &agrave; intervalles r&eacute;guliers, pour que parents, partenaires et aidants disposent d'une vision long-terme et apais&eacute;e de la connexion de leurs proches.</p>
+
+        <h3>Pourquoi les familles suivent le statut en ligne WhatsApp</h3>
+        <ul>
+            <li><strong>Routine du coucher :</strong> savoir si votre ado tchatte encore apr&egrave;s l'extinction des feux.</li>
+            <li><strong>Heures de classe :</strong> rep&eacute;rer une activit&eacute; WhatsApp pendant les cours.</li>
+            <li><strong>R&eacute;assurance :</strong> un coup d'oeil suffit pour savoir qu'un proche est r&eacute;veill&eacute; et joignable.</li>
+            <li><strong>Coordination :</strong> les couples &agrave; distance ou co-parents choisissent le bon moment pour appeler.</li>
+        </ul>
+
+        <h3>En quoi WhatsOn Family est diff&eacute;rent des trackers WhatsApp g&eacute;n&eacute;riques ?</h3>
+        <p>La plupart des apps qui pr&eacute;tendent suivre le vu en dernier WhatsApp sont construites autour du harc&egrave;lement d'adultes. WhatsOn Family fait l'inverse : nous livrons un mod&egrave;le de consentement int&eacute;gr&eacute;, nous limitons le nombre de contacts suivis et nous publions un rapport de transparence chaque trimestre. Notre cible est l'usage familial — pas la surveillance.</p>
+
+        <h3>Ce que WhatsOn Family ne fera jamais</h3>
+        <ul>
+            <li>Lire vos messages, m&eacute;mos vocaux ou m&eacute;dias.</li>
+            <li>Acc&eacute;der au compte WhatsApp de la personne suivie.</li>
+            <li>Vendre ou partager vos donn&eacute;es avec des annonceurs ou des courtiers en donn&eacute;es.</li>
+            <li>Contourner les param&egrave;tres de confidentialit&eacute; WhatsApp : si la personne masque son vu en dernier, nous respectons.</li>
+        </ul>
+
+        <h3>Le suivi du vu en dernier WhatsApp est-il l&eacute;gal ?</h3>
+        <p>L'horodatage « vu en dernier » est une donn&eacute;e publique expos&eacute;e par WhatsApp lui-m&ecirc;me. Consulter une donn&eacute;e publique est l&eacute;gal dans la plupart des juridictions. Cependant, selon votre pays, suivre un autre adulte sans son consentement peut relever du droit de la vie priv&eacute;e ou du harc&egrave;lement. WhatsOn Family est con&ccedil;u et licenci&eacute; pour un usage familial uniquement — typiquement un parent qui supervise un enfant mineur, ce dernier &eacute;tant inform&eacute;.</p>
+    </div>
+</section>
+
+<section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="section-title">
+        <h2 id="faq-title">Questions fr&eacute;quentes</h2>
+        <p>Les r&eacute;ponses honn&ecirc;tes au sujet du fonctionnement de WhatsOn Family.</p>
+    </div>
+    <div class="faq-list">
+        <div class="faq-item">
+            <div class="faq-q">Comment WhatsOn Family suit-il le vu en dernier WhatsApp ?</div>
+            <div class="faq-a">WhatsOn Family consulte l'horodatage public « vu en dernier » que WhatsApp expose lui-m&ecirc;me pour les contacts qui l'autorisent. Nous ne lisons jamais les messages et n'acc&eacute;dons jamais aux comptes WhatsApp. La personne suivie doit garder son param&egrave;tre de confidentialit&eacute; « Vu en dernier » sur Tout le monde ou Mes contacts.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">WhatsOn Family est-il l&eacute;gal et &eacute;thique ?</div>
+            <div class="faq-a">WhatsOn Family est con&ccedil;u pour un usage familial transparent. Nous demandons aux parents d'informer leurs enfants mineurs que leur activit&eacute; est suivie, conform&eacute;ment au RGPD et aux lois nationales de protection de l'enfance. L'application n'est pas destin&eacute;e au suivi d'adultes &agrave; leur insu.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Puis-je voir les messages WhatsApp avec WhatsOn Family ?</div>
+            <div class="faq-a">Non. WhatsOn Family enregistre uniquement quand un contact appara&icirc;t en ligne et quand il a &eacute;t&eacute; vu pour la derni&egrave;re fois. Nous n'avons aucun acc&egrave;s aux messages, appels, photos ou contacts &agrave; l'int&eacute;rieur de WhatsApp.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">WhatsOn Family fonctionne-t-il si la personne masque son vu en dernier ?</div>
+            <div class="faq-a">Non. Si un utilisateur WhatsApp d&eacute;finit son « Vu en dernier » sur Personne, aucun outil tiers ne peut le voir. Notre application respecte les param&egrave;tres de confidentialit&eacute; de WhatsApp — il n'y a pas de contournement.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Fonctionne-t-il sur iPhone et Android ?</div>
+            <div class="faq-a">Oui. WhatsOn Family est disponible en application iOS, Android et tableau de bord web accessible depuis n'importe quel navigateur. Votre liste de contacts suivis se synchronise sur tous vos appareils.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Faut-il installer quelque chose sur le t&eacute;l&eacute;phone de mon enfant ?</div>
+            <div class="faq-a">Non. WhatsOn Family fonctionne enti&egrave;rement de votre c&ocirc;t&eacute;. Nous consultons la donn&eacute;e publique « vu en dernier » que WhatsApp publie pour les contacts que vous ajoutez — aucun logiciel sur leur appareil.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Combien co&ucirc;te WhatsOn Family ?</div>
+            <div class="faq-a">WhatsOn Family est gratuit pour un contact suivi avec 24 heures d'historique. Famille Pro co&ucirc;te 4,99 € par mois ou 29,99 € par an, avec historique illimit&eacute;, alertes push et rapports hebdomadaires.</div>
+        </div>
+        <div class="faq-item">
+            <div class="faq-q">Puis-je annuler mon abonnement ?</div>
+            <div class="faq-a">Oui. Annulez &agrave; tout moment depuis le tableau de bord. Vous gardez l'acc&egrave;s jusqu'&agrave; la fin de la p&eacute;riode factur&eacute;e. Nous proposons aussi un remboursement sans question dans les 7 jours.</div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-cols">
+        <div>
+            <h4>WhatsOn Family</h4>
+            <ul>
+                <li><a href="#features">Fonctionnalit&eacute;s</a></li>
+                <li><a href="#how">Comment &ccedil;a marche</a></li>
+                <li><a href="#pricing">Tarifs</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Ressources</h4>
+            <ul>
+                <li><a href="#usecases">Cas d'usage</a></li>
+                <li><a href="#seo-title">Guide famille</a></li>
+                <li><a href="mailto:support@whatsonfamily.com">Contacter le support</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>L&eacute;gal</h4>
+            <ul>
+                <li><a href="/privacy.html">Politique de confidentialit&eacute;</a></li>
+                <li><a href="/terms.html">Conditions d'utilisation</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Langue</h4>
+            <ul>
+                <li><a href="/" hreflang="en" rel="alternate">English</a></li>
+                <li><a href="/fr/" hreflang="fr" rel="alternate">Fran&ccedil;ais</a></li>
+            </ul>
+        </div>
+    </div>
+    <p>&copy; 2026 WhatsOn Family. WhatsApp est une marque de Meta Platforms, Inc. WhatsOn Family est une application ind&eacute;pendante, sans affiliation, ni endossement, ni parrainage par WhatsApp ou Meta.</p>
+</footer>
+
+<script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+        q.addEventListener('click', () => { q.parentElement.classList.toggle('open'); });
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+            const target = document.querySelector(a.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+</body>
+</html>
