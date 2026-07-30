@@ -49,8 +49,9 @@
           "local": { "type": "string" },
           "zone": {
             "type": "string",
+            "description": "Murs repérés selon la convention de l'opérateur : le mur A est celui par lequel on entre dans le volume, puis sens horaire B, C, D, un recoin ajoutant une lettre. Ne jamais convertir en points cardinaux.",
             "enum": [
-              "mur_nord", "mur_sud", "mur_est", "mur_ouest", "plafond", "plancher",
+              "mur_a", "mur_b", "mur_c", "mur_d", "mur_e", "mur_f", "plafond", "plancher",
               "plinthe", "porte", "bati_de_porte", "fenetre", "bati_de_fenetre",
               "volet", "persienne", "garde_corps", "radiateur", "canalisation",
               "escalier", "placard", "coffre", "autre"

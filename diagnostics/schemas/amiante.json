@@ -34,7 +34,7 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "id", "batiment", "niveau", "local", "liste", "composant", "composant_libre",
+          "id", "batiment", "niveau", "local", "mur", "hauteur", "liste", "composant", "composant_libre",
           "materiau", "presence", "mode_de_preuve", "etat_conservation", "recommandation",
           "quantite", "unite", "accessibilite", "prelevement_ref", "photos",
           "incertain", "motif_incertitude", "verbatim"
@@ -46,7 +46,19 @@
             "type": ["string", "null"],
             "description": "Sous-sol, RDC, R+1, combles, extérieur… tel que dicté"
           },
-          "local": { "type": "string", "description": "Nom du local tel que dicté (cuisine, chambre 2, cave, cage d'escalier…)" },
+          "local": {
+            "type": "string",
+            "description": "Volume tel que dicté. Un volume = une entrée, même s'il cumule plusieurs usages (« salle d'eau WC » = un seul volume, une seule ligne)."
+          },
+          "mur": {
+            "type": ["string", "null"],
+            "enum": ["A", "B", "C", "D", "E", "F", "G", "H", "plafond", "sol", "sans_objet", null],
+            "description": "Convention de repérage de l'opérateur : le mur A est celui par lequel on entre dans le volume, puis on tourne dans le sens des aiguilles d'une montre — B, C, D. Chaque recoin ajoute une lettre. Ne jamais convertir en points cardinaux."
+          },
+          "hauteur": {
+            "type": ["string", "null"],
+            "enum": ["partie_basse", "partie_moyenne", "partie_haute", "plafond", "sol", "traversant", null]
+          },
 
           "liste": {
             "type": "string",

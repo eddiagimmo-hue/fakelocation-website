@@ -3,6 +3,18 @@
 Le gain de fiabilité vient d'ici, pas du modèle. Une dictée balisée fait passer
 l'extraction de « à peu près » à « quasi déterministe ». Dix minutes d'habitude à prendre.
 
+## Conventions de l'opérateur
+
+Ces conventions sont encodées dans les schémas. Elles ne se redisent pas à chaque fois,
+il suffit de les respecter en dictant.
+
+- **Repérage des murs** : le **mur A** est celui par lequel on entre dans le volume, puis
+  on tourne **dans le sens des aiguilles d'une montre** — B, C, D. Chaque recoin ajoute une
+  lettre (E, F…). On dit « mur C », jamais « mur nord ».
+- **Volume** : un volume = une entrée de grille, même s'il cumule plusieurs usages.
+  « Salle d'eau WC » se dicte comme un seul volume, pas deux.
+- **Hauteur** : partie basse / partie moyenne / partie haute / plafond / sol.
+
 ## Règles générales
 
 - Commencer chaque visite par : **« Début de dossier, référence …, adresse …, module … »**
@@ -15,9 +27,15 @@ l'extraction de « à peu près » à « quasi déterministe ». Dix minutes d'h
 
 ## Amiante
 
-> « Nouvelle observation. Niveau : rez-de-chaussée. Local : cuisine. Liste B. Composant :
-> conduit de fluide. Matériau : fibrociment. Présence repérée. Contrôle visuel. État de
-> conservation : EP. Photo. Fin observation. »
+> « Nouvelle observation. Niveau : rez-de-chaussée. Volume : salle d'eau WC. Mur C, partie
+> haute. Liste B. Composant : conduit de ventilation, débouché en façade. Matériau :
+> fibrociment. Présence supposée. Contrôle visuel. État de conservation : EP. Deux mètres
+> linéaires. Photo. Fin observation. »
+
+Le **schéma de repérage** reste dessiné par l'opérateur. La dictée ne le produit pas, mais
+comme chaque observation porte son volume, son mur et sa hauteur, l'extraction sort une
+liste positionnée (« salle d'eau WC → OBS-003, mur C, partie haute ») qui se reporte
+mécaniquement sur le croquis. C'est du report, plus de la reconstitution de mémoire.
 
 Si prélèvement :
 
