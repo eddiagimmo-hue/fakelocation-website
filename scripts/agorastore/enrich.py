@@ -1,15 +1,9 @@
-import requests
 import re
 import json
-import time
 import sys
 
-import os
-_PROXY = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy') or 'http://127.0.0.1:34629'
-PROXIES = {'https': _PROXY}
-CA = '/root/.ccr/ca-bundle.crt'
+from net import fetch_text
 
-session = requests.Session()
 
 def extract_balanced(html, key):
     idx = html.find(f'"{key}"')
@@ -31,17 +25,7 @@ def extract_balanced(html, key):
 
 
 def fetch_detail(url):
-    for attempt in range(5):
-        try:
-            r = session.get(url, proxies=PROXIES, verify=CA, timeout=30,
-                             headers={'User-Agent': 'Mozilla/5.0'})
-            if r.status_code == 200:
-                return r.text
-            print(f'  HTTP {r.status_code} on {url}, retry {attempt}', file=sys.stderr)
-        except Exception as e:
-            print(f'  error {e} on {url}, retry {attempt}', file=sys.stderr)
-        time.sleep(2 * (attempt + 1))
-    return None
+    return fetch_text(url)
 
 
 CITY_RE_POSTAL = re.compile(r'"formattedAddress":"[^"]*?,\s*\d{5}\s+([^,"]+),\s*France"')
@@ -87,7 +71,6 @@ if __name__ == '__main__':
             cand['bids_count_confirmed'] = None
         cand['city'] = city
         enriched.append(cand)
-        time.sleep(0.4)
 
     with open('enriched.json', 'w', encoding='utf-8') as f:
         json.dump(enriched, f, ensure_ascii=False, indent=2)

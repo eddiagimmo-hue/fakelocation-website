@@ -4,10 +4,7 @@ import json
 import time
 import sys
 
-import os
-_PROXY = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy') or 'http://127.0.0.1:34629'
-PROXIES = {'https': _PROXY}
-CA = '/root/.ccr/ca-bundle.crt'
+from net import PROXIES, VERIFY
 
 session = requests.Session()
 
@@ -15,7 +12,7 @@ session = requests.Session()
 def _api(params):
     try:
         r = session.get('https://geo.api.gouv.fr/communes', params=params,
-                         proxies=PROXIES, verify=CA, timeout=20)
+                         proxies=PROXIES, verify=VERIFY, timeout=20)
         return r.json()
     except Exception as e:
         print(f'  error querying {params}: {e}', file=sys.stderr)

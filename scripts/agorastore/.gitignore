@@ -3,3 +3,5 @@ enriched.json
 final.json
 thumbnails/
 *.xlsx
+.httpcache/
+__pycache__/

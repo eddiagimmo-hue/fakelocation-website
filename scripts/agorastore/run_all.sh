@@ -8,6 +8,9 @@ set -euo pipefail
 
 cd "$(dirname "$0")"
 
+# Chaque execution repart de donnees fraiches.
+rm -rf .httpcache
+
 python3 -c "import requests, openpyxl, PIL" 2>/dev/null || {
   echo ">>> Installation des dependances manquantes"
   pip install --quiet requests openpyxl Pillow

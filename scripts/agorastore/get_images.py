@@ -1,18 +1,12 @@
-import requests
 import re
 import json
-import time
 import sys
 import os
 from PIL import Image
 from io import BytesIO
 
-import os
-_PROXY = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy') or 'http://127.0.0.1:34629'
-PROXIES = {'https': _PROXY}
-CA = '/root/.ccr/ca-bundle.crt'
+from net import fetch, fetch_text
 
-session = requests.Session()
 IMG_DIR = 'thumbnails'
 os.makedirs(IMG_DIR, exist_ok=True)
 
@@ -38,20 +32,6 @@ def extract_array(html, key):
     return json.loads(html[start:end])
 
 
-def fetch(url):
-    for attempt in range(5):
-        try:
-            r = session.get(url, proxies=PROXIES, verify=CA, timeout=30,
-                             headers={'User-Agent': 'Mozilla/5.0'})
-            if r.status_code == 200:
-                return r
-            print(f'  HTTP {r.status_code} on {url}, retry {attempt}', file=sys.stderr)
-        except Exception as e:
-            print(f'  error {e} on {url}, retry {attempt}', file=sys.stderr)
-        time.sleep(2 * (attempt + 1))
-    return None
-
-
 if __name__ == '__main__':
     with open('final.json', encoding='utf-8') as f:
         data = json.load(f)
@@ -63,22 +43,24 @@ if __name__ == '__main__':
             d['thumbnail_path'] = out_path
             print(f'[{i+1}/{len(data)}] {pid}: already downloaded', file=sys.stderr)
             continue
-        r = fetch(d['url'])
-        if r is None:
+        html = fetch_text(d['url'])
+        if html is None:
             d['thumbnail_path'] = None
             continue
-        images = extract_array(r.text, 'images')
+        images = extract_array(html, 'images')
         if not images:
-            print(f'[{i+1}/{len(data)}] {pid}: NO IMAGES FOUND', file=sys.stderr)
+            print(f'[{i+1}/{len(data)}] {pid}: aucune image', file=sys.stderr)
             d['thumbnail_path'] = None
             continue
         img_url = images[0].get('urlSmallSize') or images[0].get('url')
-        img_resp = fetch(img_url)
-        if img_resp is None:
+        # L'image finit en vignette sur disque : la mettre aussi en cache
+        # HTTP la stockerait deux fois pour rien.
+        img_bytes = fetch(img_url, cache=False)
+        if img_bytes is None:
             d['thumbnail_path'] = None
             continue
         try:
-            im = Image.open(BytesIO(img_resp.content)).convert('RGB')
+            im = Image.open(BytesIO(img_bytes)).convert('RGB')
             ratio = THUMB_WIDTH / im.width
             new_size = (THUMB_WIDTH, max(1, int(im.height * ratio)))
             im = im.resize(new_size)
@@ -90,7 +72,7 @@ if __name__ == '__main__':
         except Exception as e:
             print(f'[{i+1}/{len(data)}] {pid}: error processing image {e}', file=sys.stderr)
             d['thumbnail_path'] = None
-        time.sleep(0.3)
+
 
     missing = [d for d in data if not d.get('thumbnail_path')]
     print(f'Done. {len(missing)} missing thumbnails', file=sys.stderr)

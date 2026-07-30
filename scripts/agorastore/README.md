@@ -4,15 +4,68 @@ Produit `annonces_sans_enchere_agorastore.xlsx` : toutes les ventes immobilière
 terminées sur [agorastore-immo.fr](https://www.agorastore-immo.fr) depuis le
 1<sup>er</sup> janvier 2023 qui n'ont reçu **aucune enchère**.
 
-## Lancer
+## Lancer à la main
 
 ```bash
 ./run_all.sh
 ```
 
-Les dépendances (`requests`, `openpyxl`, `Pillow`) sont installées au besoin.
-Le proxy HTTPS est lu depuis `$HTTPS_PROXY` — rien à modifier quand son port
-change d'une session à l'autre.
+Aucune configuration : les dépendances (`requests`, `openpyxl`, `Pillow`) sont
+installées au besoin, et la connexion est directe. Compte environ 5 minutes.
+
+## Envoi automatique quotidien
+
+Le workflow [`agorastore-daily.yml`](../../.github/workflows/agorastore-daily.yml)
+exécute le pipeline **du lundi au vendredi à 18 h (heure de Paris)** sur les
+serveurs GitHub, puis envoie le classeur par e-mail. Rien à installer, aucune
+machine à laisser allumée.
+
+GitHub planifie en UTC, qui ne suit pas l'heure d'été. Le workflow se déclenche
+donc à 16 h **et** 17 h UTC, et abandonne aussitôt celle des deux qui ne
+correspond pas à 18 h à Paris — l'envoi reste à la même heure locale toute
+l'année.
+
+### Mise en service
+
+Dans **Settings → Secrets and variables → Actions** du dépôt, onglet
+*Secrets*, créer :
+
+| Secret | Valeur |
+|---|---|
+| `MAIL_TO` | l'adresse qui reçoit le classeur |
+| `SMTP_USER` | l'adresse d'envoi (ex. un compte Gmail) |
+| `SMTP_PASSWORD` | un **mot de passe d'application**, voir ci-dessous |
+
+Avec Gmail, `SMTP_PASSWORD` ne doit **pas** être le mot de passe du compte :
+Google le refuse en SMTP. Il faut générer un mot de passe d'application sur
+[myaccount.google.com/apppasswords](https://myaccount.google.com/apppasswords)
+(la validation en deux étapes doit être active sur le compte).
+
+Pour un autre fournisseur que Gmail, ajouter dans l'onglet *Variables* :
+`SMTP_HOST` et, si besoin, `SMTP_PORT` (587 par défaut, STARTTLS ; 465 bascule
+en SSL implicite).
+
+### Vérifier
+
+Onglet **Actions → Veille Agorastore → Run workflow** déclenche un envoi
+immédiat sans attendre 18 h. Le classeur est aussi déposé en pièce jointe du
+run pendant 30 jours, ce qui permet de le récupérer même si l'envoi SMTP échoue.
+
+### En local plutôt que sur GitHub
+
+Si vous préférez faire tourner le pipeline sur votre propre machine, via `cron`
+(elle doit être allumée à 18 h) :
+
+```cron
+0 18 * * 1-5  cd /chemin/vers/scripts/agorastore && ./run_all.sh && \
+              MAIL_TO=… SMTP_USER=… SMTP_PASSWORD=… python3 send_email.py
+```
+
+### Derrière un proxy d'entreprise
+
+`net.py` prend en compte `HTTPS_PROXY` et `REQUESTS_CA_BUNDLE` s'ils sont
+définis. Sans eux, la connexion est directe et les certificats système sont
+utilisés — le cas normal.
 
 ## Le classeur produit
 
@@ -37,6 +90,7 @@ Tri par population de la commune, décroissant.
 
 | Script | Rôle |
 |---|---|
+| `net.py` | accès réseau commun : proxy optionnel et cache disque |
 | `scrape.py` | parcourt les 6 catégories immobilières, retient `totalBids == 0` et `saleStatus == 2` (terminée) |
 | `enrich.py` | ouvre chaque fiche produit : prix de mise à prix, ville, re-vérification du nombre d'enchères |
 | `dedup.py` | un bien listé dans deux catégories ne doit produire qu'une ligne |
@@ -45,6 +99,12 @@ Tri par population de la commune, décroissant.
 | `get_surfaces.py` | surface bâtie et surface de parcelle |
 | `get_images.py` | télécharge et réduit les miniatures |
 | `make_xlsx.py` | assemble le classeur |
+| `send_email.py` | envoie le classeur en pièce jointe |
+
+Quatre étapes ont besoin de la même fiche produit. `net.py` les met en cache
+dans `.httpcache/`, ce qui ramène ~360 requêtes à ~90 : le site n'est
+interrogé qu'une fois par annonce et par exécution. `run_all.sh` vide ce cache
+au démarrage pour que chaque exécution reparte de données fraîches.
 
 ## Comment le site est interrogé
 

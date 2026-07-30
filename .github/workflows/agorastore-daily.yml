@@ -1,0 +1,67 @@
+name: Veille Agorastore
+
+# 18 h à Paris, du lundi au vendredi. GitHub planifie en UTC, qui ne suit pas
+# l'heure d'été : on déclenche donc aux deux heures possibles et l'étape
+# suivante abandonne celle qui ne correspond pas à 18 h locales.
+on:
+  schedule:
+    - cron: '0 16 * * 1-5'   # 18 h à Paris en heure d'été
+    - cron: '0 17 * * 1-5'   # 18 h à Paris en heure d'hiver
+  workflow_dispatch:          # bouton « Run workflow » pour un envoi immédiat
+
+jobs:
+  rapport:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Vérifier qu'il est bien 18 h à Paris
+        id: garde
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Déclenchement manuel, on continue."
+            echo "continuer=oui" >> "$GITHUB_OUTPUT"
+          elif [ "$(TZ=Europe/Paris date +%H)" = "18" ]; then
+            echo "continuer=oui" >> "$GITHUB_OUTPUT"
+          else
+            echo "Il est $(TZ=Europe/Paris date +%H)h à Paris, pas 18h — exécution ignorée."
+            echo "continuer=non" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.garde.outputs.continuer == 'oui'
+
+      - uses: actions/setup-python@v5
+        if: steps.garde.outputs.continuer == 'oui'
+        with:
+          python-version: '3.11'
+
+      - name: Installer les dépendances
+        if: steps.garde.outputs.continuer == 'oui'
+        run: pip install --quiet requests openpyxl Pillow
+
+      - name: Construire le classeur
+        if: steps.garde.outputs.continuer == 'oui'
+        run: ./run_all.sh
+        working-directory: scripts/agorastore
+
+      # Déposé avant l'envoi : si le SMTP échoue, le fichier reste
+      # téléchargeable depuis la page du run pendant 30 jours.
+      - name: Conserver le classeur
+        if: steps.garde.outputs.continuer == 'oui'
+        uses: actions/upload-artifact@v4
+        with:
+          name: annonces-sans-enchere
+          path: scripts/agorastore/annonces_sans_enchere_agorastore.xlsx
+          retention-days: 30
+
+      - name: Envoyer par e-mail
+        if: steps.garde.outputs.continuer == 'oui'
+        run: python3 send_email.py
+        working-directory: scripts/agorastore
+        env:
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_HOST: ${{ vars.SMTP_HOST }}
+          SMTP_PORT: ${{ vars.SMTP_PORT }}

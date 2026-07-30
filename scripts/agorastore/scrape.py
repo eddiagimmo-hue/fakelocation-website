@@ -1,14 +1,10 @@
-import requests
 import re
 import json
-import time
 import sys
 from datetime import datetime, timezone
 
-import os
-_PROXY = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy') or 'http://127.0.0.1:34629'
-PROXIES = {'https': _PROXY}
-CA = '/root/.ccr/ca-bundle.crt'
+from net import fetch_text
+
 BASE = 'https://www.agorastore-immo.fr'
 
 CATEGORIES = {
@@ -25,23 +21,14 @@ DATE_FROM = datetime(2023, 1, 1, tzinfo=timezone.utc)
 # quotidiennes prennent automatiquement en compte les ventes du jour.
 DATE_TO = datetime.now(timezone.utc).replace(hour=23, minute=59, second=59, microsecond=0)
 
-session = requests.Session()
 
 def fetch_page(slug, page):
-    url = f'{BASE}/ventes-immobilieres/{slug}'
-    for attempt in range(5):
-        try:
-            r = session.get(url, params={'tvt': 4, 'page': page}, proxies=PROXIES,
-                             verify=CA, timeout=30,
-                             headers={'User-Agent': 'Mozilla/5.0'})
-            if r.status_code == 200:
-                return r.text
-            else:
-                print(f'  HTTP {r.status_code} on {slug} page {page}, retry {attempt}', file=sys.stderr)
-        except Exception as e:
-            print(f'  error {e} on {slug} page {page}, retry {attempt}', file=sys.stderr)
-        time.sleep(2 * (attempt + 1))
-    raise RuntimeError(f'Failed to fetch {slug} page {page} after retries')
+    # tvt=4 = ventes terminées
+    url = f'{BASE}/ventes-immobilieres/{slug}?tvt=4&page={page}'
+    html = fetch_text(url)
+    if html is None:
+        raise RuntimeError(f'Échec du chargement de {slug} page {page}')
+    return html
 
 
 def extract_search_results(html):
@@ -106,7 +93,7 @@ def scrape_category(display_name, slug):
         page += 1
         if page > (total // size) + 2:
             break
-        time.sleep(0.5)
+
     return results
 
 

@@ -1,15 +1,9 @@
-import requests
 import re
 import json
-import time
 import sys
 
-import os
-_PROXY = os.environ.get('HTTPS_PROXY') or os.environ.get('https_proxy') or 'http://127.0.0.1:34629'
-PROXIES = {'https': _PROXY}
-CA = '/root/.ccr/ca-bundle.crt'
+from net import fetch_text
 
-session = requests.Session()
 
 SURFACE_LABELS_PRIORITY = [
     'Surface habitable',
@@ -55,17 +49,7 @@ def parse_m2(value):
 
 
 def fetch(url):
-    for attempt in range(5):
-        try:
-            r = session.get(url, proxies=PROXIES, verify=CA, timeout=30,
-                             headers={'User-Agent': 'Mozilla/5.0'})
-            if r.status_code == 200:
-                return r.text
-            print(f'  HTTP {r.status_code} on {url}, retry {attempt}', file=sys.stderr)
-        except Exception as e:
-            print(f'  error {e} on {url}, retry {attempt}', file=sys.stderr)
-        time.sleep(2 * (attempt + 1))
-    return None
+    return fetch_text(url)
 
 
 def get_surfaces(html):
@@ -133,7 +117,6 @@ if __name__ == '__main__':
             if re.search(r'surface|parcelle', lib, re.I):
                 all_labels_seen.add(lib)
         print(f'[{i+1}/{len(data)}] {d["city"]}: surface={surface} ({slabel}), parcelle={parcelle} ({plabel})', file=sys.stderr)
-        time.sleep(0.3)
 
     print('All surface-related labels seen:', sorted(all_labels_seen), file=sys.stderr)
 
