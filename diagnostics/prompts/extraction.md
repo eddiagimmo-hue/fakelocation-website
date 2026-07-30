@@ -48,6 +48,26 @@ RÈGLES ABSOLUES :
    dans la description du schéma. Laisse-les à null.
 ```
 
+## Abréviations dictées à reconnaître
+
+L'opérateur dicte couramment en abrégé. Ces équivalences sont à appliquer sans hésitation :
+
+| Dicté | Valeur |
+|---|---|
+| « ND », « non dégradé » | `non_degrade` |
+| « EU », « état d'usage » | `etat_d_usage` |
+| « D », « dégradé » | `degrade` |
+| « NV », « non visible », « masqué » | `non_visible` |
+| « mur A » … « mur H » | `A` … `H` — jamais converti en point cardinal |
+| « standard » | applique les valeurs par défaut du type de pièce |
+| « EP » | `evaluation_periodique` (amiante) |
+| « AC », « AC1 », « AC2 » | action corrective correspondante (amiante) |
+| « A1 », « A2 », « DGI » | résultat de point de contrôle gaz |
+
+Attention à la lettre **D** : selon le contexte elle vaut « dégradé » (état de conservation
+CREP) ou « mur D » (repérage). Trancher sur le champ en cours de dictée ; en cas de doute,
+marquer `incertain`.
+
 ## Prompt utilisateur
 
 ```

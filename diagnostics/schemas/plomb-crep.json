@@ -91,6 +91,7 @@
           },
           "etat_conservation_revetement": {
             "type": "string",
+            "description": "Trois états de dégradation — non dégradé (ND), état d'usage (EU), dégradé (D) — plus 'non_visible' quand le revêtement est masqué et ne peut être jugé. 'non_evalue' n'est pas une valeur de grille : il signale que rien n'a été dicté et déclenche une alerte en relecture. Les abréviations ND, EU et D dictées à l'oral sont reconnues.",
             "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue"]
           },
           "commentaire": { "type": ["string", "null"] },
