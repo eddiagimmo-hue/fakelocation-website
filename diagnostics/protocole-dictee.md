@@ -25,6 +25,38 @@ il suffit de les respecter en dictant.
   la dernière valeur et signale la correction.
 - Terminer par **« Fin de dossier »**.
 
+## Descriptif des volumes — à dicter en premier
+
+C'est le relevé qui alimente ensuite termites, amiante et plomb. Le principe : **on ne
+dicte que ce qui sort de l'ordinaire.**
+
+Deux familles de pièces, avec leurs valeurs par défaut (voir `defauts-volumes.json`) :
+
+| | Murs | Plafond | Sol |
+|---|---|---|---|
+| **Pièce sèche** (entrée, séjour, chambres, dégagement) | plâtre peinture | plâtre peinture | parquet |
+| **Pièce humide** (cuisine, salle de bain, salle d'eau, WC) | plâtre peinture | plâtre peinture | carrelage |
+
+Le mot-clé **« standard »** applique ces valeurs sans que tu aies à les énumérer :
+
+> « Nouveau volume. Chambre 1. Standard. Fenêtre en mur B, PVC, volet roulant PVC,
+> garde-corps métal peinture. Porte en mur A, bois peinture des deux côtés.
+> Fin volume. »
+
+Quand ça sort de l'ordinaire, tu le dis, et ta parole écrase le défaut :
+
+> « Nouveau volume. Séjour. Standard, sauf murs en toile de verre peinte.
+> Fin volume. »
+
+> « Nouveau volume. Cuisine. Standard, sauf faïence sur le mur C. Fin volume. »
+
+Deux garde-fous :
+
+- **Tout champ rempli par défaut est signalé en relecture** (`defauts_appliques`). Tu vois
+  d'un coup d'œil ce que tu n'as pas réellement prononcé.
+- **L'état de conservation des revêtements n'a jamais de valeur par défaut.** Il conditionne
+  le classement CREP, il doit être constaté et dicté.
+
 ## Amiante
 
 > « Nouvelle observation. Niveau : rez-de-chaussée. Volume : salle d'eau WC. Mur C, partie

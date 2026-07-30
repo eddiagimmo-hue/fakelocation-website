@@ -1,0 +1,53 @@
+{
+  "$comment": "Valeurs par défaut appliquées APRÈS l'extraction, en code, jamais par le modèle. Un champ n'est complété par défaut que s'il est resté null : une valeur dictée l'emporte toujours. Tout champ complété ici doit être ajouté à volume.defauts_appliques[] pour être signalé en relecture.",
+  "version": "2026-07-30",
+
+  "types_de_piece": {
+    "piece_seche": {
+      "libelle": "Entrée, séjour, salon, chambres, bureau, dégagement",
+      "mots_cles": ["entree", "sejour", "salon", "chambre", "bureau", "salle a manger", "degagement", "couloir", "palier"],
+      "defauts": {
+        "murs.materiau": "platre",
+        "murs.revetement": "peinture",
+        "plafond.materiau": "platre",
+        "plafond.revetement": "peinture",
+        "sol.nature": "parquet",
+        "sol.materiau": "bois",
+        "sol.revetement": "vernis"
+      }
+    },
+    "piece_humide": {
+      "libelle": "Cuisine, salle de bain, salle d'eau, WC",
+      "mots_cles": ["cuisine", "salle de bain", "salle d eau", "salle d'eau", "wc", "toilettes", "buanderie", "cellier"],
+      "defauts": {
+        "murs.materiau": "platre",
+        "murs.revetement": "peinture",
+        "plafond.materiau": "platre",
+        "plafond.revetement": "peinture",
+        "sol.nature": "carrelage",
+        "sol.materiau": "carrelage_faience",
+        "sol.revetement": "aucun"
+      }
+    }
+  },
+
+  "variantes_frequentes": {
+    "$comment": "Formules que l'opérateur emploie couramment et qui doivent être reconnues à la dictée, en écrasement du défaut.",
+    "toile de verre peinte": { "murs.materiau": "platre", "murs.revetement": "toile_de_verre_peinte" },
+    "papier peint": { "murs.revetement": "papier_peint" },
+    "faience": { "murs.materiau": "carrelage_faience", "murs.revetement": "aucun" },
+    "lambris": { "murs.revetement": "lambris" },
+    "moquette": { "sol.nature": "moquette", "sol.materiau": "textile", "sol.revetement": "aucun" },
+    "lino": { "sol.nature": "lino_ou_vinyle", "sol.materiau": "plastique", "sol.revetement": "aucun" },
+    "stratifie": { "sol.nature": "stratifie", "sol.materiau": "bois", "sol.revetement": "aucun" },
+    "tomettes": { "sol.nature": "tomettes", "sol.materiau": "terre_cuite", "sol.revetement": "aucun" },
+    "faux plafond": { "plafond.revetement": "dalle_de_faux_plafond" }
+  },
+
+  "regles": [
+    "Une valeur dictée écrase toujours le défaut. Le défaut ne comble que le vide.",
+    "Le mot « standard » dicté par l'opérateur applique le jeu de défauts du type de pièce sans qu'il ait à énumérer sol, murs et plafond.",
+    "Si le type de pièce n'a pas pu être déterminé, aucun défaut n'est appliqué et le volume est marqué incertain.",
+    "L'état de conservation des revêtements n'a JAMAIS de valeur par défaut : il conditionne le classement CREP et doit être constaté."
+  ]
+}

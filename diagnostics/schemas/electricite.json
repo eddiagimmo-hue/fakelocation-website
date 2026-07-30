@@ -23,8 +23,27 @@
     "installation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["annee_installation", "type_alimentation", "presence_agcp", "localisation_agcp", "presence_differentiel_30ma", "nb_tableaux", "nb_circuits", "presence_prise_de_terre", "valeur_prise_de_terre_ohms", "presence_piscine", "observations_generales"],
+      "required": ["nom_client", "numero_compteur", "installation_alimentee", "installation_plus_de_15_ans", "presence_salle_d_eau", "test_declenchement_30ma", "annee_installation", "type_alimentation", "presence_agcp", "localisation_agcp", "presence_differentiel_30ma", "nb_tableaux", "nb_circuits", "presence_prise_de_terre", "valeur_prise_de_terre_ohms", "presence_piscine", "observations_generales"],
       "properties": {
+        "nom_client": { "type": ["string", "null"] },
+        "numero_compteur": { "type": ["string", "null"] },
+        "installation_alimentee": {
+          "type": ["boolean", "null"],
+          "description": "Installation sous tension au moment de la visite. Conditionne les points non vérifiables."
+        },
+        "installation_plus_de_15_ans": {
+          "type": ["boolean", "null"],
+          "description": "Vrai par défaut : sans cela le diagnostic ne serait pas requis."
+        },
+        "presence_salle_d_eau": {
+          "type": ["boolean", "null"],
+          "description": "Déclenche les points de contrôle du domaine B.4."
+        },
+        "test_declenchement_30ma": {
+          "type": ["string", "null"],
+          "enum": ["declenche", "ne_declenche_pas", "non_testable", "sans_objet", null],
+          "description": "Résultat du test du dispositif différentiel 30 mA. 'ne_declenche_pas' est une anomalie."
+        },
         "annee_installation": { "type": ["integer", "null"] },
         "type_alimentation": { "type": ["string", "null"], "enum": ["monophase", "triphase", null] },
         "presence_agcp": { "type": ["boolean", "null"], "description": "Appareil général de commande et de protection." },

@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diagimmo.local/schemas/descriptif-volumes.json",
+  "title": "Descriptif des volumes — socle commun à tous les modules",
+  "description": "Descriptif du bien saisi une seule fois et repris ensuite dans les rapports termites, amiante et plomb. C'est le relevé le plus coûteux en saisie, donc le premier à automatiser. Chaque élément porte son matériau (= substrat au sens CREP) et son revêtement, ce qui permet d'alimenter directement les unités de diagnostic du CREP.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "volumes", "alertes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_dossier", "nom_client", "adresse", "date_visite", "operateur", "type_bien", "verbatim_non_classe"],
+      "properties": {
+        "reference_dossier": { "type": ["string", "null"] },
+        "nom_client": { "type": ["string", "null"] },
+        "adresse": { "type": ["string", "null"] },
+        "date_visite": { "type": ["string", "null"] },
+        "operateur": { "type": ["string", "null"] },
+        "type_bien": {
+          "type": ["string", "null"],
+          "enum": ["appartement", "maison_individuelle", "local_commercial", "cave_ou_annexe", "immeuble", null]
+        },
+        "verbatim_non_classe": { "type": ["string", "null"] }
+      }
+    },
+
+    "volumes": {
+      "type": "array",
+      "description": "Un volume = une pièce = une entrée. Un volume cumulant plusieurs usages reste un seul volume (« salle d'eau WC »).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "niveau", "nom_volume", "type_piece", "defauts_appliques", "murs", "plafond", "sol", "portes", "fenetres", "elements_divers", "photos", "incertain", "motif_incertitude", "verbatim"],
+        "properties": {
+          "id": { "type": "string", "description": "VOL-001, VOL-002…" },
+          "niveau": { "type": ["string", "null"], "description": "Sous-sol, RDC, R+1, combles…" },
+          "nom_volume": { "type": "string", "description": "Séjour, cuisine, chambre 1, salle d'eau WC, dégagement…" },
+          "type_piece": {
+            "type": ["string", "null"],
+            "enum": ["piece_seche", "piece_humide", "annexe", "exterieur", null],
+            "description": "Les deux grandes familles de l'opérateur, qui déterminent le jeu de valeurs par défaut (voir defauts-volumes.json). Pièce sèche : entrée, séjour, chambres, dégagement — sol parquet. Pièce humide : cuisine, salle de bain, salle d'eau, WC — sol carrelage. Dans les deux cas, murs et plafond en plâtre peinture."
+          },
+          "defauts_appliques": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Liste des champs remplis par valeur par défaut et NON dictés (ex. ['sol.nature','murs.revetement']). Ces champs doivent être signalés visuellement à la relecture : l'opérateur ne les a pas prononcés."
+          },
+
+          "murs": {
+            "type": "array",
+            "description": "Convention opérateur : le mur A est celui par lequel on entre, puis sens horaire B, C, D. Chaque recoin ajoute une lettre. Ne jamais convertir en points cardinaux.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["lettre", "materiau", "revetement", "etat_revetement", "commentaire"],
+              "properties": {
+                "lettre": { "type": "string", "enum": ["A", "B", "C", "D", "E", "F", "G", "H"] },
+                "materiau": { "$comment": "= substrat au sens CREP", "type": ["string", "null"], "enum": ["platre", "bois", "metal", "brique", "pierre", "beton", "ciment_enduit", "carrelage_faience", "papier", "plastique", "autre", "indetermine", null] },
+                "revetement": { "type": ["string", "null"], "enum": ["peinture", "papier_peint", "vernis", "lasure", "enduit", "revetement_plastique_epais", "toile_de_verre", "carrelage", "lambris", "aucun", "autre", "indetermine", null] },
+                "etat_revetement": { "type": ["string", "null"], "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue", null] },
+                "commentaire": { "type": ["string", "null"] }
+              }
+            }
+          },
+
+          "plafond": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["materiau", "revetement", "etat_revetement", "commentaire"],
+            "properties": {
+              "materiau": { "type": ["string", "null"], "enum": ["platre", "bois", "beton", "metal", "brique", "plastique", "autre", "indetermine", null] },
+              "revetement": { "type": ["string", "null"], "enum": ["peinture", "toile_de_verre_peinte", "papier_peint", "lambris", "enduit", "dalle_de_faux_plafond", "aucun", "autre", "indetermine", null] },
+              "etat_revetement": { "type": ["string", "null"], "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue", null] },
+              "commentaire": { "type": ["string", "null"] }
+            }
+          },
+
+          "sol": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["nature", "materiau", "revetement", "etat_revetement", "commentaire"],
+            "properties": {
+              "nature": {
+                "type": ["string", "null"],
+                "enum": ["parquet", "parquet_flottant", "stratifie", "carrelage", "tomettes", "moquette", "lino_ou_vinyle", "dalle_plastique", "beton", "beton_cire", "pierre", "autre", "indetermine", null],
+                "description": "Ce que l'opérateur dicte spontanément : « parquet », « carrelage »… Les champs materiau et revetement en découlent pour le CREP."
+              },
+              "materiau": { "type": ["string", "null"], "enum": ["bois", "carrelage_faience", "beton", "ciment_enduit", "terre_cuite", "pierre", "plastique", "textile", "autre", "indetermine", null] },
+              "revetement": { "type": ["string", "null"], "enum": ["vernis", "peinture", "lasure", "cire", "aucun", "autre", "indetermine", null] },
+              "etat_revetement": { "type": ["string", "null"], "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue", null] },
+              "commentaire": { "type": ["string", "null"] }
+            }
+          },
+
+          "portes": {
+            "type": "array",
+            "description": "Dormant et ouvrant sont décrits séparément, et distingués face intérieure / face extérieure, conformément à la pratique de saisie.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "type_porte", "mur", "dormant_interieur", "ouvrant_interieur", "dormant_exterieur", "ouvrant_exterieur", "commentaire", "verbatim"],
+              "properties": {
+                "id": { "type": "string" },
+                "type_porte": {
+                  "type": ["string", "null"],
+                  "enum": ["porte_interieure", "porte_exterieure", "porte_palliere", "porte_de_placard", "porte_de_service", "trappe", null]
+                },
+                "mur": { "type": ["string", "null"], "enum": ["A", "B", "C", "D", "E", "F", "G", "H", null] },
+                "dormant_interieur": { "$ref": "#/$defs/element_revetu" },
+                "ouvrant_interieur": { "$ref": "#/$defs/element_revetu" },
+                "dormant_exterieur": { "$ref": "#/$defs/element_revetu" },
+                "ouvrant_exterieur": { "$ref": "#/$defs/element_revetu" },
+                "commentaire": { "type": ["string", "null"] },
+                "verbatim": { "type": "string" }
+              }
+            }
+          },
+
+          "fenetres": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "type_ouverture", "mur", "nombre", "dormant_interieur", "ouvrant_interieur", "dormant_exterieur", "ouvrant_exterieur", "volet", "garde_corps", "type_vitrage", "commentaire", "verbatim"],
+              "properties": {
+                "id": { "type": "string" },
+                "type_ouverture": {
+                  "type": ["string", "null"],
+                  "enum": ["fenetre", "porte_fenetre", "baie_vitree", "fenetre_de_toit", "chassis_fixe", null]
+                },
+                "mur": {
+                  "type": ["string", "null"],
+                  "enum": ["A", "B", "C", "D", "E", "F", "G", "H", null],
+                  "description": "Mur sur lequel la fenêtre est positionnée."
+                },
+                "nombre": { "type": ["integer", "null"] },
+                "dormant_interieur": { "$ref": "#/$defs/element_revetu" },
+                "ouvrant_interieur": { "$ref": "#/$defs/element_revetu" },
+                "dormant_exterieur": { "$ref": "#/$defs/element_revetu" },
+                "ouvrant_exterieur": { "$ref": "#/$defs/element_revetu" },
+                "volet": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["presence", "type_volet", "materiau", "revetement", "etat_revetement"],
+                  "properties": {
+                    "presence": { "type": ["boolean", "null"] },
+                    "type_volet": {
+                      "type": ["string", "null"],
+                      "enum": ["battant", "roulant", "persienne", "store_exterieur", "coulissant", null]
+                    },
+                    "materiau": { "type": ["string", "null"], "enum": ["bois", "pvc", "metal", "aluminium", "autre", "indetermine", null] },
+                    "revetement": { "type": ["string", "null"], "enum": ["peinture", "vernis", "lasure", "laque", "thermolaquage", "aucun", "autre", "indetermine", null] },
+                    "etat_revetement": { "type": ["string", "null"], "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue", null] }
+                  }
+                },
+                "garde_corps": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["presence", "materiau", "revetement", "etat_revetement"],
+                  "properties": {
+                    "presence": { "type": ["boolean", "null"] },
+                    "materiau": { "type": ["string", "null"], "enum": ["metal", "bois", "pvc", "beton", "verre", "autre", "indetermine", null] },
+                    "revetement": { "type": ["string", "null"], "enum": ["peinture", "vernis", "lasure", "laque", "thermolaquage", "aucun", "autre", "indetermine", null] },
+                    "etat_revetement": { "type": ["string", "null"], "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue", null] }
+                  }
+                },
+                "type_vitrage": {
+                  "type": ["string", "null"],
+                  "enum": ["simple_vitrage", "double_vitrage", "triple_vitrage", "survitrage", "inconnu", null],
+                  "description": "Sert au relevé DPE, se dicte au passage."
+                },
+                "commentaire": { "type": ["string", "null"] },
+                "verbatim": { "type": "string" }
+              }
+            }
+          },
+
+          "elements_divers": {
+            "type": "array",
+            "description": "Plinthes, radiateurs, canalisations, placards, escaliers, coffres — tout élément à décrire pour le CREP.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["designation", "mur", "materiau", "revetement", "etat_revetement", "verbatim"],
+              "properties": {
+                "designation": { "type": "string" },
+                "mur": { "type": ["string", "null"], "enum": ["A", "B", "C", "D", "E", "F", "G", "H", "plafond", "sol", null] },
+                "materiau": { "type": ["string", "null"] },
+                "revetement": { "type": ["string", "null"] },
+                "etat_revetement": { "type": ["string", "null"], "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue", null] },
+                "verbatim": { "type": "string" }
+              }
+            }
+          },
+
+          "photos": { "type": "array", "items": { "type": "string" } },
+          "incertain": { "type": "boolean" },
+          "motif_incertitude": { "type": ["string", "null"] },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "alertes": { "type": "array", "items": { "type": "string" } }
+  },
+
+  "$defs": {
+    "element_revetu": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["materiau", "revetement", "etat_revetement"],
+      "properties": {
+        "materiau": {
+          "type": ["string", "null"],
+          "enum": ["bois", "pvc", "metal", "aluminium", "platre", "beton", "verre", "autre", "indetermine", null]
+        },
+        "revetement": {
+          "type": ["string", "null"],
+          "enum": ["peinture", "vernis", "lasure", "laque", "thermolaquage", "aucun", "autre", "indetermine", null]
+        },
+        "etat_revetement": {
+          "type": ["string", "null"],
+          "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue", null]
+        }
+      }
+    }
+  }
+}
