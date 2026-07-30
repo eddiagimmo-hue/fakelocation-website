@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diagimmo.local/schemas/dpe.json",
+  "title": "Relevé de terrain DPE — méthode 3CL-DPE 2021",
+  "description": "ATTENTION : ce schéma décrit le RELEVÉ DE TERRAIN, pas le DPE. Le calcul 3CL, les étiquettes énergie/climat et les recommandations restent intégralement dans AnalysImmo. Le rôle de la dictée est uniquement de pré-remplir le descriptif du bâti et des systèmes. Aucun champ calculé ne doit être produit par le modèle.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "generalites", "enveloppe", "systemes", "parties_non_visitees", "alertes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_dossier", "adresse", "date_visite", "operateur", "type_dpe", "verbatim_non_classe"],
+      "properties": {
+        "reference_dossier": { "type": ["string", "null"] },
+        "adresse": { "type": ["string", "null"] },
+        "date_visite": { "type": ["string", "null"] },
+        "operateur": { "type": ["string", "null"] },
+        "type_dpe": {
+          "type": ["string", "null"],
+          "enum": ["maison_individuelle", "appartement", "immeuble_collectif", "appartement_a_partir_immeuble", null]
+        },
+        "verbatim_non_classe": { "type": ["string", "null"] }
+      }
+    },
+
+    "generalites": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["annee_construction", "surface_habitable_m2", "hauteur_sous_plafond_m", "nombre_de_niveaux", "mitoyennete", "orientation_facade_principale", "altitude_m", "zone_climatique", "type_de_bien_mitoyen", "commentaire"],
+      "properties": {
+        "annee_construction": { "type": ["integer", "null"] },
+        "surface_habitable_m2": { "type": ["number", "null"] },
+        "hauteur_sous_plafond_m": { "type": ["number", "null"] },
+        "nombre_de_niveaux": { "type": ["integer", "null"] },
+        "mitoyennete": {
+          "type": ["string", "null"],
+          "enum": ["isole", "1_mitoyennete", "2_mitoyennetes", "3_mitoyennetes", null]
+        },
+        "orientation_facade_principale": {
+          "type": ["string", "null"],
+          "enum": ["nord", "nord_est", "est", "sud_est", "sud", "sud_ouest", "ouest", "nord_ouest", null]
+        },
+        "altitude_m": { "type": ["number", "null"] },
+        "zone_climatique": { "type": ["string", "null"] },
+        "type_de_bien_mitoyen": { "type": ["string", "null"] },
+        "commentaire": { "type": ["string", "null"] }
+      }
+    },
+
+    "enveloppe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["murs", "planchers_bas", "planchers_hauts", "menuiseries", "ponts_thermiques"],
+      "properties": {
+        "murs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "designation", "orientation", "surface_m2", "materiau", "epaisseur_cm", "isolation", "type_isolant", "epaisseur_isolant_cm", "annee_isolation", "type_local_adjacent", "justificatif", "photos", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "designation": { "type": ["string", "null"] },
+              "orientation": {
+                "type": ["string", "null"],
+                "enum": ["nord", "nord_est", "est", "sud_est", "sud", "sud_ouest", "ouest", "nord_ouest", null]
+              },
+              "surface_m2": { "type": ["number", "null"] },
+              "materiau": {
+                "type": ["string", "null"],
+                "enum": [
+                  "pierre", "brique_pleine", "brique_creuse", "monomur_terre_cuite",
+                  "bloc_beton_creux", "bloc_beton_plein", "beton_banche", "beton_cellulaire",
+                  "pan_de_bois", "ossature_bois", "cloison_platre", "inconnu", null
+                ]
+              },
+              "epaisseur_cm": { "type": ["number", "null"] },
+              "isolation": {
+                "type": ["string", "null"],
+                "enum": ["non_isole", "isolation_interieure", "isolation_exterieure", "isolation_repartie", "inconnue", null]
+              },
+              "type_isolant": { "type": ["string", "null"] },
+              "epaisseur_isolant_cm": { "type": ["number", "null"] },
+              "annee_isolation": { "type": ["integer", "null"] },
+              "type_local_adjacent": {
+                "type": ["string", "null"],
+                "enum": ["exterieur", "local_non_chauffe", "local_chauffe", "terre_plein", "vide_sanitaire", "sous_sol", "veranda", null]
+              },
+              "justificatif": {
+                "type": ["string", "null"],
+                "description": "Facture, sondage, observation visuelle, valeur par défaut… Élément de preuve à conserver."
+              },
+              "photos": { "type": "array", "items": { "type": "string" } },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        },
+
+        "planchers_bas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "designation", "surface_m2", "type_plancher", "isolation", "type_isolant", "epaisseur_isolant_cm", "type_local_adjacent", "justificatif", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "designation": { "type": ["string", "null"] },
+              "surface_m2": { "type": ["number", "null"] },
+              "type_plancher": {
+                "type": ["string", "null"],
+                "enum": ["dalle_beton", "entrevous_beton", "entrevous_polystyrene", "plancher_bois_sur_solives", "terre_plein", "inconnu", null]
+              },
+              "isolation": {
+                "type": ["string", "null"],
+                "enum": ["non_isole", "isole_en_sous_face", "isole_en_surface", "inconnue", null]
+              },
+              "type_isolant": { "type": ["string", "null"] },
+              "epaisseur_isolant_cm": { "type": ["number", "null"] },
+              "type_local_adjacent": {
+                "type": ["string", "null"],
+                "enum": ["exterieur", "terre_plein", "vide_sanitaire", "cave", "garage", "local_non_chauffe", "local_chauffe", null]
+              },
+              "justificatif": { "type": ["string", "null"] },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        },
+
+        "planchers_hauts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "designation", "surface_m2", "type_plancher_haut", "isolation", "type_isolant", "epaisseur_isolant_cm", "type_local_adjacent", "justificatif", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "designation": { "type": ["string", "null"] },
+              "surface_m2": { "type": ["number", "null"] },
+              "type_plancher_haut": {
+                "type": ["string", "null"],
+                "enum": ["combles_perdus", "combles_amenages", "rampant", "toiture_terrasse", "plafond_sous_local_chauffe", "inconnu", null]
+              },
+              "isolation": {
+                "type": ["string", "null"],
+                "enum": ["non_isole", "isole_sur_plancher", "isole_en_rampant", "inconnue", null]
+              },
+              "type_isolant": { "type": ["string", "null"] },
+              "epaisseur_isolant_cm": { "type": ["number", "null"] },
+              "type_local_adjacent": { "type": ["string", "null"] },
+              "justificatif": { "type": ["string", "null"] },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        },
+
+        "menuiseries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "designation", "local", "type_ouverture", "nombre", "surface_totale_m2", "orientation", "materiau_menuiserie", "type_vitrage", "epaisseur_lame_air_mm", "gaz_de_remplissage", "presence_volet", "type_volet", "presence_masque", "justificatif", "photos", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "designation": { "type": ["string", "null"] },
+              "local": { "type": ["string", "null"] },
+              "type_ouverture": {
+                "type": ["string", "null"],
+                "enum": ["fenetre", "porte_fenetre", "porte_exterieure", "fenetre_de_toit", "baie_vitree", "bloc_baie", null]
+              },
+              "nombre": { "type": ["integer", "null"] },
+              "surface_totale_m2": { "type": ["number", "null"] },
+              "orientation": {
+                "type": ["string", "null"],
+                "enum": ["nord", "nord_est", "est", "sud_est", "sud", "sud_ouest", "ouest", "nord_ouest", "horizontal", null]
+              },
+              "materiau_menuiserie": {
+                "type": ["string", "null"],
+                "enum": ["bois", "pvc", "aluminium", "aluminium_rupture_pont_thermique", "acier", "mixte_bois_alu", null]
+              },
+              "type_vitrage": {
+                "type": ["string", "null"],
+                "enum": ["simple_vitrage", "double_vitrage", "double_vitrage_vir", "triple_vitrage", "survitrage", "brique_de_verre", "opaque", null]
+              },
+              "epaisseur_lame_air_mm": { "type": ["number", "null"] },
+              "gaz_de_remplissage": { "type": ["string", "null"], "enum": ["air", "argon_ou_krypton", "inconnu", null] },
+              "presence_volet": { "type": ["boolean", "null"] },
+              "type_volet": {
+                "type": ["string", "null"],
+                "enum": ["volet_battant_bois", "volet_roulant_pvc", "volet_roulant_alu", "persienne", "store_exterieur", "aucun", null]
+              },
+              "presence_masque": {
+                "type": ["string", "null"],
+                "description": "Masque proche ou lointain (balcon, bâtiment voisin, relief)."
+              },
+              "justificatif": { "type": ["string", "null"] },
+              "photos": { "type": "array", "items": { "type": "string" } },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        },
+
+        "ponts_thermiques": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type_liaison", "longueur_ml", "commentaire", "verbatim"],
+            "properties": {
+              "type_liaison": {
+                "type": ["string", "null"],
+                "enum": ["plancher_bas_mur", "plancher_intermediaire_mur", "plancher_haut_mur", "refend_mur", "menuiserie_mur", null]
+              },
+              "longueur_ml": { "type": ["number", "null"] },
+              "commentaire": { "type": ["string", "null"] },
+              "verbatim": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "systemes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chauffage", "eau_chaude_sanitaire", "ventilation", "climatisation", "production_energie_renouvelable"],
+      "properties": {
+        "chauffage": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "type_generateur", "energie", "marque_modele", "annee_installation", "puissance_kw", "type_emetteur", "regulation", "distribution_isolee", "part_couverte_pct", "local_generateur", "justificatif", "photos", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "type_generateur": {
+                "type": ["string", "null"],
+                "enum": [
+                  "chaudiere_standard", "chaudiere_basse_temperature", "chaudiere_condensation",
+                  "pac_air_air", "pac_air_eau", "pac_geothermique", "convecteur_electrique",
+                  "panneau_rayonnant", "plancher_chauffant_electrique", "poele_bois",
+                  "insert_ou_foyer_ferme", "chaudiere_bois", "reseau_de_chaleur",
+                  "radiateur_a_accumulation", "autre", null
+                ]
+              },
+              "energie": {
+                "type": ["string", "null"],
+                "enum": ["electricite", "gaz_naturel", "gpl", "fioul", "bois_buche", "bois_granules", "bois_plaquettes", "charbon", "reseau_de_chaleur", "autre", null]
+              },
+              "marque_modele": { "type": ["string", "null"] },
+              "annee_installation": { "type": ["integer", "null"] },
+              "puissance_kw": { "type": ["number", "null"] },
+              "type_emetteur": {
+                "type": ["string", "null"],
+                "enum": ["radiateur_eau_haute_temperature", "radiateur_eau_basse_temperature", "plancher_chauffant_eau", "ventilo_convecteur", "convecteur_electrique", "panneau_rayonnant", "air_souffle", "poele_seul", null]
+              },
+              "regulation": {
+                "type": ["string", "null"],
+                "enum": ["thermostat_ambiance", "robinet_thermostatique", "sonde_exterieure", "programmateur", "aucune", "inconnue", null]
+              },
+              "distribution_isolee": { "type": ["boolean", "null"] },
+              "part_couverte_pct": { "type": ["number", "null"] },
+              "local_generateur": { "type": ["string", "null"] },
+              "justificatif": { "type": ["string", "null"] },
+              "photos": { "type": "array", "items": { "type": "string" } },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        },
+
+        "eau_chaude_sanitaire": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "type_production", "energie", "annee_installation", "volume_ballon_l", "position_ballon", "local_ballon", "distribution_isolee", "justificatif", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "type_production": {
+                "type": ["string", "null"],
+                "enum": [
+                  "ballon_electrique", "chauffe_eau_thermodynamique", "production_par_chaudiere",
+                  "chauffe_eau_instantane_gaz", "accumulation_gaz", "solaire_thermique",
+                  "reseau_de_chaleur", "autre", null
+                ]
+              },
+              "energie": {
+                "type": ["string", "null"],
+                "enum": ["electricite", "gaz_naturel", "gpl", "fioul", "bois", "solaire", "reseau_de_chaleur", "autre", null]
+              },
+              "annee_installation": { "type": ["integer", "null"] },
+              "volume_ballon_l": { "type": ["number", "null"] },
+              "position_ballon": { "type": ["string", "null"], "enum": ["vertical", "horizontal", "sans_objet", null] },
+              "local_ballon": { "type": ["string", "null"] },
+              "distribution_isolee": { "type": ["boolean", "null"] },
+              "justificatif": { "type": ["string", "null"] },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        },
+
+        "ventilation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type_ventilation", "annee_installation", "presence_entrees_d_air", "locaux_equipes", "justificatif", "incertain", "verbatim"],
+          "properties": {
+            "type_ventilation": {
+              "type": ["string", "null"],
+              "enum": [
+                "ventilation_naturelle_par_ouverture", "ventilation_par_conduit", "vmc_simple_flux_autoreglable",
+                "vmc_simple_flux_hygroreglable_a", "vmc_simple_flux_hygroreglable_b", "vmc_double_flux",
+                "vmc_gaz", "ventilation_mecanique_repartie", "absence_de_ventilation", null
+              ]
+            },
+            "annee_installation": { "type": ["integer", "null"] },
+            "presence_entrees_d_air": { "type": ["boolean", "null"] },
+            "locaux_equipes": { "type": "array", "items": { "type": "string" } },
+            "justificatif": { "type": ["string", "null"] },
+            "incertain": { "type": "boolean" },
+            "verbatim": { "type": "string" }
+          }
+        },
+
+        "climatisation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "type_systeme", "local", "surface_climatisee_m2", "annee_installation", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "type_systeme": {
+                "type": ["string", "null"],
+                "enum": ["split", "multi_split", "gainable", "pac_reversible", "autre", null]
+              },
+              "local": { "type": ["string", "null"] },
+              "surface_climatisee_m2": { "type": ["number", "null"] },
+              "annee_installation": { "type": ["integer", "null"] },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        },
+
+        "production_energie_renouvelable": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "type_production", "surface_capteurs_m2", "puissance_crete_kwc", "orientation", "inclinaison_deg", "annee_installation", "incertain", "verbatim"],
+            "properties": {
+              "id": { "type": "string" },
+              "type_production": {
+                "type": ["string", "null"],
+                "enum": ["photovoltaique", "solaire_thermique_ecs", "solaire_combine", "autre", null]
+              },
+              "surface_capteurs_m2": { "type": ["number", "null"] },
+              "puissance_crete_kwc": { "type": ["number", "null"] },
+              "orientation": { "type": ["string", "null"] },
+              "inclinaison_deg": { "type": ["number", "null"] },
+              "annee_installation": { "type": ["integer", "null"] },
+              "incertain": { "type": "boolean" },
+              "verbatim": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "parties_non_visitees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local", "motif", "verbatim"],
+        "properties": {
+          "local": { "type": "string" },
+          "motif": { "type": "string" },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "alertes": { "type": "array", "items": { "type": "string" } }
+  }
+}

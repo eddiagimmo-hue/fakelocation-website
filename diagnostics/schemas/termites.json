@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diagimmo.local/schemas/termites.json",
+  "title": "Relevé état relatif à la présence de termites — NF P03-201",
+  "description": "Structure de sortie de l'extraction vocale pour un état termites. À recaler sur les libellés exacts d'AnalysImmo avant mise en production.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "observations", "parties_non_visitees", "constatations_diverses", "conclusion", "alertes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_dossier", "adresse", "date_visite", "operateur", "perimetre", "verbatim_non_classe"],
+      "properties": {
+        "reference_dossier": { "type": ["string", "null"] },
+        "adresse": { "type": ["string", "null"] },
+        "date_visite": { "type": ["string", "null"] },
+        "operateur": { "type": ["string", "null"] },
+        "perimetre": {
+          "type": ["string", "null"],
+          "description": "Bâtiment principal, annexes, terrain dans la limite de 10 m…"
+        },
+        "verbatim_non_classe": { "type": ["string", "null"] }
+      }
+    },
+
+    "observations": {
+      "type": "array",
+      "description": "Une entrée par ouvrage examiné dans un local. Le parcours doit couvrir tous les locaux, y compris ceux sans indice (résultat 'absence_indice').",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "batiment", "niveau", "local", "ouvrage", "ouvrage_libre", "materiau",
+          "sondage_realise", "resultat", "indices_termites", "autres_agents",
+          "etat_de_l_ouvrage", "localisation_precise", "photos",
+          "incertain", "motif_incertitude", "verbatim"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "batiment": { "type": ["string", "null"] },
+          "niveau": { "type": ["string", "null"] },
+          "local": { "type": "string" },
+
+          "ouvrage": {
+            "type": "string",
+            "enum": [
+              "charpente", "poutre", "solive", "plancher", "parquet", "lambourde",
+              "plinthe", "huisserie_ou_bati", "porte", "fenetre", "volet", "escalier",
+              "lambris", "cloison", "placard_ou_mobilier_fixe", "poteau",
+              "mur_maconnerie", "sol_terre_plein", "cave_ou_vide_sanitaire",
+              "exterieur_arbre_souche_bois_stocke", "cloture_ou_terrasse_bois", "autre"
+            ]
+          },
+          "ouvrage_libre": { "type": ["string", "null"] },
+          "materiau": {
+            "type": ["string", "null"],
+            "enum": ["bois_resineux", "bois_feuillu", "panneau_derive_du_bois", "maconnerie", "autre", null]
+          },
+          "sondage_realise": {
+            "type": ["boolean", "null"],
+            "description": "Sondage non destructif effectué sur l'ouvrage."
+          },
+
+          "resultat": {
+            "type": "string",
+            "enum": ["absence_indice", "presence_indices", "non_examine"]
+          },
+          "indices_termites": {
+            "type": "array",
+            "description": "Vide si resultat = absence_indice.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "termites_vivants", "galeries_tunnels_cordonnets", "termites_morts",
+                "alteration_du_bois", "ailes_ou_essaimage", "terre_de_maconnage"
+              ]
+            }
+          },
+          "autres_agents": {
+            "type": "array",
+            "description": "Agents de dégradation biologique du bois autres que les termites.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "aucun", "merule", "autre_champignon_lignivore", "pourriture_cubique",
+                "capricorne", "vrillette", "lyctus", "hesperophane", "insecte_indetermine"
+              ]
+            }
+          },
+          "etat_de_l_ouvrage": {
+            "type": ["string", "null"],
+            "enum": ["sain", "degrade", "tres_degrade", "non_evalue", null]
+          },
+          "localisation_precise": { "type": ["string", "null"] },
+          "photos": { "type": "array", "items": { "type": "string" } },
+
+          "incertain": { "type": "boolean" },
+          "motif_incertitude": { "type": ["string", "null"] },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "parties_non_visitees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local", "motif", "verbatim"],
+        "properties": {
+          "local": { "type": "string" },
+          "motif": {
+            "type": "string",
+            "enum": [
+              "absence_de_cle", "local_occupe_ou_encombre", "absence_de_trappe",
+              "risque_de_chute", "hauteur_inaccessible", "revetement_masquant_le_bois",
+              "refus_de_l_occupant", "autre"
+            ]
+          },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "constatations_diverses": {
+      "type": "array",
+      "description": "Humidité, dégât des eaux, ventilation, présence de bois en contact avec le sol… éléments favorisant l'infestation.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local", "constatation", "verbatim"],
+        "properties": {
+          "local": { "type": ["string", "null"] },
+          "constatation": { "type": "string" },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "conclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthese", "locaux_concernes", "commentaire"],
+      "properties": {
+        "synthese": {
+          "type": ["string", "null"],
+          "enum": [
+            "absence_d_indice_d_infestation",
+            "presence_d_indices_d_infestation",
+            "presence_de_termites_vivants",
+            null
+          ],
+          "description": "À recalculer côté code à partir de observations[] — ne pas faire confiance au modèle sur ce champ."
+        },
+        "locaux_concernes": { "type": "array", "items": { "type": "string" } },
+        "commentaire": { "type": ["string", "null"] }
+      }
+    },
+
+    "alertes": { "type": "array", "items": { "type": "string" } }
+  }
+}

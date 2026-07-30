@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diagimmo.local/schemas/plomb-crep.json",
+  "title": "Constat de risque d'exposition au plomb (CREP) — NF X46-030",
+  "description": "Structure de sortie de l'extraction vocale pour un CREP. IMPORTANT : les valeurs de mesure (mg/cm²) doivent venir de l'export de l'appareil XRF Fondis, PAS de la dictée. La voix sert à décrire l'unité de diagnostic et l'état de conservation ; on rapproche ensuite par numéro de mesure. Le classement est calculé par règle, jamais par le modèle.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "unites_diagnostic", "parties_non_visitees", "situations_de_risque", "conclusion", "alertes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_dossier", "adresse", "date_visite", "operateur", "appareil", "verbatim_non_classe"],
+      "properties": {
+        "reference_dossier": { "type": ["string", "null"] },
+        "adresse": { "type": ["string", "null"] },
+        "date_visite": { "type": ["string", "null"] },
+        "operateur": { "type": ["string", "null"] },
+        "appareil": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["marque_modele", "numero_serie", "source_radioactive", "date_chargement_source"],
+          "properties": {
+            "marque_modele": { "type": ["string", "null"] },
+            "numero_serie": { "type": ["string", "null"] },
+            "source_radioactive": { "type": ["string", "null"] },
+            "date_chargement_source": { "type": ["string", "null"] }
+          }
+        },
+        "verbatim_non_classe": { "type": ["string", "null"] }
+      }
+    },
+
+    "unites_diagnostic": {
+      "type": "array",
+      "description": "Une entrée par unité de diagnostic (UD). Une UD = un élément de construction homogène en substrat et revêtement dans un local donné.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "niveau", "local", "zone", "unite_diagnostic", "substrat", "revetement_apparent",
+          "nature_mesure", "numeros_mesure", "valeurs_mg_cm2", "classement",
+          "etat_conservation_revetement", "commentaire", "photos",
+          "incertain", "motif_incertitude", "verbatim"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "niveau": { "type": ["string", "null"] },
+          "local": { "type": "string" },
+          "zone": {
+            "type": "string",
+            "enum": [
+              "mur_nord", "mur_sud", "mur_est", "mur_ouest", "plafond", "plancher",
+              "plinthe", "porte", "bati_de_porte", "fenetre", "bati_de_fenetre",
+              "volet", "persienne", "garde_corps", "radiateur", "canalisation",
+              "escalier", "placard", "coffre", "autre"
+            ]
+          },
+          "unite_diagnostic": {
+            "type": ["string", "null"],
+            "description": "Libellé de l'UD tel que dicté (ex. « ouvrant de la fenêtre côté rue »)."
+          },
+          "substrat": {
+            "type": "string",
+            "enum": ["platre", "bois", "metal", "brique", "pierre", "beton", "ciment_enduit", "carrelage_faience", "papier", "plastique", "autre", "indetermine"]
+          },
+          "revetement_apparent": {
+            "type": "string",
+            "enum": ["peinture", "papier_peint", "vernis", "lasure", "enduit", "revetement_plastique_epais", "toile_de_verre", "aucun", "autre", "indetermine"]
+          },
+
+          "nature_mesure": {
+            "type": "string",
+            "enum": ["mesure_directe_xrf", "analyse_chimique_labo", "non_mesure_justifie", "non_mesure"]
+          },
+          "numeros_mesure": {
+            "type": "array",
+            "description": "Numéros de tir annoncés à la voix, servant à rapprocher l'export XRF. Ex. ['1042','1043'].",
+            "items": { "type": "string" }
+          },
+          "valeurs_mg_cm2": {
+            "type": "array",
+            "description": "NE PAS remplir depuis la dictée. Rempli par le rapprochement avec l'export de l'appareil. Laisser vide en sortie du LLM.",
+            "items": { "type": "number" }
+          },
+          "classement": {
+            "type": ["integer", "null"],
+            "enum": [0, 1, 2, 3, null],
+            "description": "Calculé par règle (valeur mesurée + état de conservation). Le modèle laisse null."
+          },
+          "etat_conservation_revetement": {
+            "type": "string",
+            "enum": ["non_degrade", "non_visible", "etat_d_usage", "degrade", "non_evalue"]
+          },
+          "commentaire": { "type": ["string", "null"] },
+          "photos": { "type": "array", "items": { "type": "string" } },
+
+          "incertain": { "type": "boolean" },
+          "motif_incertitude": { "type": ["string", "null"] },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "parties_non_visitees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local", "motif", "verbatim"],
+        "properties": {
+          "local": { "type": "string" },
+          "motif": {
+            "type": "string",
+            "enum": ["absence_de_cle", "local_occupe_ou_encombre", "refus_de_l_occupant", "hauteur_inaccessible", "danger", "autre"]
+          },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "situations_de_risque": {
+      "type": "array",
+      "description": "Situations de risque de saturnisme infantile et de dégradation du bâti à relever explicitement.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "local", "description", "verbatim"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "revetement_degrade_classe_3",
+              "plancher_ou_plafond_menacant_de_s_effondrer",
+              "traces_d_humidite_importantes",
+              "local_avec_enfant_mineur",
+              "degradation_du_bati",
+              "autre"
+            ]
+          },
+          "local": { "type": ["string", "null"] },
+          "description": { "type": ["string", "null"] },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "conclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nb_ud_classe_0", "nb_ud_classe_1", "nb_ud_classe_2", "nb_ud_classe_3", "obligation_travaux", "commentaire"],
+      "properties": {
+        "nb_ud_classe_0": { "type": ["integer", "null"] },
+        "nb_ud_classe_1": { "type": ["integer", "null"] },
+        "nb_ud_classe_2": { "type": ["integer", "null"] },
+        "nb_ud_classe_3": { "type": ["integer", "null"] },
+        "obligation_travaux": {
+          "type": ["boolean", "null"],
+          "description": "Calculé par règle côté code, jamais par le modèle."
+        },
+        "commentaire": { "type": ["string", "null"] }
+      }
+    },
+
+    "alertes": { "type": "array", "items": { "type": "string" } }
+  }
+}

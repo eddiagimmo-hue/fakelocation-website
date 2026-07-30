@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diagimmo.local/schemas/gaz.json",
+  "title": "État de l'installation intérieure de gaz — NF P45-500",
+  "description": "Structure de sortie pour le gaz. Comme l'électricité, ce diagnostic repose sur une liste fermée de points de contrôle : usage en checklist guidée, pas en dictée libre. Les codes de résultat A1 / A2 / DGI / 32c doivent être vérifiés sur le gabarit AnalysImmo avant mise en production.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "installation", "appareils", "points_de_controle", "points_non_verifiables", "constatations_diverses", "conclusion", "alertes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_dossier", "adresse", "date_visite", "operateur", "verbatim_non_classe"],
+      "properties": {
+        "reference_dossier": { "type": ["string", "null"] },
+        "adresse": { "type": ["string", "null"] },
+        "date_visite": { "type": ["string", "null"] },
+        "operateur": { "type": ["string", "null"] },
+        "verbatim_non_classe": { "type": ["string", "null"] }
+      }
+    },
+
+    "installation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type_gaz", "distributeur", "localisation_organe_coupure", "presence_detendeur", "type_tuyauterie", "annee_installation", "observations_generales"],
+      "properties": {
+        "type_gaz": {
+          "type": ["string", "null"],
+          "enum": ["gaz_naturel_reseau", "gpl_citerne", "gpl_bouteille", "air_propane", null]
+        },
+        "distributeur": { "type": ["string", "null"] },
+        "localisation_organe_coupure": { "type": ["string", "null"] },
+        "presence_detendeur": { "type": ["boolean", "null"] },
+        "type_tuyauterie": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["cuivre", "acier", "pe_enterre", "tuyau_flexible_inox", "tuyau_souple_caoutchouc", "autre", "indetermine"]
+          }
+        },
+        "annee_installation": { "type": ["integer", "null"] },
+        "observations_generales": { "type": ["string", "null"] }
+      }
+    },
+
+    "appareils": {
+      "type": "array",
+      "description": "Un appareil à gaz par entrée.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type_appareil", "local", "marque", "modele", "puissance_kw", "type_evacuation", "type_raccordement", "presence_ventilation", "en_service", "observation", "photos", "incertain", "verbatim"],
+        "properties": {
+          "id": { "type": "string" },
+          "type_appareil": {
+            "type": "string",
+            "enum": [
+              "chaudiere", "chauffe_eau", "chauffe_bain", "cuisiniere", "table_de_cuisson",
+              "four", "radiateur_gaz", "insert_ou_foyer_gaz", "seche_linge", "autre"
+            ]
+          },
+          "local": { "type": ["string", "null"] },
+          "marque": { "type": ["string", "null"] },
+          "modele": { "type": ["string", "null"] },
+          "puissance_kw": { "type": ["number", "null"] },
+          "type_evacuation": {
+            "type": ["string", "null"],
+            "enum": ["ventouse", "raccorde_a_un_conduit", "non_raccorde", "sans_objet", null]
+          },
+          "type_raccordement": {
+            "type": ["string", "null"],
+            "enum": ["tuyau_rigide", "tuyau_flexible_inox_a_embouts_mecaniques", "tuyau_souple_avec_collier", "sans_objet", null]
+          },
+          "presence_ventilation": { "type": ["boolean", "null"] },
+          "en_service": { "type": ["boolean", "null"] },
+          "observation": { "type": ["string", "null"] },
+          "photos": { "type": "array", "items": { "type": "string" } },
+          "incertain": { "type": "boolean" },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "points_de_controle": {
+      "type": "array",
+      "description": "Rubriques : A tuyauteries fixes — B raccordement en gaz des appareils — C ventilation des locaux et évacuation des produits de combustion — D combustion. À recaler sur le gabarit AnalysImmo.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "rubrique", "reference_point", "libelle", "resultat", "code_anomalie", "appareil_ref", "localisation", "observation", "photos", "incertain", "motif_incertitude", "verbatim"],
+        "properties": {
+          "id": { "type": "string" },
+          "rubrique": {
+            "type": "string",
+            "enum": [
+              "A_tuyauteries_fixes",
+              "B_raccordement_des_appareils",
+              "C_ventilation_et_evacuation",
+              "D_combustion",
+              "indetermine"
+            ]
+          },
+          "reference_point": { "type": ["string", "null"] },
+          "libelle": { "type": ["string", "null"] },
+          "resultat": {
+            "type": "string",
+            "enum": ["conforme", "A1", "A2", "DGI", "32c", "sans_objet", "non_verifiable"],
+            "description": "A1 = anomalie à corriger ultérieurement. A2 = à corriger dans les meilleurs délais. DGI = danger grave et immédiat, interruption de la fourniture. 32c = défaut d'aération/ventilation avec appareil raccordé, procédure spécifique."
+          },
+          "code_anomalie": { "type": ["string", "null"] },
+          "appareil_ref": {
+            "type": ["string", "null"],
+            "description": "Renvoie vers appareils[].id si le point concerne un appareil précis."
+          },
+          "localisation": { "type": ["string", "null"] },
+          "observation": { "type": ["string", "null"] },
+          "photos": { "type": "array", "items": { "type": "string" } },
+          "incertain": { "type": "boolean" },
+          "motif_incertitude": { "type": ["string", "null"] },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "points_non_verifiables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reference_point", "motif", "verbatim"],
+        "properties": {
+          "reference_point": { "type": ["string", "null"] },
+          "motif": {
+            "type": "string",
+            "enum": [
+              "installation_non_alimentee", "appareil_inaccessible", "conduit_non_visible",
+              "local_non_visite", "refus_de_l_occupant", "danger_pour_l_operateur", "autre"
+            ]
+          },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "constatations_diverses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local", "constatation", "verbatim"],
+        "properties": {
+          "local": { "type": ["string", "null"] },
+          "constatation": { "type": "string" },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "conclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["presence_dgi", "nombre_a1", "nombre_a2", "presence_32c", "certificat_de_coupure_emis", "commentaire"],
+      "properties": {
+        "presence_dgi": { "type": ["boolean", "null"], "description": "Recalculé côté code." },
+        "nombre_a1": { "type": ["integer", "null"] },
+        "nombre_a2": { "type": ["integer", "null"] },
+        "presence_32c": { "type": ["boolean", "null"] },
+        "certificat_de_coupure_emis": { "type": ["boolean", "null"] },
+        "commentaire": { "type": ["string", "null"] }
+      }
+    },
+
+    "alertes": { "type": "array", "items": { "type": "string" } }
+  }
+}

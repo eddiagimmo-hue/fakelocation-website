@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diagimmo.local/schemas/amiante.json",
+  "title": "Relevé amiante — repérage NF X46-020",
+  "description": "Structure de sortie de l'extraction vocale pour un repérage amiante (DTA, DAPP, état d'amiante avant-vente, repérage avant travaux). Les énumérations reprennent l'annexe 13-9 du CSP (listes A et B). ATTENTION : à recaler sur les libellés exacts de la version d'AnalysImmo installée avant mise en production.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "observations", "parties_non_visitees", "prelevements", "alertes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_dossier", "type_mission", "adresse", "date_visite", "operateur", "verbatim_non_classe"],
+      "properties": {
+        "reference_dossier": { "type": ["string", "null"] },
+        "type_mission": {
+          "type": ["string", "null"],
+          "enum": ["DTA", "DAPP", "etat_amiante_avant_vente", "reperage_avant_travaux", "reperage_avant_demolition", "controle_periodique", null]
+        },
+        "adresse": { "type": ["string", "null"] },
+        "date_visite": { "type": ["string", "null"], "description": "Format ISO 8601 AAAA-MM-JJ" },
+        "operateur": { "type": ["string", "null"] },
+        "verbatim_non_classe": {
+          "type": ["string", "null"],
+          "description": "Tout passage du transcript qui n'a pas pu être rattaché à une observation. Ne jamais jeter du texte : le déverser ici."
+        }
+      }
+    },
+
+    "observations": {
+      "type": "array",
+      "description": "Une entrée par couple (local, composant). Ne jamais fusionner deux locaux dans une même observation.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "batiment", "niveau", "local", "liste", "composant", "composant_libre",
+          "materiau", "presence", "mode_de_preuve", "etat_conservation", "recommandation",
+          "quantite", "unite", "accessibilite", "prelevement_ref", "photos",
+          "incertain", "motif_incertitude", "verbatim"
+        ],
+        "properties": {
+          "id": { "type": "string", "description": "Identifiant séquentiel OBS-001, OBS-002…" },
+          "batiment": { "type": ["string", "null"] },
+          "niveau": {
+            "type": ["string", "null"],
+            "description": "Sous-sol, RDC, R+1, combles, extérieur… tel que dicté"
+          },
+          "local": { "type": "string", "description": "Nom du local tel que dicté (cuisine, chambre 2, cave, cage d'escalier…)" },
+
+          "liste": {
+            "type": "string",
+            "enum": ["A", "B", "hors_liste", "indetermine"],
+            "description": "Liste A / liste B de l'annexe 13-9 CSP. 'hors_liste' pour un repérage avant travaux ou démolition."
+          },
+          "composant": {
+            "type": "string",
+            "description": "Composant de la construction. Choisir la valeur la plus proche ; si aucune ne convient, mettre 'autre' et détailler dans composant_libre.",
+            "enum": [
+              "flocage",
+              "calorifugeage",
+              "faux_plafond",
+              "enduit_projete_paroi_verticale",
+              "revetement_dur_paroi_verticale",
+              "entourage_de_poteau",
+              "coffrage_perdu",
+              "cloison_legere_ou_prefabriquee",
+              "gaine_ou_coffre_vertical",
+              "plafond",
+              "poutre_ou_charpente",
+              "gaine_ou_coffre_horizontal",
+              "enduit_projete_plancher_plafond",
+              "panneau_colle_ou_visse",
+              "conduit_de_fluide",
+              "clapet_ou_volet_coupe_feu",
+              "porte_coupe_feu",
+              "vide_ordures",
+              "toiture",
+              "bardage_ou_facade_legere",
+              "conduit_en_toiture_ou_facade",
+              "dalle_de_sol",
+              "colle_de_revetement_de_sol",
+              "joint_ou_tresse",
+              "plaque_sous_appui_de_fenetre",
+              "autre"
+            ]
+          },
+          "composant_libre": {
+            "type": ["string", "null"],
+            "description": "Description textuelle du composant si 'autre', ou précision utile."
+          },
+          "materiau": {
+            "type": "string",
+            "enum": [
+              "amiante_ciment_fibrociment", "plaque_ondulee", "flocage", "calorifugeage",
+              "dalle_vinyle_amiante", "colle_bitumineuse", "enduit", "mortier_colle",
+              "carton_amiante", "tresse_ou_bourrelet", "joint", "panneau_fibres_ciment",
+              "peinture_ou_revetement_plastique_epais", "autre", "indetermine"
+            ]
+          },
+
+          "presence": {
+            "type": "string",
+            "enum": ["absence", "presence_reperee", "presence_supposee", "non_determine"],
+            "description": "'presence_supposee' = matériau non prélevé mais réputé amianté par le repérage."
+          },
+          "mode_de_preuve": {
+            "type": "string",
+            "enum": ["controle_visuel", "prelevement", "document_anterieur", "extension_zone_similaire", "sans_objet"]
+          },
+          "etat_conservation": {
+            "type": "string",
+            "description": "Liste A : EP / AC1 / AC2. Liste B : EP / AC. 'non_applicable' si absence de matériau amianté, 'non_evalue' si non dicté.",
+            "enum": ["EP", "AC", "AC1", "AC2", "non_applicable", "non_evalue"]
+          },
+          "recommandation": {
+            "type": "string",
+            "enum": [
+              "evaluation_periodique",
+              "controle_periodique_36_mois",
+              "mesure_empoussierement",
+              "action_corrective_1er_niveau",
+              "action_corrective_2nd_niveau",
+              "travaux_de_retrait_ou_confinement",
+              "sans_objet",
+              "non_evalue"
+            ]
+          },
+
+          "quantite": { "type": ["number", "null"] },
+          "unite": { "type": ["string", "null"], "enum": ["m2", "ml", "u", "m3", null] },
+          "accessibilite": {
+            "type": ["string", "null"],
+            "enum": ["accessible", "partiellement_accessible", "non_accessible", null]
+          },
+
+          "prelevement_ref": {
+            "type": ["string", "null"],
+            "description": "Référence de l'échantillon, doit correspondre à une entrée de prelevements[]."
+          },
+          "photos": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Horodatages ou noms de fichiers photo annoncés à la dictée."
+          },
+
+          "incertain": {
+            "type": "boolean",
+            "description": "true dès qu'un champ réglementaire a été deviné plutôt qu'entendu. Force la relecture humaine."
+          },
+          "motif_incertitude": { "type": ["string", "null"] },
+          "verbatim": {
+            "type": "string",
+            "description": "Extrait littéral du transcript ayant produit cette observation. Obligatoire, sert de preuve."
+          }
+        }
+      }
+    },
+
+    "parties_non_visitees": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local", "motif", "verbatim"],
+        "properties": {
+          "local": { "type": "string" },
+          "motif": {
+            "type": "string",
+            "enum": [
+              "absence_de_cle", "local_occupe_ou_encombre", "risque_de_chute", "absence_de_trappe",
+              "hauteur_inaccessible", "refus_de_l_occupant", "danger_electrique", "autre"
+            ]
+          },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "prelevements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reference", "local", "composant_libre", "materiau_presume", "date_prelevement", "laboratoire", "resultat", "verbatim"],
+        "properties": {
+          "reference": { "type": "string" },
+          "local": { "type": ["string", "null"] },
+          "composant_libre": { "type": ["string", "null"] },
+          "materiau_presume": { "type": ["string", "null"] },
+          "date_prelevement": { "type": ["string", "null"] },
+          "laboratoire": { "type": ["string", "null"] },
+          "resultat": {
+            "type": ["string", "null"],
+            "enum": ["positif", "negatif", "en_attente", null]
+          },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "alertes": {
+      "type": "array",
+      "description": "Incohérences détectées par le modèle : local cité sans composant, prélèvement annoncé sans référence, état de conservation manquant sur une présence repérée, etc. À afficher en haut de l'écran de relecture.",
+      "items": { "type": "string" }
+    }
+  }
+}

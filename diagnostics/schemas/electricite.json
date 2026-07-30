@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://diagimmo.local/schemas/electricite.json",
+  "title": "État de l'installation intérieure d'électricité — NF C 16-600",
+  "description": "Structure de sortie pour l'électricité. ATTENTION : contrairement à l'amiante ou aux termites, ce diagnostic repose sur une LISTE FERMÉE de points de contrôle. Le mode d'usage n'est pas la dictée libre mais la checklist guidée : l'app annonce le point, vous répondez « conforme », « sans objet » ou le code d'anomalie. Le champ reference_point est laissé en string car la numérotation dépend de la version de la norme et du gabarit AnalysImmo — exporter la liste réelle depuis AnalysImmo et la figer en enum avant mise en production.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "installation", "points_de_controle", "informations_complementaires", "points_non_verifiables", "constatations_diverses", "conclusion", "alertes"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference_dossier", "adresse", "date_visite", "operateur", "verbatim_non_classe"],
+      "properties": {
+        "reference_dossier": { "type": ["string", "null"] },
+        "adresse": { "type": ["string", "null"] },
+        "date_visite": { "type": ["string", "null"] },
+        "operateur": { "type": ["string", "null"] },
+        "verbatim_non_classe": { "type": ["string", "null"] }
+      }
+    },
+
+    "installation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["annee_installation", "type_alimentation", "presence_agcp", "localisation_agcp", "presence_differentiel_30ma", "nb_tableaux", "nb_circuits", "presence_prise_de_terre", "valeur_prise_de_terre_ohms", "presence_piscine", "observations_generales"],
+      "properties": {
+        "annee_installation": { "type": ["integer", "null"] },
+        "type_alimentation": { "type": ["string", "null"], "enum": ["monophase", "triphase", null] },
+        "presence_agcp": { "type": ["boolean", "null"], "description": "Appareil général de commande et de protection." },
+        "localisation_agcp": { "type": ["string", "null"] },
+        "presence_differentiel_30ma": { "type": ["boolean", "null"] },
+        "nb_tableaux": { "type": ["integer", "null"] },
+        "nb_circuits": { "type": ["integer", "null"] },
+        "presence_prise_de_terre": { "type": ["boolean", "null"] },
+        "valeur_prise_de_terre_ohms": { "type": ["number", "null"] },
+        "presence_piscine": { "type": ["boolean", "null"] },
+        "observations_generales": { "type": ["string", "null"] }
+      }
+    },
+
+    "points_de_controle": {
+      "type": "array",
+      "description": "Une entrée par point de contrôle traité. Les domaines B.1 à B.11 : B.1 AGCP — B.2 dispositif différentiel à l'origine / prise de terre et installation de mise à la terre — B.3 protection contre les surintensités — B.4 liaison équipotentielle et installation dans les locaux contenant une baignoire ou une douche — B.5 matériels présentant des risques de contact direct — B.6 matériels vétustes ou inadaptés à l'usage — B.7 appareils d'utilisation en parties communes alimentés depuis la partie privative — B.8 piscine privée ou bassin de fontaine — B.9 à B.11 informations complémentaires. À vérifier sur le gabarit AnalysImmo.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "domaine", "reference_point", "libelle", "etat", "code_anomalie", "localisation", "observation", "photos", "incertain", "motif_incertitude", "verbatim"],
+        "properties": {
+          "id": { "type": "string" },
+          "domaine": {
+            "type": "string",
+            "enum": ["B.1", "B.2", "B.3", "B.4", "B.5", "B.6", "B.7", "B.8", "B.9", "B.10", "B.11", "indetermine"]
+          },
+          "reference_point": {
+            "type": ["string", "null"],
+            "description": "Numéro exact du point de contrôle, ex. 'B.3.3.1'. Null si non identifié."
+          },
+          "libelle": { "type": ["string", "null"] },
+          "etat": {
+            "type": "string",
+            "enum": ["conforme", "anomalie", "sans_objet", "non_verifiable", "non_realise"]
+          },
+          "code_anomalie": {
+            "type": ["string", "null"],
+            "description": "Code d'anomalie tel que dicté (ex. 'B.3.3.1'). Obligatoire si etat = anomalie."
+          },
+          "localisation": {
+            "type": ["string", "null"],
+            "description": "Local et point précis où l'anomalie a été constatée."
+          },
+          "observation": { "type": ["string", "null"] },
+          "photos": { "type": "array", "items": { "type": "string" } },
+          "incertain": { "type": "boolean" },
+          "motif_incertitude": { "type": ["string", "null"] },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "informations_complementaires": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["libelle", "reponse", "commentaire", "verbatim"],
+        "properties": {
+          "libelle": { "type": "string" },
+          "reponse": { "type": ["string", "null"], "enum": ["oui", "non", "sans_objet", null] },
+          "commentaire": { "type": ["string", "null"] },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "points_non_verifiables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reference_point", "motif", "verbatim"],
+        "properties": {
+          "reference_point": { "type": ["string", "null"] },
+          "motif": {
+            "type": "string",
+            "enum": [
+              "absence_de_courant", "tableau_inaccessible", "local_non_visite",
+              "installation_encastree_non_demontable", "refus_de_l_occupant",
+              "danger_pour_l_operateur", "autre"
+            ]
+          },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "constatations_diverses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["local", "constatation", "verbatim"],
+        "properties": {
+          "local": { "type": ["string", "null"] },
+          "constatation": { "type": "string" },
+          "verbatim": { "type": "string" }
+        }
+      }
+    },
+
+    "conclusion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["installation_comporte_anomalies", "nombre_anomalies", "domaines_concernes", "commentaire"],
+      "properties": {
+        "installation_comporte_anomalies": {
+          "type": ["boolean", "null"],
+          "description": "Recalculé côté code à partir de points_de_controle[]."
+        },
+        "nombre_anomalies": { "type": ["integer", "null"] },
+        "domaines_concernes": { "type": "array", "items": { "type": "string" } },
+        "commentaire": { "type": ["string", "null"] }
+      }
+    },
+
+    "alertes": { "type": "array", "items": { "type": "string" } }
+  }
+}
