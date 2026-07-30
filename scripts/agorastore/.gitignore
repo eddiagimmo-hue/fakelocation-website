@@ -5,3 +5,6 @@ thumbnails/
 *.xlsx
 .httpcache/
 __pycache__/
+.venv/
+.env
+veille.log

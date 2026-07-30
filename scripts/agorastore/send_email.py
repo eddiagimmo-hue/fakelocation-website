@@ -2,7 +2,7 @@
 
 Configuration par variables d'environnement, jamais en dur dans le dépôt :
 
-    MAIL_TO         destinataire (obligatoire)
+    MAIL_TO         destinataire (défaut ed.diagimmo@gmail.com)
     SMTP_USER       compte SMTP (obligatoire)
     SMTP_PASSWORD   mot de passe d'application (obligatoire)
     SMTP_HOST       défaut smtp.gmail.com
@@ -25,6 +25,7 @@ from email.message import EmailMessage
 from pathlib import Path
 
 XLSX_MIME = ('application', 'vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+DESTINATAIRE_PAR_DEFAUT = 'ed.diagimmo@gmail.com'
 
 
 def env(name, default=None):
@@ -42,7 +43,7 @@ def build_message(path: Path, rows: int | None) -> EmailMessage:
     msg = EmailMessage()
     msg['Subject'] = f'Agorastore — ventes sans enchère au {today}'
     msg['From'] = env('MAIL_FROM') or env('SMTP_USER')
-    msg['To'] = env('MAIL_TO')
+    msg['To'] = env('MAIL_TO', DESTINATAIRE_PAR_DEFAUT)
 
     total = f'{rows} annonces' if rows is not None else 'Le relevé'
     msg.set_content(
@@ -75,8 +76,7 @@ def main() -> int:
         print(f'Fichier introuvable : {path}', file=sys.stderr)
         return 1
 
-    missing = [k for k in ('MAIL_TO', 'SMTP_USER', 'SMTP_PASSWORD')
-               if not env(k)]
+    missing = [k for k in ('SMTP_USER', 'SMTP_PASSWORD') if not env(k)]
     if missing:
         print('Variables manquantes : ' + ', '.join(missing), file=sys.stderr)
         print(__doc__, file=sys.stderr)

@@ -53,13 +53,14 @@ run pendant 30 jours, ce qui permet de le récupérer même si l'envoi SMTP éch
 
 ### En local plutôt que sur GitHub
 
-Si vous préférez faire tourner le pipeline sur votre propre machine, via `cron`
-(elle doit être allumée à 18 h) :
+Le dossier [`local/`](local/) contient une installation clé en main pour Mac,
+Windows ou Linux : `installer.sh` (ou `installer-windows.ps1`) crée un
+environnement Python isolé, demande les identifiants d'envoi et programme
+l'exécution via launchd, cron ou les Tâches planifiées.
+Voir [`local/LISEZ-MOI.md`](local/LISEZ-MOI.md).
 
-```cron
-0 18 * * 1-5  cd /chemin/vers/scripts/agorastore && ./run_all.sh && \
-              MAIL_TO=… SMTP_USER=… SMTP_PASSWORD=… python3 send_email.py
-```
+Contrairement au workflow GitHub, cette voie exige que la machine soit
+allumée et connectée à 18 h.
 
 ### Derrière un proxy d'entreprise
 

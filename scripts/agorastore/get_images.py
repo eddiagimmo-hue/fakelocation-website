@@ -32,6 +32,18 @@ def extract_array(html, key):
     return json.loads(html[start:end])
 
 
+def reparer_url(url):
+    """Corrige les URLs d'image malformées émises par le site.
+
+    Certaines fiches renvoient « cdn.agorastore.frproduits/images/... » :
+    la barre oblique manque après le domaine. Sans correction, chaque
+    exécution s'acharne sur un domaine inexistant.
+    """
+    if url:
+        url = url.replace('cdn.agorastore.frproduits/', 'cdn.agorastore.fr/produits/')
+    return url
+
+
 if __name__ == '__main__':
     with open('final.json', encoding='utf-8') as f:
         data = json.load(f)
@@ -52,10 +64,10 @@ if __name__ == '__main__':
             print(f'[{i+1}/{len(data)}] {pid}: aucune image', file=sys.stderr)
             d['thumbnail_path'] = None
             continue
-        img_url = images[0].get('urlSmallSize') or images[0].get('url')
+        img_url = reparer_url(images[0].get('urlSmallSize') or images[0].get('url'))
         # L'image finit en vignette sur disque : la mettre aussi en cache
         # HTTP la stockerait deux fois pour rien.
-        img_bytes = fetch(img_url, cache=False)
+        img_bytes = fetch(img_url, cache=False, retries=2)
         if img_bytes is None:
             d['thumbnail_path'] = None
             continue
