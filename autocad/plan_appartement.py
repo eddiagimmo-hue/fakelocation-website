@@ -6,23 +6,27 @@ et generation des fichiers AutoCAD.
 
 Principe
 --------
-Chaque piece est un polygone ferme dont on connait :
-  * la longueur de chaque mur peripherique (traits rouges du croquis)
-  * la longueur de certaines diagonales (traits noirs du croquis)
-  * eventuellement, les decrochements visiblement rectangulaires, declares en
-    angles droits la ou le croquis ne fournit pas assez de diagonales
+Le croquis donne deux informations, et il faut les deux :
 
-Le releve est donc une TRIANGULATION : on ne connait aucun angle, seulement des
-longueurs. On retrouve les coordonnees des sommets par moindres carres
-(Gauss-Newton amorti / Levenberg-Marquardt) :
+  1. des LONGUEURS  : chaque mur peripherique (rouge) et certaines diagonales
+     (noir). Elles ne suffisent pas : pour figer un polygone a N sommets par
+     les seules distances, il faudrait N-3 diagonales, ce que le releve ne
+     fournit presque jamais.
+  2. des DIRECTIONS : le trace rouge lui-meme. Un mur dessine horizontal EST
+     horizontal, meme si aucune diagonale ne le dit. C'est cette information
+     qui redresse le plan et lui donne l'allure du croquis.
 
-    minimiser  sum_k ( ||Pi - Pj|| - L_k )^2  +  w * sum_v ||Pv - Pv_croquis||^2
+Les coordonnees des sommets sont donc obtenues par moindres carres amortis
+(Levenberg-Marquardt) sur deux familles de residus, toutes deux en centimetres :
 
-Le second terme (poids w tres faible) sert a donner une forme raisonnable aux
-rares degres de liberte non contraints quand il manque une diagonale. La
-solution est ensuite remise droite par recalage rigide sur le croquis
-(fonction orienter), les longueurs seules ne fixant ni la rotation ni le sens
-de parcours.
+    longueur   : ||Pi - Pj|| - longueur relevee
+    direction  : deport perpendiculaire du mur par rapport a sa direction lue
+                 sur le croquis (0 ou 90 degres apres equerrage, angle du
+                 croquis pour les pans coupes, avec un poids plus faible)
+
+Le residu de direction est lineaire en les coordonnees : sans echelle, il
+impose l'orientation d'un mur sans rien dire de sa longueur. Les mesures
+restent donc maitresses de la geometrie, le croquis de l'orientation.
 
 Le programme affiche ensuite un RAPPORT D'ECARTS : pour chaque cote mesuree,
 l'ecart entre la valeur relevee et la valeur obtenue. Un ecart important =
@@ -54,20 +58,16 @@ from dataclasses import dataclass, field
 #           calcul et a orienter la piece : la precision n'a aucune importance.
 #   murs  : liste ORDONNEE des murs peripheriques (rouge), le polygone est ferme
 #           automatiquement : ("A", "B", longueur)
-#   diago : diagonales relevees (noir) : ("A", "F", longueur)
-#   equerre : sommets ou l'angle est suppose DROIT (decrochements, retours de
-#           cloison). Le croquis ne donne pas de diagonale a ces endroits, mais
-#           un decrochement rectangulaire se lit sans ambiguite sur le dessin.
-#           Chaque angle droit remplace exactement une diagonale manquante :
-#           il est traduit en pseudo-diagonale de Pythagore entre les deux
-#           sommets voisins.
+#   diago : diagonales relevees (noir) : ("A", "F", longueur). Une longueur
+#           None signale un trait present sur le croquis mais dont le chiffre
+#           est illisible : il n'est ni utilise ni cote.
 #   rangee : ligne de la mise en page finale (les pieces ont ete relevees
 #           separement : le releve ne dit rien de leur position relative,
 #           elles sont donc posees cote a cote, a assembler ensuite).
 #
-# Rappel : un polygone a N sommets est entierement defini par ses N murs plus
-# N-3 diagonales (angles droits compris). Moins => la forme reste partiellement
-# libre : le solveur garde l'allure du croquis et le signale.
+# Rappel : les longueurs seules ne suffisent pas (il faudrait N-3 diagonales
+# par polygone). L'orientation des murs lue sur le trace rouge complete le
+# systeme : voir directions_croquis().
 
 
 @dataclass
@@ -75,8 +75,7 @@ class Piece:
     nom: str
     pts: dict[str, tuple[float, float]]
     murs: list[tuple[str, str, float]]
-    diago: list[tuple[str, str, float]] = field(default_factory=list)
-    equerre: list[str] = field(default_factory=list)
+    diago: list[tuple[str, str, float | None]] = field(default_factory=list)
     rangee: int = 0
 
     @property
@@ -84,24 +83,14 @@ class Piece:
         return [a for a, _b, _l in self.murs]
 
     @property
-    def equerres(self) -> list[tuple[str, str, float]]:
-        """Angles droits traduits en distances entre sommets voisins."""
-        som = self.sommets
-        longueurs = {(a, b): l for a, b, l in self.murs}
-        out = []
-        for nom in self.equerre:
-            i = som.index(nom)
-            avant, apres = som[i - 1], som[(i + 1) % len(som)]
-            la = longueurs[(avant, nom)]
-            lb = longueurs[(nom, apres)]
-            out.append((avant, apres, math.hypot(la, lb)))
-        return out
+    def diago_cotees(self) -> list[tuple[str, str, float]]:
+        """Diagonales effectivement mesurees (celles dont le chiffre est lisible)."""
+        return [(a, b, l) for a, b, l in self.diago if l is not None]
 
     @property
     def contraintes(self) -> list[tuple[str, str, float, str]]:
         return ([(a, b, l, "mur") for a, b, l in self.murs]
-                + [(a, b, l, "diagonale") for a, b, l in self.diago]
-                + [(a, b, l, "equerre") for a, b, l in self.equerres])
+                + [(a, b, l, "diagonale") for a, b, l in self.diago_cotees])
 
 
 PIECES: list[Piece] = [
@@ -128,10 +117,12 @@ PIECES: list[Piece] = [
             ("G", "A", 268.0),
         ],
         diago=[
-            ("A", "F", 404.0),
-            ("B", "F", 402.0),
+            # Les deux diagonales aboutissent a E, l'angle SORTANT du
+            # decrochement (et non a F) : A-F/B-F donnaient un triangle
+            # impossible, A-E/B-E tombent a 3 et 7 cm.
+            ("A", "E", 404.0),
+            ("B", "E", 402.0),
         ],
-        equerre=["D", "E"],   # decrochement 166 / 25 / 88 : angles droits
         rangee=0,
     ),
 
@@ -161,7 +152,6 @@ PIECES: list[Piece] = [
             ("B", "E", 395.0),
             ("E", "G", 163.0),
         ],
-        equerre=["B"],        # mur de droite perpendiculaire au mur du haut
         rangee=0,
     ),
 
@@ -184,7 +174,10 @@ PIECES: list[Piece] = [
         ],
         diago=[
             ("A", "D", 202.0),
-            ("B", "E", 158.0),   # lecture incertaine sur la photo
+            # Deuxieme diagonale illisible sur la photo (lue 851/158/185) :
+            # la geometrie des murs demande environ 197. Laissee sans valeur
+            # plutot que devinee -> non utilisee, non cotee.
+            ("B", "E", None),
         ],
         rangee=1,
     ),
@@ -219,23 +212,24 @@ PIECES: list[Piece] = [
     # ---------------- Croquis, bas : petite piece en haut a droite ----------
     Piece(
         nom="PIECE_5",
+        # Quadrilatere : le petit cote "75" du croquis ne se place nulle part
+        # (il imposerait un mur de 6 cm). Les deux traits noirs 136 et 134
+        # partent du meme angle vers deux points distants de quelques cm : le
+        # coin haut-droit est un angle vif, pas un pan coupe. Cf. README.
         pts={
-            "A": (905, 848),
-            "B": (1150, 838),
-            "C": (1165, 880),
-            "D": (1058, 1078),
-            "E": (905, 1078),   # angle bas-gauche (station du releve)
+            "A": (905, 848),    # angle haut-gauche
+            "B": (1150, 838),   # angle haut-droit
+            "C": (1058, 1078),  # bas du pan coupe
+            "D": (905, 1078),   # angle bas-gauche (station du releve)
         },
         murs=[
             ("A", "B", 102.0),
-            ("B", "C", 75.0),
-            ("C", "D", 109.0),   # pan coupe
-            ("D", "E", 37.0),
-            ("E", "A", 93.0),
+            ("B", "C", 109.0),   # pan coupe
+            ("C", "D", 37.0),
+            ("D", "A", 93.0),
         ],
         diago=[
-            ("E", "B", 136.0),
-            ("E", "C", 134.0),
+            ("D", "B", 136.0),
         ],
         rangee=1,
     ),
@@ -265,15 +259,14 @@ PIECES: list[Piece] = [
             ("G", "H", 183.0),
             ("H", "I", 223.0),
             ("I", "J", 100.0),
-            ("J", "A", 48.0),
+            ("J", "A", 82.0),   # lu 48, mais la fermeture impose 82
         ],
         diago=[
             ("J", "B", 116.0),
-            ("J", "D", 213.0),   # lecture incertaine sur la photo
+            ("J", "F", 213.0),   # aboutit a F (211) et non a D (138)
             ("J", "G", 236.0),
             ("J", "H", 243.0),
         ],
-        equerre=["C", "E", "F"],   # decrochements 33 / 114 / 30 / 29
         rangee=2,
     ),
 ]
@@ -315,9 +308,42 @@ def _echelle_croquis(piece: Piece) -> float:
     return rapports[len(rapports) // 2] if rapports else 1.0
 
 
-def resoudre(piece: Piece, poids_croquis: float = 0.004,
-             iterations: int = 300) -> tuple[dict[str, tuple[float, float]], list[dict]]:
-    """Retourne les coordonnees des sommets et le rapport d'ecarts."""
+def directions_croquis(piece: Piece, tolerance_deg: float = 20.0) -> list[dict]:
+    """Direction visee pour chaque mur, lue sur le trace rouge du croquis.
+
+    C'est l'information que le croquis donne en plus des longueurs : un mur
+    dessine horizontal EST horizontal, meme si aucune diagonale ne le dit. Les
+    murs proches d'un axe y sont ramenes exactement (equerrage) ; les autres
+    (pans coupes) gardent l'angle du croquis, mais avec un poids plus faible
+    car un trait oblique a main levee est bien moins fiable qu'une equerre.
+    """
+    out = []
+    for a, b, longueur in piece.murs:
+        (xa, ya), (xb, yb) = piece.pts[a], piece.pts[b]
+        angle = math.degrees(math.atan2(-(yb - ya), xb - xa))   # repere dessin
+        axe = round(angle / 90.0) * 90.0
+        ecart = abs((angle - axe + 180.0) % 360.0 - 180.0)
+        if ecart <= tolerance_deg:
+            out.append({"a": a, "b": b, "longueur": longueur,
+                        "angle": axe, "axe": True})
+        else:
+            out.append({"a": a, "b": b, "longueur": longueur,
+                        "angle": angle, "axe": False})
+    return out
+
+
+def resoudre(piece: Piece, poids_axe: float = 1.0, poids_oblique: float = 0.15,
+             poids_ancrage: float = 0.001,
+             iterations: int = 400) -> tuple[dict[str, tuple[float, float]], list[dict]]:
+    """Retourne les coordonnees des sommets et le rapport d'ecarts.
+
+    Deux familles de residus, toutes deux exprimees en centimetres :
+      * longueurs  : ||Pi - Pj|| - longueur relevee ;
+      * directions : ecart perpendiculaire du mur a la direction du croquis.
+    Le residu de direction est lineaire en les coordonnees, donc tres stable,
+    et il est sans echelle : il impose l'orientation du mur sans rien dire de
+    sa longueur. C'est ce qui redresse le plan sans toucher aux mesures.
+    """
     noms = piece.sommets
     idx = {nom: i for i, nom in enumerate(noms)}
     n = len(noms)
@@ -328,17 +354,30 @@ def resoudre(piece: Piece, poids_croquis: float = 0.004,
     X = [list(p) for p in ref]
 
     contraintes = piece.contraintes
+    directions = directions_croquis(piece)
+    for d in directions:
+        d["poids"] = poids_axe if d["axe"] else poids_oblique
+        d["sin"] = math.sin(math.radians(d["angle"]))
+        d["cos"] = math.cos(math.radians(d["angle"]))
     lam = 1e-3
+
+    def ecart_direction(pos, d) -> float:
+        """Deport perpendiculaire, en cm, du mur par rapport a sa direction."""
+        ia, ib = idx[d["a"]], idx[d["b"]]
+        return (-(pos[ib][0] - pos[ia][0]) * d["sin"]
+                + (pos[ib][1] - pos[ia][1]) * d["cos"])
 
     def cout(pos):
         s = 0.0
         for a, b, longueur, _ in contraintes:
             ia, ib = idx[a], idx[b]
-            d = math.hypot(pos[ib][0] - pos[ia][0], pos[ib][1] - pos[ia][1])
-            s += (d - longueur) ** 2
+            dd = math.hypot(pos[ib][0] - pos[ia][0], pos[ib][1] - pos[ia][1])
+            s += (dd - longueur) ** 2
+        for d in directions:
+            s += (d["poids"] * ecart_direction(pos, d)) ** 2
         for i in range(n):
-            s += (poids_croquis * (pos[i][0] - ref[i][0])) ** 2
-            s += (poids_croquis * (pos[i][1] - ref[i][1])) ** 2
+            s += (poids_ancrage * (pos[i][0] - ref[i][0])) ** 2
+            s += (poids_ancrage * (pos[i][1] - ref[i][1])) ** 2
         return s
 
     cout_courant = cout(X)
@@ -349,6 +388,12 @@ def resoudre(piece: Piece, poids_croquis: float = 0.004,
         JtJ = [[0.0] * m for _ in range(m)]
         Jtr = [0.0] * m
 
+        def accumuler(g, r):
+            for k, gk in g:
+                Jtr[k] += gk * r
+                for l, gl in g:
+                    JtJ[k][l] += gk * gl
+
         for a, b, longueur, _ in contraintes:
             ia, ib = idx[a], idx[b]
             dx = X[ib][0] - X[ia][0]
@@ -356,20 +401,23 @@ def resoudre(piece: Piece, poids_croquis: float = 0.004,
             d = math.hypot(dx, dy)
             if d < 1e-9:
                 dx, dy, d = 1e-6, 0.0, 1e-6
-            r = d - longueur
             ux, uy = dx / d, dy / d
             # d(residu)/d(coord) : -u sur le sommet a, +u sur le sommet b
-            g = [(2 * ia, -ux), (2 * ia + 1, -uy), (2 * ib, ux), (2 * ib + 1, uy)]
-            for k, gk in g:
-                Jtr[k] += gk * r
-                for l, gl in g:
-                    JtJ[k][l] += gk * gl
+            accumuler([(2 * ia, -ux), (2 * ia + 1, -uy),
+                       (2 * ib, ux), (2 * ib + 1, uy)], d - longueur)
+
+        for d in directions:
+            ia, ib = idx[d["a"]], idx[d["b"]]
+            w, si, co = d["poids"], d["sin"], d["cos"]
+            accumuler([(2 * ia, w * si), (2 * ia + 1, -w * co),
+                       (2 * ib, -w * si), (2 * ib + 1, w * co)],
+                      w * ecart_direction(X, d))
 
         for i in range(n):
             for k, (xi, xr) in enumerate(((X[i][0], ref[i][0]), (X[i][1], ref[i][1]))):
                 j = 2 * i + k
-                JtJ[j][j] += poids_croquis ** 2
-                Jtr[j] += poids_croquis ** 2 * (xi - xr)
+                JtJ[j][j] += poids_ancrage ** 2
+                Jtr[j] += poids_ancrage ** 2 * (xi - xr)
 
         # Amortissement de Levenberg-Marquardt
         for j in range(m):
@@ -398,49 +446,20 @@ def resoudre(piece: Piece, poids_croquis: float = 0.004,
         rapport.append({"a": a, "b": b, "genre": genre,
                         "releve": longueur, "obtenu": obtenu,
                         "ecart": obtenu - longueur})
-    return coords, rapport
 
-
-def orienter(piece: Piece, coords: dict[str, tuple[float, float]]) -> dict[str, tuple[float, float]]:
-    """Oriente la piece comme sur le croquis.
-
-    Les longueurs seules ne fixent ni la rotation ni le sens de parcours : on
-    remet donc la solution en place par un recalage rigide (Kabsch) sur les
-    positions du croquis, apres avoir corrige un eventuel effet miroir.
-    """
-    som = piece.sommets
-    ech = _echelle_croquis(piece)
-    ref = {s: (piece.pts[s][0] * ech, -piece.pts[s][1] * ech) for s in som}
-
-    def aire_signee(c):
-        a = 0.0
-        for i, s in enumerate(som):
-            p, q = c[s], c[som[(i + 1) % len(som)]]
-            a += p[0] * q[1] - q[0] * p[1]
-        return a
-
-    if aire_signee(coords) * aire_signee(ref) < 0:      # solution en miroir
-        coords = {s: (-x, y) for s, (x, y) in coords.items()}
-
-    n = len(som)
-    gx = sum(coords[s][0] for s in som) / n
-    gy = sum(coords[s][1] for s in som) / n
-    rx = sum(ref[s][0] for s in som) / n
-    ry = sum(ref[s][1] for s in som) / n
-
-    # Rotation optimale : angle de la somme des produits croises
-    num = sum((coords[s][0] - gx) * (ref[s][1] - ry) - (coords[s][1] - gy) * (ref[s][0] - rx)
-              for s in som)
-    den = sum((coords[s][0] - gx) * (ref[s][0] - rx) + (coords[s][1] - gy) * (ref[s][1] - ry)
-              for s in som)
-    th = math.atan2(num, den)
-    ct, st = math.cos(th), math.sin(th)
-    return {s: (ct * (x - gx) - st * (y - gy), st * (x - gx) + ct * (y - gy))
-            for s, (x, y) in coords.items()}
+    # Ecart angulaire final de chaque mur par rapport au croquis
+    angles = []
+    for d in directions:
+        (xa, ya), (xb, yb) = coords[d["a"]], coords[d["b"]]
+        obtenu = math.degrees(math.atan2(yb - ya, xb - xa))
+        ecart = (obtenu - d["angle"] + 180.0) % 360.0 - 180.0
+        angles.append({"a": d["a"], "b": d["b"], "axe": d["axe"],
+                       "vise": d["angle"], "ecart": ecart})
+    return coords, {"cotes": rapport, "angles": angles}
 
 
 def disposer(pieces_resolues: dict[str, dict[str, tuple[float, float]]],
-             ecart: float = 120.0) -> None:
+             ecart: float = 150.0) -> None:
     """Range les pieces en rangees sans chevauchement.
 
     Le releve mesure chaque piece separement : il ne dit rien de leur position
@@ -483,6 +502,14 @@ def _n(v: float) -> str:
 
 def _milieu(p, q):
     return ((p[0] + q[0]) / 2.0, (p[1] + q[1]) / 2.0)
+
+
+def _pose_nom(coords, sommets) -> tuple[tuple[float, float], float]:
+    """Nom de la piece juste au-dessus du polygone, pour ne masquer aucune cote."""
+    xs = [coords[s][0] for s in sommets]
+    ys = [coords[s][1] for s in sommets]
+    hauteur = max(12.0, min(H_NOM, (max(xs) - min(xs)) / 6.0))
+    return ((min(xs) + max(xs)) / 2.0, max(ys) + hauteur), hauteur
 
 
 def _angle_texte(p, q) -> float:
@@ -532,24 +559,23 @@ def ecrire_scr(chemin: str, solutions: dict[str, dict[str, tuple[float, float]]]
         L += ["_Close"]
 
         # --- diagonales de controle
-        if piece.diago:
+        if piece.diago_cotees:
             L.append("CLAYER")
             L.append("DIAGONALES")
-            for a, b, _l in piece.diago:
+            for a, b, _l in piece.diago_cotees:
                 L += ["_.LINE",
                       f"{_n(coords[a][0])},{_n(coords[a][1])}",
                       f"{_n(coords[b][0])},{_n(coords[b][1])}",
                       ""]
 
         # --- cotes (texte au milieu de chaque segment)
-        for a, b, longueur in piece.murs + piece.diago:   # pas les equerres supposees
+        for a, b, longueur in piece.murs + piece.diago_cotees:
             L.append(_texte_lisp("COTES", _milieu(coords[a], coords[b]), H_COTE,
                                  _angle_texte(coords[a], coords[b]), f"{longueur:g}"))
 
         # --- nom de la piece au centre
-        cx = sum(coords[s][0] for s in piece.sommets) / len(piece.sommets)
-        cy = sum(coords[s][1] for s in piece.sommets) / len(piece.sommets)
-        L.append(_texte_lisp("NOMS", (cx, cy), H_NOM, 0.0, piece.nom))
+        pos, h = _pose_nom(coords, piece.sommets)
+        L.append(_texte_lisp("NOMS", pos, h, 0.0, piece.nom))
 
     L += ["CLAYER", "MURS", "_.ZOOM", "_Extents", "_.UNDO", "_End", "CMDECHO", "1"]
 
@@ -594,14 +620,13 @@ def ecrire_dxf(chemin: str, solutions: dict[str, dict[str, tuple[float, float]]]
         sommets = piece.sommets
         for i, s in enumerate(sommets):
             ligne("MURS", coords[s], coords[sommets[(i + 1) % len(sommets)]])
-        for a, b, _l in piece.diago:
+        for a, b, _l in piece.diago_cotees:
             ligne("DIAGONALES", coords[a], coords[b])
-        for a, b, longueur in piece.murs + piece.diago:   # pas les equerres supposees
+        for a, b, longueur in piece.murs + piece.diago_cotees:
             texte("COTES", _milieu(coords[a], coords[b]), H_COTE,
                   _angle_texte(coords[a], coords[b]), f"{longueur:g}")
-        cx = sum(coords[s][0] for s in sommets) / len(sommets)
-        cy = sum(coords[s][1] for s in sommets) / len(sommets)
-        texte("NOMS", (cx, cy), H_NOM, 0.0, piece.nom)
+        pos, h = _pose_nom(coords, sommets)
+        texte("NOMS", pos, h, 0.0, piece.nom)
 
     g(0, "ENDSEC"); g(0, "EOF")
 
@@ -634,20 +659,20 @@ def ecrire_svg(chemin: str, solutions: dict[str, dict[str, tuple[float, float]]]
                        for s in piece.sommets)
         s.append(f'<polygon points="{pts}" fill="#e8434322" stroke="#e04030" '
                  f'stroke-width="6" stroke-linejoin="round"/>')
-        for a, b, _l in piece.diago:
+        for a, b, _l in piece.diago_cotees:
             pa, pb = T(coords[a]), T(coords[b])
             s.append(f'<line x1="{pa[0]:.2f}" y1="{pa[1]:.2f}" x2="{pb[0]:.2f}" '
                      f'y2="{pb[1]:.2f}" stroke="#8898a8" stroke-width="1.6"/>')
-        for a, b, longueur in piece.murs + piece.diago:   # pas les equerres supposees
+        for a, b, longueur in piece.murs + piece.diago_cotees:
             mx, my = T(_milieu(coords[a], coords[b]))
             ang = -_angle_texte(coords[a], coords[b])
             s.append(f'<text x="{mx:.2f}" y="{my:.2f}" font-size="15" fill="#222" '
                      f'text-anchor="middle" dominant-baseline="middle" '
                      f'transform="rotate({ang:.1f} {mx:.2f} {my:.2f})">{longueur:g}</text>')
-        cx = sum(T(coords[s_])[0] for s_ in piece.sommets) / len(piece.sommets)
-        cy = sum(T(coords[s_])[1] for s_ in piece.sommets) / len(piece.sommets)
-        s.append(f'<text x="{cx:.2f}" y="{cy:.2f}" font-size="26" fill="#8a2a20" '
-                 f'text-anchor="middle" opacity="0.65">{piece.nom}</text>')
+        pos, h = _pose_nom(coords, piece.sommets)
+        nx, ny = T(pos)
+        s.append(f'<text x="{nx:.2f}" y="{ny:.2f}" font-size="{max(h, 18):.0f}" '
+                 f'fill="#8a2a20" text-anchor="middle" opacity="0.8">{piece.nom}</text>')
 
     s.append('</svg>')
     with open(chemin, "w", encoding="utf-8") as f:
@@ -665,7 +690,7 @@ def main() -> None:
 
     for piece in PIECES:
         coords, rapport = resoudre(piece)
-        solutions[piece.nom] = orienter(piece, coords)
+        solutions[piece.nom] = coords
         rapports[piece.nom] = rapport
 
     disposer(solutions)
@@ -675,7 +700,6 @@ def main() -> None:
     suspects: list[str] = []
     for piece in PIECES:
         n = len(piece.sommets)
-        manquantes = max(0, (n - 3) - len(piece.diago) - len(piece.equerre))
         aire = 0.0
         c = solutions[piece.nom]
         som = piece.sommets
@@ -685,10 +709,11 @@ def main() -> None:
         aire = abs(aire) / 2.0
 
         print(f"\n{piece.nom} : {n} sommets, surface {aire / 10000:.2f} m2")
-        if manquantes:
-            print(f"  /!\\ {manquantes} diagonale(s) manquante(s) : la forme reste "
-                  f"partiellement libre, l'allure du croquis est conservee.")
-        for r in rapports[piece.nom]:
+        for a, b, l in piece.diago:
+            if l is None:
+                print(f"  {a}-{b:<2} diagonale tracee sur le croquis mais cote illisible "
+                      f": non utilisee")
+        for r in rapports[piece.nom]["cotes"]:
             drapeau = ""
             if abs(r["ecart"]) > 3.0:
                 drapeau = "   <<< A VERIFIER"
@@ -696,6 +721,14 @@ def main() -> None:
                                 f"({r['genre']} {r['releve']:g})")
             print(f"  {r['a']}-{r['b']:<2} {r['genre']:<10} releve {r['releve']:>7.1f} "
                   f"  calcule {r['obtenu']:>7.1f}   ecart {r['ecart']:+6.1f}{drapeau}")
+
+        devies = [a for a in rapports[piece.nom]["angles"]
+                  if a["axe"] and abs(a["ecart"]) > 1.5]
+        if devies:
+            for a in devies:
+                print(f"  {a['a']}-{a['b']:<2} mur dessine "
+                      f"{'horizontal' if a['vise'] % 180 == 0 else 'vertical':<10} "
+                      f"mais devie de {a['ecart']:+5.1f} deg pour respecter les cotes")
 
     print("\n" + "=" * 66)
     if suspects:
