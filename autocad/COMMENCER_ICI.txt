@@ -1,0 +1,83 @@
+PLAN D'APPARTEMENT — RELEVE PAR TRIANGULATION VERS AUTOCAD
+==========================================================
+
+Contenu de cette archive, et a quoi sert chaque fichier.
+
+
+JE VEUX JUSTE LE PLAN
+---------------------
+    plan_appartement.dxf
+
+Ouvrir directement dans AutoCAD (menu Ouvrir). Unite : le centimetre.
+Chaque piece est une polyligne fermee : elle se deplace d'un bloc, se decale
+avec DECALER pour donner l'epaisseur des cloisons, et sa surface se lit avec
+AIRE > Objet.
+
+Calques : MURS (rouge), DIAGONALES (gris, a geler une fois le plan verifie),
+COTES, NOMS.
+
+    plan_appartement.svg     le meme plan, a ouvrir dans un navigateur pour
+                             un coup d'oeil rapide, sans lancer AutoCAD
+    plan_appartement.scr     variante : script a jouer dans un dessin deja
+                             ouvert (Gerer > Executer un script)
+
+
+JE VEUX TRAITER UN AUTRE APPARTEMENT
+------------------------------------
+    releve2plan.py           l'outil
+    plan_appartement.releve  un releve complet, comme modele
+
+Il faut Python 3.9 ou plus recent, et rien d'autre. Sous Windows, installer
+Python depuis python.org, puis dans un terminal ouvert dans ce dossier :
+
+    python releve2plan.py mon_nouveau_releve.txt
+
+Sous macOS ou Linux :
+
+    python3 releve2plan.py mon_nouveau_releve.txt
+
+Trois fichiers sortent a cote du releve, sous le meme nom : .dxf, .scr, .svg.
+
+La marche a suivre :
+  1. copier plan_appartement.releve sous un autre nom ;
+  2. y saisir le nouveau releve, une ligne par mur : sa longueur et sa
+     direction (MUR 326 E). Les sommets se nomment tout seuls A, B, C... dans
+     l'ordre des murs, donc pour noter une diagonale il suffit de compter les
+     murs sur le croquis ;
+  3. lancer l'outil et LIRE LE DIAGNOSTIC : il indique de combien chaque piece
+     ne se referme pas et quelle cote la refermerait. Corriger, relancer.
+     Proceder dans cet ordre : d'abord la fermeture des murs, ensuite seulement
+     les diagonales.
+
+Le format complet est decrit dans README.md et en tete de releve2plan.py.
+
+
+POURQUOI CET OUTIL
+------------------
+Un releve au metre donne des longueurs et aucun angle. Ca ne suffit pas a
+figer une piece : il faudrait beaucoup plus de diagonales qu'on n'en releve.
+L'information manquante est sur le croquis, sous les yeux : la direction de
+chaque mur. Un mur dessine horizontal est horizontal. L'outil combine les deux
+par moindres carres, les mesures restant maitresses de la geometrie et le
+croquis de l'orientation.
+
+Sur un releve manuscrit, l'erreur vient presque toujours de la transcription,
+pas de la mesure. D'ou le diagnostic.
+
+
+A SAVOIR SUR CE RELEVE-CI
+-------------------------
+    croquis_releve_original.jpeg    la photo du releve manuscrit d'origine
+
+Quatre cotes du croquis etaient impossibles et ont ete corrigees. Le detail est
+dans README.md, section "Le releve d'exemple".
+
+Il reste un point a verifier sur le terrain : dans la PIECE_1, le pan coupe
+releve a 100 doit mesurer 128 pour que la piece se referme. Un coup de metre
+dans ce coin, et le plan sera bon partout.
+
+La PIECE_5 est le point le plus incertain : la cote 75 du croquis ne se place
+nulle part (elle imposerait un mur de 6 cm). La piece est traitee en
+quadrilatere a angle vif.
+
+Toutes les autres cotes tombent a moins de 2,5 cm.
