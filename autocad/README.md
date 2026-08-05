@@ -82,9 +82,16 @@ si un mur est horizontal, vertical ou oblique.
 
 ## Corrections de lecture apportées au croquis
 
-Trois de mes transcriptions initiales étaient géométriquement impossibles. Dans
-chaque cas la correction n'est pas une supposition : elle est imposée par les
-autres mesures. À confirmer sur l'original.
+Quatre de mes transcriptions initiales étaient géométriquement impossibles. Dans
+chaque cas la correction est imposée par les autres mesures, elle n'est pas une
+supposition — la première ci-dessous a d'ailleurs été confirmée par le relevé
+d'origine.
+
+### PIECE_4 — la diagonale vaut 228 sur `B–D` (confirmé)
+
+Relevée `328`, elle était impossible : `93 + 212 = 305 < 328`. La bonne valeur
+est **228**, sur la diagonale `B–D` (angle rentrant → angle haut-droit), qui
+mesure 230 dans la pièce fermée. Toute la pièce tombe alors sous 1,6 cm.
 
 ### PIECE_6 — le mur `J–A` vaut 82 et non 48
 
@@ -126,13 +133,9 @@ cotée. Le reste de la pièce tombe à 2,3 cm près sans elle.
 
 ## Ce qui reste à vérifier
 
-Après correction, deux pièces gardent une tension :
-
-- **PIECE_1**, le pan coupé `F–G` relevé `100` veut faire 107, et le mur
-  `G–A` relevé `268` veut faire 273. La pièce est cohérente à ~6 cm, mais ce
-  coin mérite un coup de mètre.
-- **PIECE_4**, la diagonale `328` veut faire 334 (je l'ai lue `A–C`). La pièce
-  est de toute façon surdéterminée : ses murs se ferment seuls à 3 cm près.
+Une seule tension subsiste : dans **PIECE_1**, le pan coupé `F–G` relevé `100`
+veut faire 107, et le mur `G–A` relevé `268` veut faire 273. La pièce est
+cohérente à ~6 cm près, mais ce coin mérite un coup de mètre.
 
 Toutes les autres cotes tombent à moins de 2,5 cm.
 
@@ -150,7 +153,7 @@ partagée entre PIECE_1 et PIECE_2, et la cote `93` entre PIECE_4 et PIECE_5).
 | PIECE_1 | 7 | 11,95 m² |
 | PIECE_2 | 7 | 11,87 m² |
 | PIECE_3 | 5 | 1,85 m² |
-| PIECE_4 | 6 | 3,21 m² |
+| PIECE_4 | 6 | 3,22 m² |
 | PIECE_5 | 4 | 0,64 m² |
 | PIECE_6 | 10 | 5,08 m² |
 

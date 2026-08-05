@@ -202,7 +202,9 @@ PIECES: list[Piece] = [
             ("F", "A", 110.0),
         ],
         diago=[
-            ("A", "C", 328.0),   # cf. README : lue comme A-C et non D-B
+            # Cote confirmee par le releveur : 228 et non 328, sur la
+            # diagonale B-D (angle rentrant -> angle haut-droit).
+            ("B", "D", 228.0),
             ("A", "D", 149.0),
             ("D", "F", 115.0),
         ],
