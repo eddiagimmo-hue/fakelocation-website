@@ -1,0 +1,87 @@
+# Releve de l'appartement -- exemple de fichier d'entree pour releve2plan.py
+#
+#   python3 releve2plan.py appartement.releve
+#
+# Unite : le centimetre. Les sommets sont nommes automatiquement A, B, C...
+# dans l'ordre des murs, en partant du premier.
+#
+# Directions : E N O S mettent le mur exactement d'equerre.
+#              NE NO SE SO (et les angles en degres) sont indicatifs.
+
+
+PIECE PIECE_1
+    MUR  326  E
+    MUR  399  S
+    MUR  166  O
+    MUR   25  N
+    MUR   88  O
+    MUR  100  NO          # pan coupe -- cote a recontroler, cf. diagnostic
+    MUR  268  N
+    DIAG A E 404          # les deux diagonales aboutissent a E, l'angle
+    DIAG B E 402          # SORTANT du decrochement, et non a F
+    RANGEE 0
+
+
+PIECE PIECE_2
+    MUR  318  E
+    MUR  296  S
+    MUR   94.5 SO         # pan coupe
+    MUR   90  O
+    MUR   36  S
+    MUR  162  O
+    MUR  399  N
+    DIAG A E 398
+    DIAG B E 395
+    DIAG E G 163
+    RANGEE 0
+
+
+PIECE PIECE_3
+    MUR   44  NE          # petit pan coupe
+    MUR   61  E
+    MUR  195  S
+    MUR   92  O
+    MUR  184  N
+    DIAG A D 202
+    DIAG B E ?            # tracee sur le croquis, chiffre illisible
+    RANGEE 1
+
+
+PIECE PIECE_4
+    MUR  325  E
+    MUR   93  S
+    MUR  212  O
+    MUR   14  S
+    MUR  114  O
+    MUR  110  N
+    DIAG B D 228          # relevee 328 par erreur d'ecriture, corrigee sur place
+    DIAG A D 149
+    DIAG D F 115
+    RANGEE 1
+
+
+PIECE PIECE_5
+    MUR  102  E
+    MUR  109  SO          # pan coupe
+    MUR   37  O
+    MUR   93  N
+    DIAG D B 136
+    RANGEE 1
+
+
+PIECE PIECE_6
+    MUR   82  E
+    MUR  162  S
+    MUR   33  E
+    MUR  114  S
+    MUR   30  O
+    MUR   29  S
+    MUR  183  O
+    MUR  223  N
+    MUR  100  E
+    MUR   82  N           # lu 48 sur le croquis, la fermeture impose 82
+    DIAG J B 116
+    DIAG J F 213
+    DIAG J G 236
+    DIAG J H 243
+    RANGEE 2
