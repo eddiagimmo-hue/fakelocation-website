@@ -1,0 +1,246 @@
+CMDECHO
+0
+OSMODE
+0
+BLIPMODE
+0
+_.UNDO
+_BEgin
+_.-LAYER
+_Make
+MURS
+_Color
+1
+
+_Make
+DIAGONALES
+_Color
+8
+
+_Make
+COTES
+_Color
+3
+
+_Make
+NOMS
+_Color
+4
+
+
+(princ "\nTrace PIECE_1")(princ)
+CLAYER
+MURS
+_.PLINE
+0.000,0.000
+321.966,-51.126
+337.988,-449.805
+174.515,-420.942
+178.865,-396.323
+92.211,-381.000
+65.859,-272.144
+_Close
+CLAYER
+DIAGONALES
+_.LINE
+0.000,0.000
+92.211,-381.000
+
+_.LINE
+321.966,-51.126
+92.211,-381.000
+
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 160.983 -25.563 0.0)) (cons 11 (list 160.983 -25.563 0.0)) (cons 40 12.000) (cons 50 -0.157479) '(72 . 1) '(73 . 2) (cons 1 "326"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 329.977 -250.466 0.0)) (cons 11 (list 329.977 -250.466 0.0)) (cons 40 12.000) (cons 50 -1.530630) '(72 . 1) '(73 . 2) (cons 1 "399"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 256.252 -435.373 0.0)) (cons 11 (list 256.252 -435.373 0.0)) (cons 40 12.000) (cons 50 -0.174761) '(72 . 1) '(73 . 2) (cons 1 "166"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 176.690 -408.632 0.0)) (cons 11 (list 176.690 -408.632 0.0)) (cons 40 12.000) (cons 50 1.395912) '(72 . 1) '(73 . 2) (cons 1 "25"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 135.538 -388.662 0.0)) (cons 11 (list 135.538 -388.662 0.0)) (cons 40 12.000) (cons 50 -0.175015) '(72 . 1) '(73 . 2) (cons 1 "88"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 79.035 -326.572 0.0)) (cons 11 (list 79.035 -326.572 0.0)) (cons 40 12.000) (cons 50 -1.333286) '(72 . 1) '(73 . 2) (cons 1 "100"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 32.929 -136.072 0.0)) (cons 11 (list 32.929 -136.072 0.0)) (cons 40 12.000) (cons 50 -1.333361) '(72 . 1) '(73 . 2) (cons 1 "268"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 46.105 -190.500 0.0)) (cons 11 (list 46.105 -190.500 0.0)) (cons 40 12.000) (cons 50 -1.333340) '(72 . 1) '(73 . 2) (cons 1 "404"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 207.088 -216.063 0.0)) (cons 11 (list 207.088 -216.063 0.0)) (cons 40 12.000) (cons 50 0.962428) '(72 . 1) '(73 . 2) (cons 1 "402"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "NOMS") (cons 10 (list 167.343 -281.620 0.0)) (cons 11 (list 167.343 -281.620 0.0)) (cons 40 25.000) (cons 50 0.000000) '(72 . 1) '(73 . 2) (cons 1 "PIECE_1"))) (princ))
+(princ "\nTrace PIECE_2")(princ)
+CLAYER
+MURS
+_.PLINE
+457.988,-50.833
+775.987,-49.998
+776.766,-345.996
+711.674,-414.504
+621.679,-413.612
+624.746,-449.482
+462.747,-449.805
+_Close
+CLAYER
+DIAGONALES
+_.LINE
+457.988,-50.833
+621.679,-413.612
+
+_.LINE
+775.987,-49.998
+621.679,-413.612
+
+_.LINE
+621.679,-413.612
+462.747,-449.805
+
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 616.987 -50.416 0.0)) (cons 11 (list 616.987 -50.416 0.0)) (cons 40 12.000) (cons 50 0.002625) '(72 . 1) '(73 . 2) (cons 1 "318"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 776.376 -197.997 0.0)) (cons 11 (list 776.376 -197.997 0.0)) (cons 40 12.000) (cons 50 -1.568163) '(72 . 1) '(73 . 2) (cons 1 "296"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 744.220 -380.250 0.0)) (cons 11 (list 744.220 -380.250 0.0)) (cons 40 12.000) (cons 50 0.810963) '(72 . 1) '(73 . 2) (cons 1 "94.5"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 666.676 -414.058 0.0)) (cons 11 (list 666.676 -414.058 0.0)) (cons 40 12.000) (cons 50 -0.009906) '(72 . 1) '(73 . 2) (cons 1 "90"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 623.212 -431.547 0.0)) (cons 11 (list 623.212 -431.547 0.0)) (cons 40 12.000) (cons 50 -1.485489) '(72 . 1) '(73 . 2) (cons 1 "36"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 543.746 -449.643 0.0)) (cons 11 (list 543.746 -449.643 0.0)) (cons 40 12.000) (cons 50 0.001995) '(72 . 1) '(73 . 2) (cons 1 "162"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 460.367 -250.319 0.0)) (cons 11 (list 460.367 -250.319 0.0)) (cons 40 12.000) (cons 50 -1.558869) '(72 . 1) '(73 . 2) (cons 1 "399"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 539.833 -232.223 0.0)) (cons 11 (list 539.833 -232.223 0.0)) (cons 40 12.000) (cons 50 -1.146934) '(72 . 1) '(73 . 2) (cons 1 "398"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 698.833 -231.805 0.0)) (cons 11 (list 698.833 -231.805 0.0)) (cons 40 12.000) (cons 50 1.169457) '(72 . 1) '(73 . 2) (cons 1 "395"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 542.213 -431.709 0.0)) (cons 11 (list 542.213 -431.709 0.0)) (cons 40 12.000) (cons 50 0.223906) '(72 . 1) '(73 . 2) (cons 1 "163"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "NOMS") (cons 10 (list 633.084 -310.604 0.0)) (cons 11 (list 633.084 -310.604 0.0)) (cons 40 25.000) (cons 50 0.000000) '(72 . 1) '(73 . 2) (cons 1 "PIECE_2"))) (princ))
+(princ "\nTrace PIECE_3")(princ)
+CLAYER
+MURS
+_.PLINE
+5.062,-582.130
+36.954,-612.442
+80.578,-569.805
+91.986,-764.471
+0.000,-766.060
+_Close
+CLAYER
+DIAGONALES
+_.LINE
+5.062,-582.130
+91.986,-764.471
+
+_.LINE
+36.954,-612.442
+0.000,-766.060
+
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 21.008 -597.286 0.0)) (cons 11 (list 21.008 -597.286 0.0)) (cons 40 12.000) (cons 50 -0.759998) '(72 . 1) '(73 . 2) (cons 1 "44"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 58.766 -591.124 0.0)) (cons 11 (list 58.766 -591.124 0.0)) (cons 40 12.000) (cons 50 0.773956) '(72 . 1) '(73 . 2) (cons 1 "61"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 86.282 -667.138 0.0)) (cons 11 (list 86.282 -667.138 0.0)) (cons 40 12.000) (cons 50 -1.512263) '(72 . 1) '(73 . 2) (cons 1 "195"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 45.993 -765.266 0.0)) (cons 11 (list 45.993 -765.266 0.0)) (cons 40 12.000) (cons 50 0.017274) '(72 . 1) '(73 . 2) (cons 1 "92"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 2.531 -674.095 0.0)) (cons 11 (list 2.531 -674.095 0.0)) (cons 40 12.000) (cons 50 1.543284) '(72 . 1) '(73 . 2) (cons 1 "184"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 48.524 -673.300 0.0)) (cons 11 (list 48.524 -673.300 0.0)) (cons 40 12.000) (cons 50 -1.125952) '(72 . 1) '(73 . 2) (cons 1 "202"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 18.477 -689.251 0.0)) (cons 11 (list 18.477 -689.251 0.0)) (cons 40 12.000) (cons 50 1.334723) '(72 . 1) '(73 . 2) (cons 1 "158"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "NOMS") (cons 10 (list 42.916 -658.982 0.0)) (cons 11 (list 42.916 -658.982 0.0)) (cons 40 25.000) (cons 50 0.000000) '(72 . 1) '(73 . 2) (cons 1 "PIECE_3"))) (princ))
+(princ "\nTrace PIECE_4")(princ)
+CLAYER
+MURS
+_.PLINE
+215.354,-652.821
+539.407,-628.035
+536.194,-720.980
+326.487,-752.071
+325.939,-766.060
+211.986,-762.770
+_Close
+CLAYER
+DIAGONALES
+_.LINE
+215.354,-652.821
+536.194,-720.980
+
+_.LINE
+215.354,-652.821
+326.487,-752.071
+
+_.LINE
+326.487,-752.071
+211.986,-762.770
+
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 377.380 -640.428 0.0)) (cons 11 (list 377.380 -640.428 0.0)) (cons 40 12.000) (cons 50 0.076338) '(72 . 1) '(73 . 2) (cons 1 "325"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 537.801 -674.508 0.0)) (cons 11 (list 537.801 -674.508 0.0)) (cons 40 12.000) (cons 50 1.536244) '(72 . 1) '(73 . 2) (cons 1 "93"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 431.340 -736.525 0.0)) (cons 11 (list 431.340 -736.525 0.0)) (cons 40 12.000) (cons 50 0.147185) '(72 . 1) '(73 . 2) (cons 1 "212"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 326.213 -759.065 0.0)) (cons 11 (list 326.213 -759.065 0.0)) (cons 40 12.000) (cons 50 1.531624) '(72 . 1) '(73 . 2) (cons 1 "14"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 268.962 -764.415 0.0)) (cons 11 (list 268.962 -764.415 0.0)) (cons 40 12.000) (cons 50 -0.028864) '(72 . 1) '(73 . 2) (cons 1 "114"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 213.670 -707.796 0.0)) (cons 11 (list 213.670 -707.796 0.0)) (cons 40 12.000) (cons 50 1.540175) '(72 . 1) '(73 . 2) (cons 1 "110"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 375.774 -686.901 0.0)) (cons 11 (list 375.774 -686.901 0.0)) (cons 40 12.000) (cons 50 -0.209326) '(72 . 1) '(73 . 2) (cons 1 "328"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 270.920 -702.446 0.0)) (cons 11 (list 270.920 -702.446 0.0)) (cons 40 12.000) (cons 50 -0.728972) '(72 . 1) '(73 . 2) (cons 1 "149"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 269.236 -757.420 0.0)) (cons 11 (list 269.236 -757.420 0.0)) (cons 40 12.000) (cons 50 0.093174) '(72 . 1) '(73 . 2) (cons 1 "115"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "NOMS") (cons 10 (list 359.228 -713.790 0.0)) (cons 11 (list 359.228 -713.790 0.0)) (cons 40 25.000) (cons 50 0.000000) '(72 . 1) '(73 . 2) (cons 1 "PIECE_4"))) (princ))
+(princ "\nTrace PIECE_5")(princ)
+CLAYER
+MURS
+_.PLINE
+659.407,-666.414
+758.219,-641.115
+806.319,-698.660
+720.655,-766.060
+685.108,-755.792
+_Close
+CLAYER
+DIAGONALES
+_.LINE
+685.108,-755.792
+758.219,-641.115
+
+_.LINE
+685.108,-755.792
+806.319,-698.660
+
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 708.813 -653.765 0.0)) (cons 11 (list 708.813 -653.765 0.0)) (cons 40 12.000) (cons 50 0.250646) '(72 . 1) '(73 . 2) (cons 1 "102"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 782.269 -669.888 0.0)) (cons 11 (list 782.269 -669.888 0.0)) (cons 40 12.000) (cons 50 -0.874571) '(72 . 1) '(73 . 2) (cons 1 "75"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 763.487 -732.360 0.0)) (cons 11 (list 763.487 -732.360 0.0)) (cons 40 12.000) (cons 50 0.666640) '(72 . 1) '(73 . 2) (cons 1 "109"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 702.882 -760.926 0.0)) (cons 11 (list 702.882 -760.926 0.0)) (cons 40 12.000) (cons 50 -0.281196) '(72 . 1) '(73 . 2) (cons 1 "37"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 672.258 -711.103 0.0)) (cons 11 (list 672.258 -711.103 0.0)) (cons 40 12.000) (cons 50 -1.290792) '(72 . 1) '(73 . 2) (cons 1 "93"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 721.664 -698.454 0.0)) (cons 11 (list 721.664 -698.454 0.0)) (cons 40 12.000) (cons 50 1.003231) '(72 . 1) '(73 . 2) (cons 1 "136"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 745.713 -727.226 0.0)) (cons 11 (list 745.713 -727.226 0.0)) (cons 40 12.000) (cons 50 0.440465) '(72 . 1) '(73 . 2) (cons 1 "134"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "NOMS") (cons 10 (list 725.942 -705.608 0.0)) (cons 11 (list 725.942 -705.608 0.0)) (cons 40 25.000) (cons 50 0.000000) '(72 . 1) '(73 . 2) (cons 1 "PIECE_5"))) (princ))
+(princ "\nTrace PIECE_6")(princ)
+CLAYER
+MURS
+_.PLINE
+120.609,-896.740
+201.911,-886.060
+264.776,-1035.365
+295.191,-1022.559
+253.833,-1128.792
+225.877,-1117.909
+215.356,-1144.933
+34.669,-1173.933
+0.000,-953.645
+99.009,-939.605
+_Close
+CLAYER
+DIAGONALES
+_.LINE
+99.009,-939.605
+201.911,-886.060
+
+_.LINE
+99.009,-939.605
+295.191,-1022.559
+
+_.LINE
+99.009,-939.605
+215.356,-1144.933
+
+_.LINE
+99.009,-939.605
+34.669,-1173.933
+
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 161.260 -891.400 0.0)) (cons 11 (list 161.260 -891.400 0.0)) (cons 40 12.000) (cons 50 0.130613) '(72 . 1) '(73 . 2) (cons 1 "82"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 233.343 -960.713 0.0)) (cons 11 (list 233.343 -960.713 0.0)) (cons 40 12.000) (cons 50 -1.172278) '(72 . 1) '(73 . 2) (cons 1 "162"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 279.983 -1028.962 0.0)) (cons 11 (list 279.983 -1028.962 0.0)) (cons 40 12.000) (cons 50 0.398511) '(72 . 1) '(73 . 2) (cons 1 "33"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 274.512 -1075.676 0.0)) (cons 11 (list 274.512 -1075.676 0.0)) (cons 40 12.000) (cons 50 1.199538) '(72 . 1) '(73 . 2) (cons 1 "114"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 239.855 -1123.350 0.0)) (cons 11 (list 239.855 -1123.350 0.0)) (cons 40 12.000) (cons 50 -0.371251) '(72 . 1) '(73 . 2) (cons 1 "30"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 220.616 -1131.421 0.0)) (cons 11 (list 220.616 -1131.421 0.0)) (cons 40 12.000) (cons 50 1.199560) '(72 . 1) '(73 . 2) (cons 1 "29"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 125.013 -1159.433 0.0)) (cons 11 (list 125.013 -1159.433 0.0)) (cons 40 12.000) (cons 50 0.159141) '(72 . 1) '(73 . 2) (cons 1 "183"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 17.334 -1063.789 0.0)) (cons 11 (list 17.334 -1063.789 0.0)) (cons 40 12.000) (cons 50 -1.414697) '(72 . 1) '(73 . 2) (cons 1 "223"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 49.504 -946.625 0.0)) (cons 11 (list 49.504 -946.625 0.0)) (cons 40 12.000) (cons 50 0.140859) '(72 . 1) '(73 . 2) (cons 1 "100"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 109.809 -918.173 0.0)) (cons 11 (list 109.809 -918.173 0.0)) (cons 40 12.000) (cons 50 1.104025) '(72 . 1) '(73 . 2) (cons 1 "48"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 150.460 -912.833 0.0)) (cons 11 (list 150.460 -912.833 0.0)) (cons 40 12.000) (cons 50 0.479796) '(72 . 1) '(73 . 2) (cons 1 "116"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 197.100 -981.082 0.0)) (cons 11 (list 197.100 -981.082 0.0)) (cons 40 12.000) (cons 50 -0.400041) '(72 . 1) '(73 . 2) (cons 1 "213"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 157.183 -1042.269 0.0)) (cons 11 (list 157.183 -1042.269 0.0)) (cons 40 12.000) (cons 50 -1.055265) '(72 . 1) '(73 . 2) (cons 1 "236"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "COTES") (cons 10 (list 66.839 -1056.769 0.0)) (cons 11 (list 66.839 -1056.769 0.0)) (cons 40 12.000) (cons 50 1.302827) '(72 . 1) '(73 . 2) (cons 1 "243"))) (princ))
+(progn (entmake (list '(0 . "TEXT") (cons 8 "NOMS") (cons 10 (list 171.123 -1029.954 0.0)) (cons 11 (list 171.123 -1029.954 0.0)) (cons 40 25.000) (cons 50 0.000000) '(72 . 1) '(73 . 2) (cons 1 "PIECE_6"))) (princ))
+CLAYER
+MURS
+_.ZOOM
+_Extents
+_.UNDO
+_End
+CMDECHO
+1
