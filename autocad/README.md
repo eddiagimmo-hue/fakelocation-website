@@ -16,8 +16,17 @@ ce dossier :
 | `plan_appartement.scr` | Script à jouer dans un dessin existant : ruban *Gérer > Exécuter un script* (ou commande `SCRIPT`) |
 | `plan_appartement.svg` | Aperçu immédiat dans un navigateur, pour vérifier avant d'ouvrir AutoCAD |
 
-Unité du dessin : **le centimètre** (les cotes du croquis sont reprises telles
-quelles). Calques créés : `MURS` (rouge), `DIAGONALES` (gris), `COTES`, `NOMS`.
+Unité du dessin : **le centimètre** (`$INSUNITS` = 5, les cotes du croquis sont
+reprises telles quelles). Calques créés : `MURS` (rouge), `DIAGONALES` (gris),
+`COTES`, `NOMS`.
+
+Le DXF est en R12 (`AC1009`), lu par toutes les versions d'AutoCAD et par les
+autres logiciels de CAO. Chaque pièce y est une **polyligne fermée** : elle se
+déplace d'un bloc, se décale (`DECALER`) pour donner l'épaisseur des cloisons,
+et sa surface se lit directement avec `AIRE > Objet`. Les diagonales sont des
+lignes séparées sur leur propre calque, à geler ou supprimer une fois le plan
+contrôlé. Fichier vérifié sans erreur par l'audit `ezdxf` (outil de contrôle
+uniquement : le script, lui, n'a aucune dépendance).
 
 > Le `.scr` crée les textes par `entmake` (AutoLISP) : la commande `TEXT` pose un
 > nombre d'invites variable selon le style courant, ce qui décalerait tout le

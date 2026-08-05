@@ -595,13 +595,52 @@ def ecrire_dxf(chemin: str, solutions: dict[str, dict[str, tuple[float, float]]]
         out.append(str(code))
         out.append(f"{valeur:.4f}" if isinstance(valeur, float) else str(valeur))
 
+    xs = [p[0] for c in solutions.values() for p in c.values()]
+    ys = [p[1] for c in solutions.values() for p in c.values()]
+
+    # --- En-tete : sans lui, AutoCAD ouvre le fichier sans etendues ni unites
+    g(0, "SECTION"); g(2, "HEADER")
+    g(9, "$ACADVER"); g(1, "AC1009")
+    g(9, "$INSBASE"); g(10, 0.0); g(20, 0.0); g(30, 0.0)
+    g(9, "$EXTMIN"); g(10, min(xs)); g(20, min(ys)); g(30, 0.0)
+    g(9, "$EXTMAX"); g(10, max(xs)); g(20, max(ys)); g(30, 0.0)
+    g(9, "$LIMMIN"); g(10, min(xs)); g(20, min(ys))
+    g(9, "$LIMMAX"); g(10, max(xs)); g(20, max(ys))
+    g(9, "$INSUNITS"); g(70, 5)               # 5 = centimetres
+    g(9, "$LUNITS"); g(70, 2)                 # unites decimales
+    g(9, "$TEXTSTYLE"); g(7, "STANDARD")
+    g(0, "ENDSEC")
+
     g(0, "SECTION"); g(2, "TABLES")
-    g(0, "TABLE"); g(2, "LAYER"); g(70, len(CALQUES))
+
+    g(0, "TABLE"); g(2, "LTYPE"); g(70, 1)
+    g(0, "LTYPE"); g(2, "CONTINUOUS"); g(70, 0); g(3, "Solid line")
+    g(72, 65); g(73, 0); g(40, 0.0)
+    g(0, "ENDTAB")
+
+    g(0, "TABLE"); g(2, "STYLE"); g(70, 1)
+    g(0, "STYLE"); g(2, "STANDARD"); g(70, 0); g(40, 0.0); g(41, 1.0)
+    g(50, 0.0); g(71, 0); g(42, 2.5); g(3, "txt"); g(4, "")
+    g(0, "ENDTAB")
+
+    g(0, "TABLE"); g(2, "LAYER"); g(70, len(CALQUES) + 1)
+    g(0, "LAYER"); g(2, "0"); g(70, 0); g(62, 7); g(6, "CONTINUOUS")
     for nom, couleur in CALQUES:
         g(0, "LAYER"); g(2, nom); g(70, 0); g(62, couleur); g(6, "CONTINUOUS")
-    g(0, "ENDTAB"); g(0, "ENDSEC")
+    g(0, "ENDTAB")
+
+    g(0, "ENDSEC")
 
     g(0, "SECTION"); g(2, "ENTITIES")
+
+    def polyligne_fermee(calque, points):
+        """POLYLINE R12 : un seul objet manipulable (deplacer, decaler, surface)."""
+        g(0, "POLYLINE"); g(8, calque); g(66, 1); g(70, 1)   # 70 = 1 : fermee
+        g(10, 0.0); g(20, 0.0); g(30, 0.0)
+        for p in points:
+            g(0, "VERTEX"); g(8, calque)
+            g(10, float(p[0])); g(20, float(p[1])); g(30, 0.0)
+        g(0, "SEQEND"); g(8, calque)
 
     def ligne(calque, p, q):
         g(0, "LINE"); g(8, calque)
@@ -612,14 +651,14 @@ def ecrire_dxf(chemin: str, solutions: dict[str, dict[str, tuple[float, float]]]
         g(0, "TEXT"); g(8, calque)
         g(10, float(p[0])); g(20, float(p[1])); g(30, 0.0)
         g(40, float(hauteur)); g(1, contenu); g(50, float(angle))
+        g(7, "STANDARD")
         g(72, 1); g(73, 2)                       # justification centre / milieu
         g(11, float(p[0])); g(21, float(p[1])); g(31, 0.0)
 
     for piece in PIECES:
         coords = solutions[piece.nom]
         sommets = piece.sommets
-        for i, s in enumerate(sommets):
-            ligne("MURS", coords[s], coords[sommets[(i + 1) % len(sommets)]])
+        polyligne_fermee("MURS", [coords[s] for s in sommets])
         for a, b, _l in piece.diago_cotees:
             ligne("DIAGONALES", coords[a], coords[b])
         for a, b, longueur in piece.murs + piece.diago_cotees:
